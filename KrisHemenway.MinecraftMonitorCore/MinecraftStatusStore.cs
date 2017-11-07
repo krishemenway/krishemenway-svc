@@ -1,7 +1,7 @@
-﻿using KrisHemenway.CommonCore;
+﻿using KrisHemenway.Common;
 using System.Collections.Generic;
 
-namespace KrisHemenway.MinecraftMonitorCore
+namespace KrisHemenway.MinecraftMonitor
 {
 	public interface IMinecraftStatusStore
 	{

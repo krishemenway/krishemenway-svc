@@ -1,27 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KrisHemenway.PushNotifications", "KrisHemenway.PushNotifications\KrisHemenway.PushNotifications.csproj", "{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KrisHemenway.HttpServer", "KrisHemenway.HttpServer\KrisHemenway.HttpServer.csproj", "{C005B424-D0FB-465A-A8E1-4B718D8C1018}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KrisHemenway.TeamSpeakMonitor", "KrisHemenway.TeamSpeakMonitor\KrisHemenway.TeamSpeakMonitor.csproj", "{488D8D47-E80C-4FD0-AAE9-65F0C103688F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KrisHemenway.Common", "KrisHemenway.Common\KrisHemenway.Common.csproj", "{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KrisHemenway.AndroidApp", "KrisHemenway.AndroidApp\KrisHemenway.AndroidApp.csproj", "{A4582A80-FBB6-4F08-B003-C5376D47384B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.TVShowsCore", "KrisHemenway.TVShowsCore\KrisHemenway.TVShowsCore.csproj", "{4333AB48-7B35-4331-AFE8-C556D83DEC74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.TVShows", "KrisHemenway.TVShowsCore\KrisHemenway.TVShows.csproj", "{4333AB48-7B35-4331-AFE8-C556D83DEC74}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.CommonCore", "KrisHemenway.CommonCore\KrisHemenway.CommonCore.csproj", "{8BB49355-BB9E-4766-B42F-7C2DD498E319}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.Common", "KrisHemenway.CommonCore\KrisHemenway.Common.csproj", "{8BB49355-BB9E-4766-B42F-7C2DD498E319}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.NotificationCore", "KrisHemenway.NotificationCore\KrisHemenway.NotificationCore.csproj", "{4AADDBB7-61C6-442A-BC72-6362E0A9E873}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.Notification", "KrisHemenway.NotificationCore\KrisHemenway.Notification.csproj", "{4AADDBB7-61C6-442A-BC72-6362E0A9E873}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.MinecraftMonitorCore", "KrisHemenway.MinecraftMonitorCore\KrisHemenway.MinecraftMonitorCore.csproj", "{E3D94EF9-A00A-404A-9046-9F6C8316D197}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.MinecraftMonitor", "KrisHemenway.MinecraftMonitorCore\KrisHemenway.MinecraftMonitor.csproj", "{E3D94EF9-A00A-404A-9046-9F6C8316D197}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.TeamspeakMonitorCore", "KrisHemenway.TeamspeakMonitorCore\KrisHemenway.TeamspeakMonitorCore.csproj", "{9C548F7C-0988-4D99-8442-6796B03EAB52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.TeamspeakMonitor", "KrisHemenway.TeamspeakMonitorCore\KrisHemenway.TeamspeakMonitor.csproj", "{9C548F7C-0988-4D99-8442-6796B03EAB52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,54 +25,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Debug|x64.Build.0 = Debug|Any CPU
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Debug|x86.Build.0 = Debug|Any CPU
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Release|x64.ActiveCfg = Release|Any CPU
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Release|x64.Build.0 = Release|Any CPU
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Release|x86.ActiveCfg = Release|Any CPU
-		{8476F1CA-5E19-4E7A-96A1-6E3D672726D2}.Release|x86.Build.0 = Release|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Debug|x64.Build.0 = Debug|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Debug|x86.Build.0 = Debug|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Release|x64.ActiveCfg = Release|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Release|x64.Build.0 = Release|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Release|x86.ActiveCfg = Release|Any CPU
-		{C005B424-D0FB-465A-A8E1-4B718D8C1018}.Release|x86.Build.0 = Release|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Debug|x64.Build.0 = Debug|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Debug|x86.Build.0 = Debug|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Release|x64.ActiveCfg = Release|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Release|x64.Build.0 = Release|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Release|x86.ActiveCfg = Release|Any CPU
-		{488D8D47-E80C-4FD0-AAE9-65F0C103688F}.Release|x86.Build.0 = Release|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Debug|x64.Build.0 = Debug|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Debug|x86.Build.0 = Debug|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Release|x64.ActiveCfg = Release|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Release|x64.Build.0 = Release|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Release|x86.ActiveCfg = Release|Any CPU
-		{2DB12D24-B6CF-46D9-8A77-9D1FBD0BA5B7}.Release|x86.Build.0 = Release|Any CPU
 		{A4582A80-FBB6-4F08-B003-C5376D47384B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A4582A80-FBB6-4F08-B003-C5376D47384B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4582A80-FBB6-4F08-B003-C5376D47384B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

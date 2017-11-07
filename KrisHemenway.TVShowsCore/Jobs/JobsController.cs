@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace KrisHemenway.TVShowsCore.Jobs
+namespace KrisHemenway.TVShows.Jobs
 {
 	[Route("jobs")]
 	public class JobsController : Controller

@@ -1,4 +1,4 @@
-﻿namespace KrisHemenway.TeamspeakMonitorCore
+﻿namespace KrisHemenway.TeamspeakMonitor
 {
 	public class TeamspeakUser
 	{

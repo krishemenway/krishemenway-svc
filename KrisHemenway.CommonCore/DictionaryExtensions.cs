@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace KrisHemenway.CommonCore
+namespace KrisHemenway.Common
 {
 	public static class DictionaryExtensions
 	{

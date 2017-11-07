@@ -1,21 +1,19 @@
-﻿using KrisHemenway.TVShowsCore.Seriess;
-using Microsoft.Extensions.Logging;
+﻿using KrisHemenway.TVShows.Seriess;
 using Quartz;
+using Serilog;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace KrisHemenway.TVShowsCore.Jobs
+namespace KrisHemenway.TVShows.Jobs
 {
 	[DisallowConcurrentExecution]
 	public class RefreshTVShowsJob : IJob
 	{
 		public RefreshTVShowsJob()
 		{
-			_seriesStore = new SeriesStore();
+			_seriesStore = new ShowStore();
 			_refreshSeriesTask = new RefreshSeriesTask();
-
-			_logger = new LoggerFactory().CreateLogger<RefreshTVShowsJob>();
 		}
 
 		public Task Execute(IJobExecutionContext context)
@@ -31,7 +29,7 @@ namespace KrisHemenway.TVShowsCore.Jobs
 				}
 				catch (Exception e)
 				{
-					_logger.LogError(default(EventId), e, "Failed to refresh shows!");
+					Log.Error(e, "Failed to refresh shows!");
 				}
 			});
 		}
@@ -66,7 +64,5 @@ namespace KrisHemenway.TVShowsCore.Jobs
 
 		private readonly ISeriesStore _seriesStore;
 		private readonly IRefreshSeriesTask _refreshSeriesTask;
-
-		private readonly ILogger<RefreshTVShowsJob> _logger;
 	}
 }

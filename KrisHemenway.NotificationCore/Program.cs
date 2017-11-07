@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using System.Diagnostics;
+using Serilog;
+using System;
+using Serilog.Events;
 
 namespace KrisHemenway.NotificationCore
 {
@@ -10,26 +12,60 @@ namespace KrisHemenway.NotificationCore
 	{
 		public static void Main(string[] args)
 		{
+			SetupLogging();
+
+			try
+			{
+				SetupConfiguration();
+				StartWebHost();
+			}
+			catch (Exception exception)
+			{
+				Log.Fatal(exception, "Service terminated unexpectedly");
+			}
+			finally
+			{
+				Log.CloseAndFlush();
+			}
+		}
+
+		private static void SetupConfiguration()
+		{
 			Configuration = new ConfigurationBuilder()
 				.SetBasePath(Directory.GetCurrentDirectory())
 				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
 				.AddEnvironmentVariables()
 				.Build();
+		}
 
-			var host = new WebHostBuilder()
+		private static void SetupLogging()
+		{
+			Log.Logger = new LoggerConfiguration()
+				.MinimumLevel.Debug()
+				.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+				.Enrich.FromLogContext()
+				.WriteTo.Console()
+				.WriteTo.RollingFile("app-{Date}.log")
+				.CreateLogger();
+		}
+
+		private static void StartWebHost()
+		{
+			WebHost = new WebHostBuilder()
 				.UseKestrel()
 				.UseConfiguration(Configuration)
-				.UseContentRoot(ExecutablePath)
 				.UseStartup<Startup>()
-				.UseApplicationInsights()
+				.UseSerilog()
 				.UseUrls($"http://*:{WebPort}")
 				.Build();
 
-			host.Run();
+			WebHost.Run();
 		}
 
 		public static int WebPort => Configuration.GetValue<int>("WebPort");
+
 		public static IConfigurationRoot Configuration { get; private set; }
+		public static IWebHost WebHost { get; private set; }
 
 		public static string ExecutablePath => Directory.GetCurrentDirectory();
 	}

@@ -3,26 +3,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KrisHemenway.TVShowsCore.Episodes
+namespace KrisHemenway.TVShows.Episodes
 {
 	public interface IEpisodeStore
 	{
-		void SaveEpisode(Episode episode);
-		void UpdateEpisode(Episode episode);
+		void SaveEpisode(IEpisode episode);
+		void UpdateEpisode(IEpisode episode);
 
-		IReadOnlyList<Episode> FindNewEpisodes();
-		IReadOnlyList<Episode> FindEpisodesAiring(DateTime onDate);
-		IReadOnlyList<Episode> FindEpisodesAiring(DateTime start, DateTime end);
+		IReadOnlyList<IEpisode> FindNewEpisodes();
+		IReadOnlyList<IEpisode> FindEpisodesAiring(DateTime onDate);
+		IReadOnlyList<IEpisode> FindEpisodesAiring(DateTime start, DateTime end);
 	}
 
 	class EpisodeStore : IEpisodeStore
 	{
-		public IReadOnlyList<Episode> FindEpisodesAiring(DateTime onDate)
+		public IReadOnlyList<IEpisode> FindEpisodesAiring(DateTime onDate)
 		{
 			return FindEpisodesAiring(onDate, onDate);
 		}
 
-		public IReadOnlyList<Episode> FindEpisodesAiring(DateTime start, DateTime end)
+		public IReadOnlyList<IEpisode> FindEpisodesAiring(DateTime start, DateTime end)
 		{
 			const string sql = @"
 				SELECT
@@ -34,7 +34,6 @@ namespace KrisHemenway.TVShowsCore.Episodes
 					e.airdate,
 					s.id as seriesid,
 					s.name as series,
-					e.rage_url as rageurl,
 					e.created_at as created,
 					e.updated_at as lastmodified,
 					e.path
@@ -52,7 +51,7 @@ namespace KrisHemenway.TVShowsCore.Episodes
 			}
 		}
 
-		public IReadOnlyList<Episode> FindNewEpisodes()
+		public IReadOnlyList<IEpisode> FindNewEpisodes()
 		{
 			const string sql = @"
 				SELECT
@@ -64,7 +63,6 @@ namespace KrisHemenway.TVShowsCore.Episodes
 					e.airdate,
 					s.id as seriesid,
 					s.name as series,
-					e.rage_url as rageurl,
 					e.created_at as created,
 					e.updated_at as lastmodified,
 					e.path
@@ -82,7 +80,7 @@ namespace KrisHemenway.TVShowsCore.Episodes
 			}
 		}
 
-		public void SaveEpisode(Episode episode)
+		public void SaveEpisode(IEpisode episode)
 		{
 			const string sql = @"
 				INSERT INTO episodes 
@@ -96,7 +94,7 @@ namespace KrisHemenway.TVShowsCore.Episodes
 			}
 		}
 
-		public void UpdateEpisode(Episode episode)
+		public void UpdateEpisode(IEpisode episode)
 		{
 			const string sql = @"
 				UPDATE episodes

@@ -1,5 +1,5 @@
 ﻿
-namespace KrisHemenway.CommonCore
+namespace KrisHemenway.Common
 {
 	public class ServerInfo
 	{

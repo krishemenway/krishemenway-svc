@@ -1,5 +1,5 @@
-﻿using KrisHemenway.TVShowsCore.Episodes;
-using KrisHemenway.TVShowsCore.Seriess;
+﻿using KrisHemenway.TVShows.Episodes;
+using KrisHemenway.TVShows.Seriess;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -8,23 +8,18 @@ using System.IO;
 using System.Linq;
 using System.Net;
 
-namespace KrisHemenway.TVShowsCore
+namespace KrisHemenway.TVShows
 {
 	public interface IMazeDataSource
 	{
-		List<Episode> FindEpisodes(Series series);
+		List<IEpisode> FindEpisodes(IShow series);
 	}
 
 	public class MazeDataSource : IMazeDataSource
 	{
-		public MazeDataSource()
+		public List<IEpisode> FindEpisodes(IShow series)
 		{
-			_logger = new LoggerFactory().CreateLogger<MazeDataSource>();
-		}
-
-		public List<Episode> FindEpisodes(Series series)
-		{
-			var episodes = new List<Episode>();
+			var episodes = new List<IEpisode>();
 
 			if(!series.MazeId.HasValue)
 			{
@@ -35,17 +30,17 @@ namespace KrisHemenway.TVShowsCore
 			{
 				episodes.AddRange(FindEpisodesFromMazeApi(series));
 			}
-			catch(Exception e)
+			catch(Exception exception)
 			{
-				_logger.LogError($"Failed to Read Data for Maze {series.MazeId.Value}", e);
+				throw new Exception($"Failed to fetch episode data for series {series.MazeId.Value}", exception);
 			}
 
 			return episodes;
 		}
 
-		private IReadOnlyList<Episode> FindEpisodesFromMazeApi(Series series)
+		private IReadOnlyList<Episode> FindEpisodesFromMazeApi(IShow show)
 		{
-			var request = WebRequest.Create($"http://api.tvmaze.com/shows/{series.MazeId}/episodes");
+			var request = WebRequest.Create($"http://api.tvmaze.com/shows/{show.MazeId}/episodes");
 			var response = request.GetResponseAsync();
 
 			response.Wait();
@@ -53,12 +48,12 @@ namespace KrisHemenway.TVShowsCore
 			using (var streamReader = new StreamReader(response.Result.GetResponseStream()))
 			{
 				return JsonConvert.DeserializeObject<IReadOnlyList<MazeTVEpisode>>(streamReader.ReadToEnd())
-					.Select(episode => CreateEpisode(episode, series))
+					.Select(episode => CreateEpisode(episode, show))
 					.ToList();
 			}
 		}
 
-		private Episode CreateEpisode(MazeTVEpisode episode, Series series)
+		private Episode CreateEpisode(MazeTVEpisode episode, IShow series)
 		{
 			return new Episode
 			{
@@ -70,9 +65,6 @@ namespace KrisHemenway.TVShowsCore
 				SeriesId = series.Id
 			};
 		}
-
-		private readonly ILogger<MazeDataSource> _logger;
-
 	}
 
 	public class MazeTVEpisode
@@ -92,7 +84,7 @@ namespace KrisHemenway.TVShowsCore
 
 		public DateTime AirDate { get; set; }
 		public DateTime Airstamp { get; set; }
-		public TimeSpan AirTime { get; set; }
+		public TimeSpan? AirTime { get; set; }
 
 	}
 

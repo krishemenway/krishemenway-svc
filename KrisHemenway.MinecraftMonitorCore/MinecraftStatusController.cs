@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace KrisHemenway.MinecraftMonitorCore
+namespace KrisHemenway.MinecraftMonitor
 {
 	[Route("api/minecraft")]
 	public class MinecraftStatusController : Controller

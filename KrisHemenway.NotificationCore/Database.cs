@@ -13,21 +13,9 @@ namespace KrisHemenway.NotificationCore
 			return connection;
 		}
 
-		private static string Host
-		{
-			get { return Program.Configuration.GetValue<string>("PushServiceHost"); }
-		}
-
-		private static string User
-		{
-			get { return Program.Configuration.GetValue<string>("PushServiceUser"); }
-		}
-
-		private static string Password
-		{
-			get { return Program.Configuration.GetValue<string>("PushServicePassword"); }
-		}
-
-		private const string DatabaseName = "krishemenway";
+		private static string Host => Program.Configuration.GetValue<string>("PushServiceHost");
+		private static string User => Program.Configuration.GetValue<string>("PushServiceUser");
+		private static string Password => Program.Configuration.GetValue<string>("PushServicePassword");
+		private static string DatabaseName => Program.Configuration.GetValue<string>("PushDatabaseName");
 	}
 }

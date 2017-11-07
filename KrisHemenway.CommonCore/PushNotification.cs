@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Text;
 
-namespace KrisHemenway.CommonCore
+namespace KrisHemenway.Common
 {
 	public interface IPushNotificationSender
 	{

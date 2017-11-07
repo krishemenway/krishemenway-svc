@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KrisHemenway.MinecraftMonitorCore
+namespace KrisHemenway.MinecraftMonitor
 {
 	public class MinecraftStatus
 	{

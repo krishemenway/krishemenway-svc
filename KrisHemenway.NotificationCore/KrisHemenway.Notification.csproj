@@ -3,24 +3,26 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+    <RootNamespace>KrisHemenway.Notification</RootNamespace>
+    <AssemblyName>KrisHemenway.Notification</AssemblyName>
+    <StartupObject>KrisHemenway.NotificationCore.Program</StartupObject>
   </PropertyGroup>
-
   <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Humanizer" Version="2.2.0" />
+    <PackageReference Include="Dapper" Version="1.50.2" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0" />
-    <PackageReference Include="Quartz" Version="3.0.0-alpha3" />
+    <PackageReference Include="Npgsql" Version="3.2.5" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KrisHemenway.CommonCore\KrisHemenway.CommonCore.csproj" />
+    <ProjectReference Include="..\KrisHemenway.CommonCore\KrisHemenway.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace KrisHemenway.CommonCore
+namespace KrisHemenway.Common
 {
 	public class RefillableList<T>
 	{

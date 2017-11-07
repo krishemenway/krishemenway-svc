@@ -1,8 +1,25 @@
 ﻿using System;
 
-namespace KrisHemenway.TVShowsCore.Episodes
+namespace KrisHemenway.TVShows.Episodes
 {
-	public class Episode
+	public interface IEpisode
+	{
+		int Id { get; }
+		string Title { get; }
+
+		string Series { get; }
+		int SeriesId { get; }
+		int EpisodeNumber { get; }
+
+		int Season { get; }
+		int EpisodeInSeason { get; }
+
+		DateTime? AirDate { get; }
+		DateTime LastModified { get; }
+		DateTime Created { get; }
+	}
+
+	public class Episode : IEpisode
 	{
 		public int Id { get; set; }
 		public string Title { get; set; }

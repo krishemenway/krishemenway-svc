@@ -1,10 +1,12 @@
-﻿using KrisHemenway.CommonCore;
-using KrisHemenway.TVShowsCore.Episodes;
+﻿using KrisHemenway.Common;
+using KrisHemenway.TVShows.Episodes;
 using Quartz;
+using Serilog;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KrisHemenway.TVShowsCore.Jobs
+namespace KrisHemenway.TVShows.Jobs
 {
 	[DisallowConcurrentExecution]
 	public class ThisJustInJob : IJob
@@ -18,22 +20,29 @@ namespace KrisHemenway.TVShowsCore.Jobs
 		{
 			return Task.Run(() =>
 			{
-				var newEpisodes = new EpisodeStore().FindNewEpisodes();
-
-				if (newEpisodes.Count == 0)
+				try
 				{
-					return;
+					var newEpisodes = new EpisodeStore().FindNewEpisodes();
+
+					if (newEpisodes.Count == 0)
+					{
+						return;
+					}
+
+					var details = new PushNotificationDetails
+					{
+						Title = NewInformationTodayTitle,
+						Content = string.Join("\n", newEpisodes.Select(episode => $"{episode.Series} - {episode.Season}x{episode.EpisodeInSeason} {episode.Title}")),
+						TypeName = nameof(ThisJustInJob),
+						AlertNumber = newEpisodes.Count
+					};
+
+					_pushNotificationSender.NotifyAll(details);
 				}
-
-				var details = new PushNotificationDetails
+				catch (Exception exception)
 				{
-					Title = NewInformationTodayTitle,
-					Content = string.Join("\n", newEpisodes.Select(episode => $"{episode.Series} - {episode.Season}x{episode.EpisodeInSeason} {episode.Title}")),
-					TypeName = nameof(ThisJustInJob),
-					AlertNumber = newEpisodes.Count
-				};
-
-				_pushNotificationSender.NotifyAll(details);
+					Log.Error(exception, "Failed during This Just in Job");
+				}
 			});
 		}
 

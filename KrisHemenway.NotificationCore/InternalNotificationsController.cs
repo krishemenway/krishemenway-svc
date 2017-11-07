@@ -1,4 +1,4 @@
-﻿using KrisHemenway.CommonCore;
+﻿using KrisHemenway.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KrisHemenway.NotificationCore

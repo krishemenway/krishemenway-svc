@@ -1,35 +1,36 @@
-﻿using KrisHemenway.TVShowsCore.Episodes;
-using KrisHemenway.TVShowsCore.Seriess;
-using Microsoft.Extensions.Logging;
+﻿using KrisHemenway.TVShows.Episodes;
+using KrisHemenway.TVShows.Seriess;
+using Serilog;
 using System;
 using System.Linq;
 
-namespace KrisHemenway.TVShowsCore.Jobs
+namespace KrisHemenway.TVShows.Jobs
 {
 	public interface IRefreshSeriesTask
 	{
-		void Refresh(Series series);
+		void Refresh(IShow show);
 	}
 
 	public class RefreshSeriesTask : IRefreshSeriesTask
 	{
-		public RefreshSeriesTask()
+		public RefreshSeriesTask(
+			IEpisodeStore episodeStore = null,
+			IMazeDataSource mazeDataSource = null)
 		{
-			_episodeStore = new EpisodeStore();
-			_logger = new LoggerFactory().CreateLogger<RefreshTVShowsJob>();
-			_mazeDataSource = new MazeDataSource();
+			_episodeStore = episodeStore ?? new EpisodeStore();
+			_mazeDataSource = mazeDataSource ?? new MazeDataSource();
 		}
 
-		public void Refresh(Series series)
+		public void Refresh(IShow show)
 		{
-			if (!series.MazeId.HasValue)
+			if (!show.MazeId.HasValue)
 			{
 				return;
 			}
 
-			foreach (var episode in _mazeDataSource.FindEpisodes(series))
+			foreach (var episode in _mazeDataSource.FindEpisodes(show))
 			{
-				var existingEpisode = series.Episodes.SingleOrDefault(x => x.Season == episode.Season && x.EpisodeInSeason == episode.EpisodeInSeason);
+				var existingEpisode = show.Episodes.SingleOrDefault(x => x.Season == episode.Season && x.EpisodeInSeason == episode.EpisodeInSeason);
 
 				if (existingEpisode == null)
 				{
@@ -42,19 +43,19 @@ namespace KrisHemenway.TVShowsCore.Jobs
 			}
 		}
 
-		private void CreateEpisode(Episode episode)
+		private void CreateEpisode(IEpisode episode)
 		{
-			_logger.LogDebug($"Creating Episode: {episode}");
+			Log.Information("Creating Episode: {Episode}", episode);
 			_episodeStore.SaveEpisode(episode);
 		}
 
-		private void UpdateEpisode(Episode episode)
+		private void UpdateEpisode(IEpisode episode)
 		{
-			_logger.LogDebug($"Updating Episode: {episode}");
+			Log.Information("Updating Episode: {Episode}", episode);
 			_episodeStore.UpdateEpisode(episode);
 		}
 
-		private static bool ShouldUpdateEpisode(Episode exisingEpisode, Episode newEpisode)
+		private static bool ShouldUpdateEpisode(IEpisode exisingEpisode, IEpisode newEpisode)
 		{
 			if (newEpisode.AirDate == default(DateTime) || newEpisode.AirDate == DateTime.MinValue || newEpisode.AirDate == DateTime.MaxValue)
 			{
@@ -69,8 +70,7 @@ namespace KrisHemenway.TVShowsCore.Jobs
 			return false;
 		}
 
-		private readonly EpisodeStore _episodeStore;
-		private readonly ILogger<RefreshTVShowsJob> _logger;
-		private MazeDataSource _mazeDataSource;
+		private readonly IEpisodeStore _episodeStore;
+		private readonly IMazeDataSource _mazeDataSource;
 	}
 }

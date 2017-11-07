@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Humanizer;
-using KrisHemenway.CommonCore;
+using KrisHemenway.Common;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
-namespace KrisHemenway.MinecraftMonitorCore
+namespace KrisHemenway.MinecraftMonitor
 {
 	public class MinecraftServerMonitorJob : IJob
 	{

@@ -1,7 +1,10 @@
-﻿using KrisHemenway.CommonCore;
+﻿using KrisHemenway.Common;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using System.Linq;
+using System;
 
-namespace KrisHemenway.MinecraftMonitorCore
+namespace KrisHemenway.MinecraftMonitor
 {
 	public interface IServerInfoStore
 	{
@@ -12,11 +15,18 @@ namespace KrisHemenway.MinecraftMonitorCore
 	{
 		public IReadOnlyList<ServerInfo> Find()
 		{
-			return new List<ServerInfo>
-			{
-				ServerInfo.Create("minecraft.colinlorenz.com", 25565),
-				ServerInfo.Create("minecraft.krishemenway.com", 25565)
-			};
+			return Program.Configuration.GetValue<string[]>("Servers").Select(CreateServerInfo).ToList();
+		}
+
+		private ServerInfo CreateServerInfo(string serverAddress)
+		{
+			var serverAddressParts = serverAddress.Split(new[] { ':' });
+
+			return new ServerInfo
+				{
+					Host = serverAddressParts[0],
+					Port = Convert.ToInt32(serverAddressParts[1])
+				};
 		}
 	}
 }

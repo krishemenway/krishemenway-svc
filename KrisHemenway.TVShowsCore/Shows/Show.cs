@@ -1,12 +1,27 @@
-﻿using KrisHemenway.TVShowsCore.Episodes;
+﻿using KrisHemenway.TVShows.Episodes;
 using System;
 using System.Collections.Generic;
 
-namespace KrisHemenway.TVShowsCore.Seriess
+namespace KrisHemenway.TVShows.Seriess
 {
-	public class Series
+	public interface IShow
 	{
-		public Series()
+		int Id { get; }
+		string Name { get; }
+		string Path { get; }
+
+		int? RageId { get; }
+		int? MazeId { get; }
+
+		List<Episode> Episodes { get; }
+
+		DateTime Created { get; }
+		DateTime LastModified { get; }
+	}
+
+	public class Show : IShow
+	{
+		public Show()
 		{
 			Episodes = new List<Episode>();
 		}

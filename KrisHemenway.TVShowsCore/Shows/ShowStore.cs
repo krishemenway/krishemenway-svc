@@ -1,19 +1,19 @@
 ﻿using Dapper;
-using KrisHemenway.TVShowsCore.Episodes;
+using KrisHemenway.TVShows.Episodes;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KrisHemenway.TVShowsCore.Seriess
+namespace KrisHemenway.TVShows.Seriess
 {
 	public interface ISeriesStore
 	{
-		IReadOnlyList<Series> FindAll();
-		Series Create(CreateSeriesRequest request);
+		IReadOnlyList<IShow> FindAll();
+		IShow Create(CreateSeriesRequest request);
 	}
 
-	internal class SeriesStore : ISeriesStore
+	internal class ShowStore : ISeriesStore
 	{
-		public IReadOnlyList<Series> FindAll()
+		public IReadOnlyList<IShow> FindAll()
 		{
 			const string seriesSql = @"
 				SELECT
@@ -46,7 +46,7 @@ namespace KrisHemenway.TVShowsCore.Seriess
 
 			using (var dbConnection = Database.CreateConnection())
 			{
-				var seriesById = dbConnection.Query<Series>(seriesSql).ToDictionary(x => x.Id, x => x);
+				var seriesById = dbConnection.Query<Show>(seriesSql).ToDictionary(x => x.Id, x => x);
 				var allEpisodes = dbConnection.Query<Episode>(episodesSql).ToList();
 
 				foreach (var episode in allEpisodes)
@@ -58,7 +58,7 @@ namespace KrisHemenway.TVShowsCore.Seriess
 			}
 		}
 
-		public Series FindOrNull(string name)
+		public IShow FindOrNull(string name)
 		{
 			const string seriesSql = @"
 				SELECT
@@ -93,7 +93,7 @@ namespace KrisHemenway.TVShowsCore.Seriess
 
 			using (var dbConnection = Database.CreateConnection())
 			{
-				var series = dbConnection.QueryFirstOrDefault<Series>(seriesSql, new { name });
+				var series = dbConnection.QueryFirstOrDefault<Show>(seriesSql, new { name });
 
 				if (series == null)
 				{
@@ -105,7 +105,7 @@ namespace KrisHemenway.TVShowsCore.Seriess
 			}
 		}
 
-		public Series Create(CreateSeriesRequest request)
+		public IShow Create(CreateSeriesRequest request)
 		{
 			const string sql = @"
 				INSERT INTO series (id, name, rage_id, maze_id, path)
@@ -114,7 +114,7 @@ namespace KrisHemenway.TVShowsCore.Seriess
 
 			using (var dbConnection = Database.CreateConnection())
 			{
-				return new Series
+				return new Show
 				{
 					Id = dbConnection.Query<int>(sql, request).First(),
 					Name = request.Name,

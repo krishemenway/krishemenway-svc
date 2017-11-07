@@ -2,32 +2,15 @@
 using Npgsql;
 using System.Data;
 
-namespace KrisHemenway.TVShowsCore
+namespace KrisHemenway.TVShows
 {
 	class Database
 	{
 		public static IDbConnection CreateConnection()
 		{
-			var connection = new NpgsqlConnection($"Host={Host};Username={User};Password={Password};Database={DatabaseName}");
+			var connection = new NpgsqlConnection($"Host={Program.Settings.Host};Username={Program.Settings.User};Password={Program.Settings.Password};Database={Program.Settings.DatabaseName}");
 			connection.Open();
 			return connection;
 		}
-
-		private static string Host
-		{
-			get { return Program.Configuration.GetValue<string>("PushServiceHost"); }
-		}
-
-		private static string User
-		{
-			get { return Program.Configuration.GetValue<string>("PushServiceUser"); }
-		}
-
-		private static string Password
-		{
-			get { return Program.Configuration.GetValue<string>("PushServicePassword"); }
-		}
-
-		public const string DatabaseName = "krishemenway";
 	}
 }

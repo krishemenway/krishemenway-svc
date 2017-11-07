@@ -2,10 +2,9 @@
 using System;
 using System.Linq;
 
-namespace KrisHemenway.TVShowsCore.Episodes
+namespace KrisHemenway.TVShows.Episodes
 {
 	[Route("api/tvshows/episodes")]
-	//[CacheOutputUntilToday(RefreshTVShowsJob.JobExecutionHour, RefreshTVShowsJob.JobExecutionMinute)]
 	public class EpisodesController : Controller
 	{
 		[HttpGet("new")]

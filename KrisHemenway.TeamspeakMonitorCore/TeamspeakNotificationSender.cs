@@ -1,6 +1,6 @@
-﻿using KrisHemenway.CommonCore;
+﻿using KrisHemenway.Common;
 
-namespace KrisHemenway.TeamspeakMonitorCore
+namespace KrisHemenway.TeamspeakMonitor
 {
 	public class TeamspeakNotificationSender
 	{

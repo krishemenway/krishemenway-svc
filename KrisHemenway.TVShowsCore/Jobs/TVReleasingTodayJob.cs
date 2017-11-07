@@ -1,11 +1,12 @@
-﻿using KrisHemenway.CommonCore;
-using KrisHemenway.TVShowsCore.Episodes;
+﻿using KrisHemenway.Common;
+using KrisHemenway.TVShows.Episodes;
 using Quartz;
+using Serilog;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KrisHemenway.TVShowsCore.Jobs
+namespace KrisHemenway.TVShows.Jobs
 {
 	[DisallowConcurrentExecution]
 	public class TVReleasingTodayJob : IJob
@@ -18,22 +19,29 @@ namespace KrisHemenway.TVShowsCore.Jobs
 		public Task Execute(IJobExecutionContext context)
 		{
 			return Task.Run(() => {
-				var episodes = new EpisodeStore().FindEpisodesAiring(DateTime.Today, DateTime.Today);
-
-				if (episodes.Count == 0)
+				try
 				{
-					return;
+					var episodes = new EpisodeStore().FindEpisodesAiring(DateTime.Today, DateTime.Today);
+
+					if (episodes.Count == 0)
+					{
+						return;
+					}
+
+					var details = new PushNotificationDetails
+					{
+						Title = $"Airing Today",
+						Content = string.Join("\n", episodes.Select(episode => $"{episode.Series} - {episode.Season}x{episode.EpisodeInSeason} {episode.Title}")),
+						TypeName = nameof(TVReleasingTodayJob),
+						AlertNumber = episodes.Count
+					};
+
+					_pushNotificationSender.NotifyAll(details);
 				}
-
-				var details = new PushNotificationDetails
+				catch (Exception exception)
 				{
-					Title = $"Airing Today",
-					Content = string.Join("\n", episodes.Select(episode => $"{episode.Series} - {episode.Season}x{episode.EpisodeInSeason} {episode.Title}")),
-					TypeName = nameof(TVReleasingTodayJob),
-					AlertNumber = episodes.Count
-				};
-
-				_pushNotificationSender.NotifyAll(details);
+					Log.Error(exception, "Failed during TV releasing today job");
+				}
 			});
 		}
 

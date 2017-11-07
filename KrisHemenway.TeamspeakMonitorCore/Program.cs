@@ -1,35 +1,22 @@
-﻿using System.IO;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 
-namespace KrisHemenway.TeamspeakMonitorCore
+namespace KrisHemenway.TeamspeakMonitor
 {
 	public class Program
 	{
 		public static void Main(string[] args)
 		{
-			Configuration = new ConfigurationBuilder()
-				.SetBasePath(Directory.GetCurrentDirectory())
-				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-				.AddEnvironmentVariables()
-				.Build();
-
-			var host = new WebHostBuilder()
+			new WebHostBuilder()
 				.UseKestrel()
-				.UseConfiguration(Configuration)
-				.UseContentRoot(ExecutablePath)
+				.UseConfiguration(Settings.Configuration)
 				.UseStartup<Startup>()
 				.UseApplicationInsights()
-				.UseUrls($"http://*:{WebPort}")
-				.Build();
-
-			host.Run();
+				.UseUrls($"http://*:{Settings.WebPort}")
+				.Build()
+				.Run();
 		}
 
-		public static int WebPort => Configuration.GetValue<int>("WebPort");
-		public static IConfigurationRoot Configuration { get; private set; }
-
-		public static string ExecutablePath => Directory.GetCurrentDirectory();
+		public static Settings Settings = new Settings();
 	}
 }

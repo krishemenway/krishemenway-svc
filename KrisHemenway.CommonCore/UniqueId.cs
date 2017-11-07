@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KrisHemenway.CommonCore
+namespace KrisHemenway.Common
 {
 	public class UniqueId
 	{
