@@ -1,0 +1,284 @@
+<html>
+
+	<head>
+	
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
+		
+		<link href="/skills/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="/skills/css/bootstrap-responsive.min.css" rel="stylesheet" />
+		<script src="/skills/js/bootstrap.min.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="/skills/js/visualize.jQuery.js"></script>
+		<link type="text/css" rel="stylesheet" href="/skills/css/visualize.jQuery.css"/>
+		
+		<link type="text/css" rel="stylesheet" href="/skills/css/skills.css"/>
+		
+		<script>
+			$(function() {
+				$(".skill_list li").hide();
+				
+				$("h2.skill_type button")
+					.button()
+					.click(function() {
+						var items = $(this).parent().next("ul").find("li");
+						$(this)
+							.button('toggle');
+						
+						if(items.first().is(":visible")) {
+							items = $(items.get().reverse());
+						}
+						
+						var i = 0;
+						items.each(function() {
+							$(this).delay(i++ * 35).fadeToggle(60 + i * 15);
+						});
+					});
+				
+				$("h2.skill_type button").first().trigger('click');
+			});
+		</script>
+	</head>
+
+	<body>
+		
+		<div id="content">
+		
+			<div id="at_a_glance">
+				<table>
+					<caption></caption>
+					<thead>
+						<th>
+							<td></td>
+							<th></th>
+						</th>
+					</thead>
+				</table>
+			</div>
+		
+			<h2 class="skill_type">
+				Products
+				<button data-minimize-text="-" class="btn btn-primary pull-right">+</button>
+			</h2>
+			<ul class="skill_list">
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					<div class="progress pull-right"><div class="bar" style="width: 25%;">Still Learning</div></div>
+					
+					<h3><a href="viewskill.html">Health Quotient</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Outbound SSO</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Batch Data Exports (BDEs)</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Inbound SSO</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Provider Selection Advisor</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Health Topics</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Hospital Advisor</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Rewards</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Coaching</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Web Services</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Health Topics</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Health Topics</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Health Topics</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+			</ul>
+		
+			<h2 class="skill_type">
+				Technologies
+				<button data-minimize-text="-" class="btn btn-primary pull-right">+</button>
+			</h2>
+			<ul class="skill_list">
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">jQuery</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Entity Framework</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Model View Presenter</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">MVC3</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+			</ul>
+		
+			<h2 class="skill_type">
+				Non-Work Related
+				<button data-minimize-text="-" class="btn btn-primary pull-right">+</button>
+			</h2>
+			<ul class="skill_list">
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Bowling</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Nunchaku</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+				<li class="skill well clearfix">
+					<img class="skill-image pull-right" src="http://placehold.it/84x60">
+					
+					<h3><a href="viewskill.html">Chasing Cats</a></h3>
+					
+					<p>
+						This engineer has mastered the fine arts in our flagship product, Health Quotient. 
+						Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+					</p>
+				</li>
+			</ul>
+		</div>
+		
+	</body>
+	
+</html>

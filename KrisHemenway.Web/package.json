@@ -1,0 +1,34 @@
+{
+  "name": "krishemenway-react",
+  "version": "1.0.0",
+  "description": "Personal website showing off tools/projects built by me",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/krishemenway/krishemenway-svc.git"
+  },
+  "scripts": { },
+  "author": "Kris Hemenway <krishemenway@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^15.0.2",
+    "@types/react-dom": "^15.0.2",
+    "@types/moment": "^2.13.0",
+    "@types/jquery": "^3.2.16"
+  },
+  "devDependencies": {
+    "browserify": "*",
+    "tsify": "3.0.3",
+    "typescript": "^2.6.1",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.2.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-sass": "^2.0.0",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "redux": "^3.3.0",
+    "moment": "^2.19.1",
+    "jquery": "^3.2.1"
+  }
+}

@@ -1,0 +1,369 @@
+
+<html>
+	<head>
+		<title>Jeopardy</title>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.8.24/themes/base/jquery.ui.all.min.css" rel="stylesheet" />
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.3/bootstrap.min.js"></script>
+		
+		<style>
+			body {
+				text-align: center;
+				font-family: "Calibri";
+			}
+			h1,h2 {
+				text-align: center;
+			}
+			
+			/* Board */
+			.board {
+				margin: 0 auto;
+			}
+			.board .category {
+				width: 19%;
+				display: inline-block;
+				text-align: center;
+			}
+			.board .selection {
+				cursor: pointer;
+				height: 55px;
+				text-align: center;
+				width: 75%;
+				margin: 10px auto;
+				padding-top: 40px;
+			}
+			.board .point_value {
+				font-size: 24px;
+			}
+			.board .question {
+				display: none;
+			}
+			.board .answer {
+				display: none;
+			}
+			
+			/* Modal */
+			#modal-prompt {
+			}
+			#modal-prompt .question {
+				font-size: 60px;
+				line-height: 60px;
+				margin: 20px 0 0 0;
+			}
+			#modal-prompt .answer {
+				font-size: 60px;
+				line-height: 60px;
+				margin: 0 0 80px 0;
+			}
+			#modal-prompt button {
+				font-size: 48px;
+			}
+			#modal-prompt #actions {
+				position: absolute;
+				bottom: 0;
+				left: 50%;
+				margin-left: -138.5px;
+			}
+			
+			#modal-prompt .closeButton {
+				float: right;
+				font-size: 18px;
+			}
+			
+			#modal-prompt .startButton {
+				width: 277px;
+			}
+			
+			.span2 {
+				margin: 0;
+			}
+			
+			.ui-dialog .ui-dialog-content {
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+		</style>
+		
+		
+		<script>
+			$(function() {
+				$(window).resize(function() {
+					$("#modal-prompt").dialog({position: ['center',80]});
+				});
+			
+				$(".selection").addClass("btn btn-primary");
+				
+				$("#modal-prompt").dialog(
+					{ 
+						autoOpen: false,
+						modal: true,
+						resizable: false,
+						draggable: false,
+						height: 581,
+						width: '93%',
+						position: ['center',80]
+					}
+				);
+				
+				$(".ui-dialog-titlebar").remove();
+				
+				$(".selection").click(function() {
+					var question = $(this).find(".question").html();
+					var answer = $(this).find(".answer").html();
+					
+					$(this).hide('explode', function() {
+						$(this).show().html("");
+						$(this).addClass("btn-inverse").removeClass("btn-primary");
+						$(this).unbind('click');
+						$(".showQuestion").hide();
+						$(".closeButton").attr("disabled","disabled");
+						$(".startButton").removeAttr("disabled");
+						
+						$("#modal-prompt .startButton").html("Start").addClass("btn-success");
+						$("#modal-prompt .question").hide().html(question);
+						$("#modal-prompt .answer").html(answer);
+						$("#modal-prompt").dialog('open');
+					});
+					
+					console.log("clicked");
+				});
+				
+				var time = 30;
+				var interval_id;
+				
+				$(".startButton").click(function() {
+					if(!interval_id) {
+						time = 11;
+						Interval();
+						interval_id = setInterval(Interval, 1000);
+					} else {
+						clearInterval(interval_id);
+						interval_id = undefined;
+					}
+				});
+				
+				$(".closeButton").click(function() {
+					$("#modal-prompt").dialog('close');
+				});
+				
+				$(".showQuestion").click(function() {
+					$(this).hide();
+					$("#modal-prompt .question").show();
+					$(".closeButton").removeAttr("disabled");
+				});
+				
+				function Interval()
+				{
+					var btn = $(".startButton");
+					btn.removeClass("btn-warning btn-success btn-danger");
+				
+					if(time == 0)
+					{
+						btn.addClass("btn-danger");
+						btn.html("Times Up!")
+						clearInterval(interval_id);
+						interval_id = undefined;
+						$(".showQuestion").show();
+						btn.attr("disabled", "disabled");
+						return;
+					} 
+					else if(time <= 10)
+					{
+						btn.addClass("btn-warning");
+					} 
+					else 
+					{
+						btn.addClass("btn-success");
+					}
+					
+					btn.html(time--);
+				}
+			});
+		</script>
+	</head>
+	
+	<body>
+		<h1>Jeopardy</h1>
+		<div class="board">
+			<div class="category">
+				<h2>Header</h2>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">100</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">200</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">300</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">400</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">500</span>
+					<span class="answer">This is an answer</span>
+				</div>
+			</div>
+			
+			<div class="category">
+				<h2>Header</h2>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">100</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">200</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">300</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">400</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">500</span>
+					<span class="answer">This is an answer</span>
+				</div>
+			</div>
+			<div class="category">
+				<h2>Header</h2>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">100</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">200</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">300</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">400</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">500</span>
+					<span class="answer">This is an answer</span>
+				</div>
+			</div>
+			<div class="category">
+				<h2>Header</h2>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">100</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">200</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">300</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">400</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">500</span>
+					<span class="answer">This is an answer</span>
+				</div>
+			</div>
+			<div class="category">
+				<h2>Header</h2>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">100</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">200</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">300</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">400</span>
+					<span class="answer">This is an answer</span>
+				</div>
+				<div class="selection">
+					<span class="question">This is a question</span>
+					<span class="point_value">500</span>
+					<span class="answer">This is an answer</span>
+				</div>
+			</div>
+		</div>
+		
+		<div id="modal-prompt">
+			<button class="closeButton btn btn-inverse">X</button>
+			<div class="answer"></div>
+			
+			<button class="showQuestion btn-large btn-info">Show Question</button>
+			<div class="question"></div>
+			
+			<div id="actions">
+				<button class="startButton btn-large btn-success">Start</button>
+			</div>
+		</div>
+		
+		
+		<div id="scores">
+			<div class="team cobra">
+			
+			</div>
+			
+			<div class="team basilisk">
+			
+			</div>
+			
+			<div class="team velociraptor">
+			
+			</div>
+			
+			<div class="team dragon">
+			
+			</div>
+			
+			<div class="team hydra">
+			
+			</div>
+		</div>
+	</body>
+</html>

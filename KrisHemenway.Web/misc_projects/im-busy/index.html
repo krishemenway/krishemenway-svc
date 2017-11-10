@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<link href="/im-busy/styles/bootstrap.css" rel="stylesheet" />
+		<link href="/im-busy/styles/look-cool.css" rel="stylesheet" />
+	</head>
+
+	<body ng-app="im_busy" ng-controller="im_busy">
+		<button type="button" class="stop" ng-hide="stopped" ng-click="stop()"><i class="glyphicon glyphicon-stop"></i></button>
+		<button type="button" class="start" ng-hide="!stopped" ng-click="start()"><i class="glyphicon glyphicon-play-circle"></i></button>
+		<button type="button" class="settings" ng-hide="settings_opened" ng-click="settings_opened = true; stop()"><i class="glyphicon glyphicon-wrench"></i></button>
+
+		<ul class="inputted-data">
+			<li class="line" scroll-if="line.number === line_number - 1" ng-repeat="line in lines">
+				<span class="line-number">{{line.number}}</span>
+				<pre class="line-content">{{line.content}}</pre>
+			</li>
+		</ul>
+
+		<div class="console-input">
+			<div class="line-number">&nbsp;</div>
+			<pre class="console-placeholder">{{current_text}}</pre>
+			<span class="cursor"></span>
+		</div>
+
+		<div class="settings-menu" ng-show="settings_opened">
+			<h2>Welcome!</h2>
+
+			<label for="changeText">What text would you like automated?</label>
+			<textarea id="changeText" placeholder="Your Text Here ..." rows="10" cols="80" ng-model="settingsText"></textarea>
+
+			<p>
+				<label for="intervalTime">Time Between keystrokes (in ms)</label>
+				<input type="text" id="intervalTime" ng-model="type_character_time_in_ms" />
+			</p>
+
+			<button class="close-settings-menu" ng-click="settings_opened = false; reloadSettings(); start()">Submit Automate Request</button>
+		</div>
+
+		<!-- External -->
+		<script type="text/javascript" src="///cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.32/angular.min.js"></script>
+		<script type="text/javascript" src="///cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.32/angular-route.min.js"></script>
+		<script type="text/javascript" src="///cdnjs.cloudflare.com/ajax/libs/reqwest/2.0.5/reqwest.min.js"></script>
+
+		<script type="text/javascript" src="/im-busy/scripts/lookincoo.js"></script>
+	</body>
+
+</html>

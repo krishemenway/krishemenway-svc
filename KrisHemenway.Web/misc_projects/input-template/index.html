@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
+
+		<style>
+		.validationError { border: 1px solid #F00; }
+		</style>
+	</head>
+
+	<body>
+		<div id="TemplateContainer">
+			<select data-bind="value: selectedFormat">
+				<option value="How many {_} did you {_} {day}?">How many ______ did you ______ today?</option>
+				<option value="Enter your {_} for {day}:">Enter your ______ for today:</option>
+				<option value="Did you {_} {day}?">Did you ______ today?</option>
+				<option value="{_}">Other Prompt</option>
+			</select>
+			<div data-bind="component: { name: 'message-template', params: {Format: selectedFormat, Message: resultMessage}}"></div>
+		</div>
+
+		<script type="text/html" id="TextMessagePartTypeTemplate">
+			<span data-bind="text: renderedContent()"></span>
+		</script>
+
+		<script type="text/html" id="InputMessagePartTypeTemplate">
+			<input type="text" data-bind="textInput: content, css: {'validationError': !isValid()}"></span>
+		</script>
+
+		<script type="text/html" id="MessageTemplate">
+			<div data-bind="foreach: messageParts"><!-- ko template: { name: type + "MessagePartTypeTemplate" } --><!-- /ko --></div>
+		</script>
+
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-debug.js"></script>
+		<script type="text/javascript" src="/input-template/index.js"></script>
+
+	</body>
+
+</html>

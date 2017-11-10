@@ -1,0 +1,297 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="/challenges-prototype/activityinput.css" />
+	</head>
+	<body>
+		<div id="site">
+			<div id="intake">
+				<h2 class="challengeName">The Challenge To End All Challenges</h2>
+
+				<div class="ChallengeDaySelector is-at-end" data-bind="css: { 'is-at-beginning': selectedIndexIsAtBeginning(), 'is-at-end': selectedIndexIsAtEnd() }">
+					<button type="button" id="backDays" data-bind="click: goBackDays"><div class="backArrow" />Last 7 Days</button>
+					<ul id="days" data-bind="foreach: viewableDays">
+						<li data-bind="css: {'is-selected': $parent.selectedDay() === $data, 'has-data-entered': hasData}">
+							<button type="button" data-bind="text: humanDate(), click: $parent.selectDay"></button>
+							<div class="symbol" />
+						</li>
+					</ul>
+					<button type="button" id="forwardDays" data-bind="click: goForwardDays"><div class="forwardArrow" />Next 7 Days</button>
+				</div>
+
+				<div id="ChallengeIntake" data-bind="with: selectedDay() !== undefined ? selectedDay().intakeViewModel() : undefined">
+					<div id="ActivityIntake" data-bind="css: {'viewing-time-intake': viewingTimeIntake, 'has-completed-activity': hasCompletedActivityViewModels, 'viewing-log': shouldShowLog}">
+						<div id="ActivityLog">
+							<h3 class="instructions">What I did <span data-bind="text: humanDate()"></span></h3>
+							<ul id="completedActivities" data-bind="foreach: completedActivityViewModels">
+								<li class="completedActivity activity">
+									<span class="icon" data-bind="css: activity().activityClassName()"></span>
+
+									I was
+									<span data-bind="text: activity().name.toLowerCase()"></span> 
+									for 
+									<input type="tel" data-bind="value: totalMinutesCompleted" />
+									minutes
+									<button type="button" class="delete" data-bind="click: $parent.removeCompletedActivity">Remove Activity</button>
+								</li>
+							</ul>
+
+							<button type="button" class="addActivity" data-bind="click: toggleViewLog">Add an activity</button>
+						</div>
+
+						<h3 class="newActivityInstructions">
+							Add an activity for <span data-bind="text: humanDate()"></span>
+							<span class="orViewLog" data-bind="if: hasCompletedActivityViewModels">
+								or 
+								<button type="button" class="viewLog" data-bind="click: toggleViewLog, text: 'view ' + humanDate() + '\'s recorded activities'">View Log</button>
+							</span>
+						</h3>
+
+						<form id="NewCompletedActivity" data-bind="with: newCompletedActivityViewModel, submit: saveNewCompletedActivityViewModel">
+							
+							<ul id="PopularActivities">
+
+								<!-- ko foreach: $parent.activityPickerActivities -->
+								<li class="activity" data-bind="css: {'is-selected': $parent.activity() === $data}, click: $parent.selectActivity">
+									<button type="button" data-bind="text: name, css: activityClassName()" />
+								</li>
+								<!-- /ko-->
+
+								<li class="more">
+									<button type="button" data-bind="click: $parent.toggleForceTimeIntakeView">More</button>
+								</li>
+
+							</ul>
+
+							<div id="SelectedActivity">
+
+								<select class="activityDropdown" data-bind="options: $parent.activityViewModels, optionsText: 'name', value: activity, optionsCaption: 'Choose...'"></select>
+
+								<div class="selectedActivity activity" data-bind="if: activity() !== undefined">
+									<div class="icon" data-bind="css: activity().activityClassName()"></div>
+								</div>
+
+							</div>
+
+							<div id="ActivityMinuteIntake">
+
+								<h3 class="minutes-instructions" data-bind="if: activity() !== undefined">How long did you do <span data-bind="text: activity().name.toLowerCase()"></span> for?</h3>
+
+								<div class="timeInput">
+
+									<div class="hours">
+										<label for="Hours">Hours</label>
+										<input data-bind="value: hoursCompleted, AllowNumbersOnly: true" type="tel" id="Hours" placeholder="00" />
+									</div>
+
+									<span class="seperator">:</span>
+
+									<div class="minutes">
+										<label for="Minutes">Minutes</label>
+										<input data-bind="value: minutesCompleted, AllowNumbersOnly: true" type="tel" id="Minutes" placeholder="00" />
+									</div>
+
+								</div>
+
+							</div>
+
+							<button type="submit" data-bind="visible: $parent.viewingTimeIntake" class="save">Save</button>
+						</form>	
+					</div>
+
+				</div>
+
+				<div id="ChallengeStats">
+					<div class="score">
+						<div id="Score" data-bind="CountingValue: totalScore">0</div>
+						<div id="ScoreMeasurement">Total activity minutes</div>
+					</div>
+
+					<div class="daysRecorded">
+						<div id="DaysRecorded" data-bind="text: daysRecorded">0</div>
+						<div id="DaysRecordedLabel">Days recorded</div>
+					</div>
+
+					<div class="daysRemaining">
+						<div id="DaysRemaining">327</div>
+						<div id="DaysRemainingLabel">Days remaining in the challenge</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script id="ChallengeActivitesData" type="application/json">
+			{
+			    "2013-6-1": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-2": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-3": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-4": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-5": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-6": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-06-7": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-8": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-9": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-10": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-11": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-12": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-13": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-14": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-15": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ],
+			    "2013-6-16": [
+			        {
+			            "activityId": 1,
+			            "minutesCompleted": 60
+			        },
+			        {
+			            "activityId": 2,
+			            "minutesCompleted": 60
+			        }
+			    ]
+			}
+		</script>
+
+		<script id="ChallengeConfiguration" type="application/json">
+			{
+				"StartDate": "2013-06-01",
+				"EndDate": "2013-07-13",
+				"TotalScore": 1920,
+				"DaysRecorded": 16
+			}
+		</script>
+        <script type="text/javascript" data-main="/challenges-prototype/scripts/ActivityChallenge.js" src="/challenges-prototype/scripts/require.js"></script>
+	</body>
+</html>

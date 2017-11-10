@@ -1,0 +1,593 @@
+h2,h1,h3,h4,p,div,span,li,button,input {
+	font-family:'Segoe UI','Helvetica Neue';
+}
+
+body, html {
+	padding: 0;
+	margin: 0;
+}
+
+#site {
+	width: 100%;
+	max-width: 997px;
+	margin: 0 auto;
+}
+
+#intake {
+	width: 66%;
+	background-color: #E8E8E8;
+	background-image: url('billie_holiday.png');
+}
+
+@media screen and (max-width: 997px) { 
+	#intake {
+		width: 100%;
+	}
+}
+
+#intake h2 {
+	font-weight: bold;
+	border-bottom: 1px solid #bbb;
+	padding: 4px 10px;
+	margin: 0;
+}
+
+#intake .challengeName {
+	background-color: #484848;
+	color: #F8F8F8;
+	display: block;
+	margin-bottom: 20px;
+	padding: 8px;
+	font-size: 20px;
+}
+
+.ChallengeDaySelector.is-at-end #forwardDays {
+	opacity: 0;
+	visibility: hidden;
+}
+
+.ChallengeDaySelector.is-at-beginning #backDays {
+	opacity: 0;
+	visibility: hidden;
+}
+
+#ChallengeIntake {
+	position: relative;
+	overflow: hidden;
+	padding-top: 20px;
+	background-color: #FFF;
+	border-top: 2px solid #989898;
+}
+
+#ActivityIntake {
+	min-height: 225px;
+}
+
+#StepsIntake {
+	background: url('walking.png') no-repeat;
+	background-repeat: no-repeat;
+	background-position: 30px 0;
+	background-size: 192px 192px;
+	min-height: 170px;
+	padding-left: 250px;
+	padding-top: 30px;
+}
+
+#StepsIntake .instructions {
+	color: #484848;
+	font-weight: 300;
+	font-size: 24px;
+	margin: 0 0 15px 0;
+}
+
+#StepsIntake .steps {
+	vertical-align: middle;
+	text-align: center;
+	height: 55px;
+	font-size: 42px;
+	font-weight: bold;
+	width: 250px;
+	border-radius: 4px;
+	color: #484848;
+}
+
+.forwardArrow, .backArrow {
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+}
+
+#backDays, #forwardDays {
+	height: 46px;
+	width: 5%;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: text-top;
+	text-indent: -9999px;
+
+	-webkit-transition: all 300ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	   -moz-transition: all 300ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	     -o-transition: all 300ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	        transition: all 300ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+}
+
+#forwardArrow,.backArrow {
+	margin-left: 11px;
+}
+
+@media screen and (max-width: 550px) { 
+	#forwardArrow,.backArrow {
+		margin-left: 3px;
+	}
+}
+
+.backArrow {
+	border-right: 14px solid #181818;
+}
+
+.forwardArrow {
+	border-left: 14px solid #181818;
+}
+
+
+
+#backDays:hover .backArrow, #forwardDays:hover .forwardArrow {
+	border-left-color: red;
+	border-right-color: red;
+}
+
+#days {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+	width: 85%;
+	vertical-align: text-top;
+}
+
+#days li {
+	display: inline-block;
+	width: 12%;
+	text-align: center;
+	margin: 0 .5%;
+	position: relative;
+}
+
+#days li:last-child {
+	margin-right: 0;
+}
+
+#days li button {
+	height: 53px;
+	width: 100%;
+	padding-bottom: 31px;
+	font-size: 12px;
+	border: 0;
+	color: #181818;
+	font-weight: bold;
+	cursor: pointer;
+	border-top-right-radius: 2px;
+	border-top-left-radius: 2px;
+	text-transform: uppercase;
+
+	background-color: #DDD;
+	background: -moz-linear-gradient(top,  #DDD 0%, #BBB 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#DDD), color-stop(100%,#BBB));
+	background: -webkit-linear-gradient(top,  #DDD 0%,#BBB 100%);
+	background: -o-linear-gradient(top,  #DDD 0%,#BBB 100%);
+	background: -ms-linear-gradient(top,  #DDD 0%,#BBB 100%);
+	background: linear-gradient(to bottom,  #DDD 0%,#BBB 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#DDD', endColorstr='#BBB',GradientType=0 );
+}
+
+#days li.is-selected button {
+	cursor: default;
+}
+
+#days li.has-data-entered button {
+	color: #FFF;
+	background-color: #43A2CA;
+	background: -moz-linear-gradient(top,  #43A2CA 0%, #51b5b0 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#43A2CA), color-stop(100%,#51b5b0));
+	background: -webkit-linear-gradient(top,  #43A2CA 0%,#51b5b0 100%);
+	background: -o-linear-gradient(top,  #43A2CA 0%,#51b5b0 100%);
+	background: -ms-linear-gradient(top,  #43A2CA 0%,#51b5b0 100%);
+	background: linear-gradient(to bottom,  #43A2CA 0%,#51b5b0 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#43A2CA', endColorstr='#51b5b0',GradientType=0 );
+}
+
+#days li.is-selected button, #days li.is-selected button:hover {
+	color: #FFF;
+	background-color: #bf5b5d;
+	background: -moz-linear-gradient(top,  #bf5b5d 0%, #f6912c 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#bf5b5d), color-stop(100%,#f6912c));
+	background: -webkit-linear-gradient(top,  #bf5b5d 0%,#f6912c 100%);
+	background: -o-linear-gradient(top,  #bf5b5d 0%,#f6912c 100%);
+	background: -ms-linear-gradient(top,  #bf5b5d 0%,#f6912c 100%);
+	background: linear-gradient(to bottom,  #bf5b5d 0%,#f6912c 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bf5b5d', endColorstr='#f6912c',GradientType=0 );
+}
+
+#days li button:hover {
+	color: #FFF;
+	background-color: #DDD;
+	background: -moz-linear-gradient(top,  #ccc 0%, #999 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ccc), color-stop(100%,#999));
+	background: -webkit-linear-gradient(top,  #ccc 0%,#999 100%);
+	background: -o-linear-gradient(top,  #ccc 0%,#999 100%);
+	background: -ms-linear-gradient(top,  #ccc 0%,#999 100%);
+	background: linear-gradient(to bottom,  #ccc 0%,#999 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ccc', endColorstr='#999',GradientType=0 );
+}
+
+#days li:after {
+	content: '';
+	width: 0;
+	height: 0;
+	border-top: 0 solid #f6912c;
+	border-left: 35px solid transparent;
+	border-right: 35px solid transparent;
+	position: absolute;
+	top: 53px;
+	left: 0;
+	z-index: 2;
+}
+
+#days li.is-selected:after, #days li.is-selected:hover:after {
+	border-top-width: 20px;
+
+	-webkit-transition: all 100ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	   -moz-transition: all 100ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	     -o-transition: all 100ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	        transition: all 100ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+}
+
+#days li .symbol {
+	background-image: url('check.png');
+	background-repeat: no-repeat;
+	width: 35px;
+	height: 35px;
+	position: absolute;
+	z-index: 3;
+	left: 21px;
+	top: 20px;
+
+	opacity: 0;
+
+	pointer-events:none;
+
+	-webkit-transition: all 170ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	   -moz-transition: all 170ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	     -o-transition: all 170ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	        transition: all 170ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+}
+
+#days li.has-data-entered .symbol {
+	opacity: 1;
+}
+
+#days li.has-data-entered.is-selected .symbol {
+	top: 24px;
+
+	background-image: url('check.png');
+}
+
+#PopularActivities {
+	list-style-type: none;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	font-size: 0; /* fixes spacing between inline block */
+}
+
+#PopularActivities li {
+	display: inline-block;
+	width: 18%;
+	margin: .8%;
+	position: relative;
+}
+
+@media screen and (max-width: 550px) {
+	#PopularActivities li {
+		width: 48%;
+	}
+}
+
+#PopularActivities button {
+	background-color: #efeded;
+	border-radius: 4px;
+	border: 0;
+	cursor: pointer;
+	height: 80px;
+	width: 100%;
+	vertical-align: bottom;
+	padding-top: 60px;
+}
+
+.viewing-time-intake .orViewLog {
+	display: none;
+}
+
+.viewLog {
+	background: transparent;
+	font-size: inherit;
+	font-weight: inherit;
+	border-style: none;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+	color: blue;
+}
+
+#PopularActivities .activity button, #PopularActivities .more button {
+	background-repeat: no-repeat;
+	background-position: 50% 0;
+}
+
+#PopularActivities button:hover {
+	background-color: #c8c8c8;
+}
+
+.viewing-time-intake #PopularActivities {
+	display: none;
+}
+
+#SelectedActivity {
+	width: 215px;
+	display: none;
+}
+
+.viewing-time-intake #SelectedActivity {
+	display: block;
+}
+
+.activityDropdown {
+	margin: 30px auto 0 auto;
+	display: block;
+}
+
+.selectedActivity.activity .icon {
+	width: 92px;
+	height: 92px;
+	margin: 20px auto 0 auto;
+	background-repeat: no-repeat;
+	background-size: 92px 92px;
+
+}
+
+.activity .walking { background-image: url('icons/walking.png'); }
+.activity .running { background-image: url('icons/running.png'); }
+.activity .housework { background-image: url('icons/housework.png'); }
+.activity .bicycling { background-image: url('icons/bicycling.png'); }
+.activity .machinewiggling { background-image: url('icons/machinewiggling.png'); }
+.activity .weightlifting { background-image: url('icons/weightlifting.png'); }
+.activity .yoga { background-image: url('icons/yoga.png'); }
+.activity .swimming { background-image: url('icons/swimming.png'); }
+.activity .weirdones { background-image: url('icons/weirdones.png'); }
+ .more  button{ background-image: url('icons/more.png'); }
+
+#ActivityLog {
+	display: none;
+	padding-bottom: 80px;
+}
+
+#ActivityLog .instructions {
+	margin: 0 10px 10px 10px;
+	font-weight: normal;
+	font-size: 16px;
+}
+
+.viewing-log.has-completed-activity #ActivityLog {
+	display: block;
+}
+
+.viewing-log #NewCompletedActivity {
+	display: none;
+}
+
+#NewCompletedActivity {
+	margin: 0 2px 0 1px;
+	display: block;
+}
+
+.new-activity-instructions, .minutes-instructions {
+	font-size: 16px;
+	padding: 10px;
+	margin: 0;
+}
+
+.viewing-time-intake .new-activity-instructions {
+	display: none;
+}
+
+.hours, .minutes {
+	display: inline-block;
+}
+.hours label, .minutes label {
+	display: block;
+	text-align: center;
+	font-size: 12px;
+}
+.hours input, .minutes input {
+	border-radius: 5px;
+}
+#Hours, #Minutes {
+	width: 60px;
+	height: 40px;
+	font-size: 18px;
+	text-align: center;
+}
+
+.seperator {
+	margin: 0 10px;
+}
+
+#ActivityMinuteIntake {
+	width: 410px;
+	position: absolute;
+	top: 0;
+	right: -430px;
+	background: #FFF;
+	height: 260px;
+	padding: 20px 0 0 0;
+	border-left: 1px solid #c8c8c8;
+
+	background-image: url('clock.png');
+	background-repeat: no-repeat;
+	background-position: 30px 60px;
+
+	-webkit-transition: all 170ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	   -moz-transition: all 170ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	     -o-transition: all 170ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+	        transition: all 170ms cubic-bezier(0.120, 0.460, 0.215, 0.750);
+}
+
+.timeInput {
+	position: relative;
+	top: 40px;
+	left: 180px;
+}
+
+.viewing-time-intake #ActivityMinuteIntake {
+	right: 0;
+	padding-left: 30px;
+}
+
+#ChallengeStats { 
+	width: 100%;
+	height: 100px;
+
+	background-image: url('irongrip.png');
+	border-top: 5px solid #f6912c;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+#ChallengeStats #ScoreMeasurement, #ChallengeStats #DaysRecordedLabel, 
+#ChallengeStats #DaysRemainingLabel, #ChallengeStats #Score,
+#ChallengeStats #DaysRecorded, #ChallengeStats #DaysRemaining {
+	color: #F8F8F8;
+	text-shadow: -1px -1px 3px #181818;
+}
+
+.score, .daysRemaining, .daysRecorded {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0;
+}
+.daysRemaining, .daysRecorded {
+	margin: 15px 2.5% 0 2.5%;
+}
+.score {
+	width: 35%;
+	margin-left: 4%;
+}
+.daysRemaining {
+	width: 20%;
+}
+.daysRecorded {
+	width: 20%;
+}
+
+#ChallengeStats #Score {
+	font-size: 54px;
+	font-weight: bold;
+	letter-spacing: 4px;
+}
+
+#ChallengeStats #DaysRecorded, #ChallengeStats #DaysRemaining {
+	font-size: 32px;
+}
+
+#ChallengeStats #ScoreMeasurement, #ChallengeStats #DaysRecordedLabel, #ChallengeStats #DaysRemainingLabel {
+	font-size: 16px;
+}
+
+.save,.addActivity {
+	color: #FFF;
+	background-color: #94C43D;
+	padding: 10px 20px;
+	cursor: pointer;
+	font-size: 16px;
+	border: 0;
+	border-radius: 5px;
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+}
+
+.save:hover, .addActivity:hover {
+	background-color: #43A2CA;
+}
+
+#completedActivities {
+	list-style-type: none;
+	margin: 0 20px;
+	padding: 0;
+}
+
+#completedActivities .completedActivity {
+	background-color: #efeded;
+	border-radius: 4px;
+	margin: 10px 0;
+	padding: 10px 118px 10px 10px;
+	position: relative;
+	font-size: 24px;
+
+	background-image: url('');
+}
+
+#completedActivities .completedActivity input {
+	width: 50px;
+	text-align: center;
+	height: 38px;
+	font-size: 24px;
+}
+
+#completedActivities .completedActivity .delete {
+	background-color: #FFF;
+	background-image: url('delete.png');
+	background-repeat: no-repeat;
+	border: 0;
+	text-indent: -999px;
+	height: 58px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 58px;
+	cursor: pointer;
+	padding-left: 15px;
+}
+
+.completedActivity .icon {
+	display: block;
+	width: 46px;
+	height: 46px;
+	position: absolute;
+	top: 0;
+	right: 64px;
+	background-size: 46px 46px;
+	background-repeat: no-repeat;
+	margin: 6px;
+}
+
+#completedActivities .completedActivity .delete:hover {
+	background-color: rgba(255,0,0,.75);
+}
+
+.newActivityInstructions {
+	display: block;
+	margin: 0 10px 10px 10px;
+	font-weight: normal;
+	font-size: 16px;
+}
+
+.viewing-log .newActivityInstructions {
+	display: none;
+}

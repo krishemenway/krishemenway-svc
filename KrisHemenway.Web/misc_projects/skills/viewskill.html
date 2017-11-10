@@ -1,0 +1,136 @@
+<html>
+
+	<head>
+	
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
+		
+		<link href="/skills/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="/skills/css/bootstrap-responsive.min.css" rel="stylesheet" />
+		<script src="/skills/js/bootstrap.min.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="/skills/js/visualize.jQuery.js"></script>
+		<link type="text/css" rel="stylesheet" href="/skills/css/visualize.jQuery.css"/>
+		
+		<link type="text/css" rel="stylesheet" href="/skills/css/skills.css"/>
+		
+		<style>
+
+		</style>
+		
+		<script>
+			$(function() {
+				$("table.integrations_graph")
+					.hide()
+					.visualize({type: 'pie', height: '250px', width: '275px'})
+					.attr("id","current_experience_graph")
+					.addClass("pull-right")
+					.insertAfter('table.integrations_graph');
+			});
+		</script>
+	</head>
+
+	<body>
+		
+		<div id="content">
+			<div class="skill_header">
+				<img class="skill-image pull-right" src="http://placehold.it/140x100">
+				<h1>Health Quotient</h1>
+			</div>
+			
+			<div class="skill_details">
+				<table class="integrations_graph">
+					<caption>Current Integrations Experience</caption>
+					<thead><tr><td></td><th scope="col">Count</th></tr></thead>
+					<tbody>
+						<tr><th scope="row">No Experience</th> <td>6</td></tr>
+						<tr><th scope="row">Learning</th> <td>5</td></tr>
+						<tr><th scope="row">Understands</th> <td>15</td></tr>
+						<tr><th scope="row">Can Teach</th> <td>5</td></tr>
+					</tbody>
+				</table>
+				
+				<form class="status-update form-horizontal">
+					<fieldset class="control-group">
+						<label class="control-label" for="your_state">Update Your Status</label>
+						<div class="controls">
+							
+							<select name="your_state" id="your_state" class="input-large">
+								<option>N/A</option>
+								<option>No Experience</option>
+								<option>Learning</option>
+								<option>Understands</option>
+								<option>Can Teach</option>
+							</select>
+							
+							<button class="btn btn-primary">Save</button>
+						</div>
+					</fieldset>
+				</form>
+				
+				<p>
+					This engineer has masters the fine arts in our flagship product, Health Quotient. 
+					Understanding the .questions files, QDB Concepts, and how the various ways our flagship products interacts with different products.
+				</p>
+				
+				<div class="users_by_skill_type">
+					<h3><span class="skill_type_prefix">People who...</span> Can Teach</h3>
+					<ul>
+						<li class="well employee"><a href="/skills/profile.html">Dave Smith</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Lenore Marez</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Jamie Bucker</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Elnora Rowlands</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Glenda Kujawa</a></li>
+					</ul>
+					
+					<h3><span class="skill_type_prefix">People who...</span> Understands</h3>
+					<ul>
+						<li class="well employee"><a href="/skills/profile.html">Pauline Lamp</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Flora Eng</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Kenneth Welty</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Gregory Kesler</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Kristine Faber</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Andrew Plowman</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Dianne Castaneda</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Eunice Brice</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Raymond Gish</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Brandon Quintanilla</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Robert Maloney</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Madeline Mccord</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Jacob Nicholls</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Cora Bracey</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Alison Cantara</a></li>
+					</ul>
+					
+					<h3><span class="skill_type_prefix">People who...</span> Learning</h3>
+					<ul>
+						<li class="well employee"><a href="/skills/profile.html">Benjamin Nystrom</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Ronald Bouchard</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Annette Plascencia</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Christopher Rumph</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Chad Brann</a></li>
+					</ul>
+					
+					<h3><span class="skill_type_prefix">People who...</span> No Experience</h3>
+					<ul>
+					
+						<li class="well employee"><a href="/skills/profile.html">Dora Malik</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Samuel Ford</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Bruce Redd</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Timothy Finley</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Alan Epps</a></li>
+						<li class="well employee"><a href="/skills/profile.html">Marianne Candelario</a></li>
+					</ul>
+				</div>
+				
+				<h3>Related Links</h3>
+				<ul>
+					<li><a href="/skills/">Product Implementation Guide</a></li>
+					<li><a href="/skills/">DSL D</a></li>
+				</ul>
+			</div>
+		</div>
+		
+	</body>
+	
+</html>

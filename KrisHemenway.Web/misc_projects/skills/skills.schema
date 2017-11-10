@@ -1,0 +1,53 @@
+Employee
+	EmployeeID
+	Name
+
+1|Kris
+	
+	
+	
+Skill
+	SkillID
+	SkillTypeID
+	Name
+	Description
+	Image
+
+1|1|Health Quotient|Blah blah blah|something.jpg
+2|1|Outbound SSO|Blah blah blah|something.jpg
+
+
+
+SkillType
+	SkillTypeID
+	Name
+
+1|Products
+2|Technologies
+3|Non-Work Related
+
+
+
+SkillLevel
+	SkillID
+	SkillLevelValue
+	Description
+
+1|1|No Experience
+1|2|Learning
+1|3|Understands
+1|4|Can Teach
+2|1|No Experience
+2|2|Learning
+2|3|Understands
+2|4|Can Teach
+
+	
+
+EmployeeSkill
+	EmployeeID
+	SkillID
+	SkillLevelValue
+
+1|1|4
+1|2|3

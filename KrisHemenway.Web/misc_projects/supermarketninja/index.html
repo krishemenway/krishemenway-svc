@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+
+		<link rel="apple-touch-icon" href="/supermarketninja/supermarketninja-icon.png" />
+		<link href="/supermarketninja/styles/styles.css" rel="stylesheet" />
+		<title>Market Ninja</title>
+		
+	</head>
+	<body>
+		<div id="gameFrame">
+			<canvas width="320" height="500" id="game"></canvas>
+
+			<div id="gameStarted">
+				<button type="button" id="startButton">Start</button>
+			</div>
+
+			<div id="gameEnded">
+				<button type="button" id="replayButton">Replay</button>
+			</div>
+		</div>
+
+		<audio id="scanSound" autobuffer="autobuffer">
+			<source src="/supermarketninja/scan.wav" type="audio/x-wav">
+		</audio>
+		<audio id="trashSound" autobuffer="autobuffer">
+			<source src="/supermarketninja/trash.wav" type="audio/x-wav">
+		</audio>
+		<audio id="backgroundMusic" loop="loop" autobuffer="autobuffer">
+			<source src="/supermarketninja/music.mp3" type="audio/mp3">
+		</audio>
+
+		<script type="text/javascript" src="/supermarketninja/scripts/javascriptIsAwesome.js"></script>
+		<script type="text/javascript" src="/supermarketninja/scripts/fallingObject.js"></script>
+		<script type="text/javascript" src="/supermarketninja/scripts/startedGameRules.js"></script>
+		<script type="text/javascript" src="/supermarketninja/scripts/finishedGameRules.js"></script>
+		<script type="text/javascript" src="/supermarketninja/scripts/runningGameRules.js"></script>
+		<script type="text/javascript" src="/supermarketninja/scripts/gameRules.js"></script>
+		<script type="text/javascript" src="/supermarketninja/scripts/gameLoop.js"></script>
+		<script type="text/javascript" src="/supermarketninja/scripts/index.js"></script>
+	</body>
+</html>

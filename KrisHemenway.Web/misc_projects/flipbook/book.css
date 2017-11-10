@@ -1,0 +1,69 @@
+#backcover {
+	background: url('backcover.png');
+}
+#cover {
+	background: url('cover.png');
+}
+.book .page {
+	width: 400px;
+	height: 400px;
+	position: absolute;
+	background: white;
+	overflow: hidden;
+	background: #999;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#000000');
+	background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#000));
+	background: -moz-linear-gradient(top,  #ccc,  #000);
+}
+.book .page-wrapper {
+	width: 380px;
+	padding: 20px 10px 20px 10px;
+}
+.book .right-side {
+	left: 400px;
+}
+.book .left-side {
+	left: 0px;
+}
+.flipbook.ui-dialog {
+	background: none;
+	border: 0;
+}
+.flipbook.ui-dialog .ui-dialog-content {
+	overflow: hidden;
+}
+.flipbook.ui-dialog .ui-dialog-titlebar {
+	padding: 0;
+	border: 0;
+	background: none;
+	display: block;
+}
+.ui-widget-overlay {
+	background: #000;
+	opacity: .8;
+	filter: alpha(opacity = 80);
+}
+button.arrow {
+	text-align: center;
+	color: #fff;
+	width: 20px;
+	height: 400px;
+	z-index: 1000;
+	position: absolute;
+	background-color: #000;
+	opacity: .2;
+	filter: alpha(opacity = 20);
+	text-decoration: none;
+	border: 0;
+	cursor: pointer;
+}
+button.arrow:hover {
+	opacity: .5;
+	filter: alpha(opacity = 50);
+}
+button.right-arrow {
+	left: 780px;
+}
+button.left-arrow {
+	left: 0;
+}

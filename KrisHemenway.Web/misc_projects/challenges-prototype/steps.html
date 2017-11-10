@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="/challenges-prototype/activityinput.css" />
+	</head>
+	<body>
+		<div id="site">
+			<div id="intake">
+				<h2 class="challengeName">The Challenge To End All Challenges</h2>
+
+				<div class="ChallengeDaySelector is-at-end" data-bind="css: { 'is-at-beginning': selectedIndexIsAtBeginning(), 'is-at-end': selectedIndexIsAtEnd() }">
+					<button type="button" id="backDays" data-bind="click: goBackDays"><div class="backArrow" /></button>
+					<ul id="days" data-bind="foreach: viewableDays">
+						<li data-bind="css: {'is-selected': $parent.selectedDay() === $data, 'has-data-entered': hasData}">
+							<button type="button" data-bind="text: humanDate(), click: $parent.selectDay"></button>
+							<div class="symbol" />
+						</li>
+					</ul>
+					<button type="button" id="forwardDays" data-bind="click: goForwardDays"><div class="forwardArrow" /></button>
+				</div>
+
+				<div id="ChallengeIntake" data-bind="with: selectedDay() !== undefined ? selectedDay().intakeViewModel() : undefined">
+					<div id="StepsIntake">
+						<h3 class="instructions">Enter Steps for <span data-bind="text: date.weekdayName()">?</span></h3>
+						<input type="tel" class="steps" placeholder="0000" data-bind="value: stepsCount, hasfocus: inputIsFocused, AllowNumbersOnly: true" />
+					</div>
+				</div>
+
+				<div id="ChallengeStats">
+					<div class="score">
+						<div id="Score" data-bind="CountingValue: totalScore">0</div>
+						<div id="ScoreMeasurement">Total Steps</div>
+					</div>
+
+					<div class="daysRecorded">
+						<div id="DaysRecorded" data-bind="text: daysRecorded">10</div>
+						<div id="DaysRecordedLabel">Days Recorded</div>
+					</div>
+
+					<div class="daysRemaining">
+						<div id="DaysRemaining">327</div>
+						<div id="DaysRemainingLabel">Days Remaining in the Challenge</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script id="ChallengeConfiguration" type="application/json">
+			{
+				"StartDate": "2013-06-01",
+				"EndDate": "2013-07-13",
+				"TotalScore": 3000,
+				"DaysRecorded": 2
+			}
+		</script>
+
+		<script id="ChallengeStepsData" type="application/json">
+			{
+				"2013-6-1": 1000,
+				"2013-6-2": 2000	
+			}
+		</script>
+
+        <script type="text/javascript" data-main="/challenges-prototype/scripts/StepsChallenge.js" src="/challenges-prototype/scripts/require.js"></script>
+	</body>
+</html>
