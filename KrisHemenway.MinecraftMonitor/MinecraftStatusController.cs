@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Linq;
 
 namespace KrisHemenway.MinecraftMonitor
@@ -7,10 +8,10 @@ namespace KrisHemenway.MinecraftMonitor
 	public class MinecraftStatusController : Controller
 	{
 		[HttpGet(nameof(Status))]
-		public IActionResult Status()
+		public IActionResult Status(IOptions<Settings> settings)
 		{
 			var minecraftStatusStore = new MinecraftStatusStore();
-			var minecraftStatus = new ServerInfoStore()
+			var minecraftStatus = new ServerInfoStore(settings)
 				.Find()
 				.Select(x => new {
 					x.Host,

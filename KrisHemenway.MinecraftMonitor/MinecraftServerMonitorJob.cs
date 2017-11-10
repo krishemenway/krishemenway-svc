@@ -33,7 +33,6 @@ namespace KrisHemenway.MinecraftMonitor
 			_pushNotificationSender = new PushNotificationSender();
 			_minecraftStatusService = new MinecraftStatusService();
 			_minecraftStatusStore = new MinecraftStatusStore();
-			_serverInfoStore = new ServerInfoStore();
 			_logger = new LoggerFactory().CreateLogger<MinecraftServerMonitorJob>();
 		}
 
@@ -79,7 +78,6 @@ namespace KrisHemenway.MinecraftMonitor
 		private const string NotificationTitle = "Minecraft Status";
 		private readonly IPushNotificationSender _pushNotificationSender;
 		private readonly IMinecraftStatusService _minecraftStatusService;
-		private readonly IServerInfoStore _serverInfoStore;
 		private readonly IMinecraftStatusStore _minecraftStatusStore;
 		private readonly ILogger<MinecraftServerMonitorJob> _logger;
 	}

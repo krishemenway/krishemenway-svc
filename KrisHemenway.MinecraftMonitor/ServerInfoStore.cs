@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System;
+using Microsoft.Extensions.Options;
 
 namespace KrisHemenway.MinecraftMonitor
 {
@@ -13,10 +14,14 @@ namespace KrisHemenway.MinecraftMonitor
 
 	public class ServerInfoStore : IServerInfoStore
 	{
+		public ServerInfoStore(IOptions<Settings> options)
+		{
+			_options = options;
+		}
+
 		public IReadOnlyList<ServerInfo> Find()
 		{
-			return Program.Configuration
-				.GetValue<string[]>("Servers")?
+			return _options.Value.Servers
 				.Select(CreateServerInfo)
 				.ToList() ?? new List<ServerInfo>();
 		}
@@ -31,5 +36,8 @@ namespace KrisHemenway.MinecraftMonitor
 					Port = Convert.ToInt32(serverAddressParts[1])
 				};
 		}
+
+
+		private readonly IOptions<Settings> _options;
 	}
 }

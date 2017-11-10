@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Quartz;
 using Quartz.Impl;
+using Serilog;
 
 namespace KrisHemenway.MinecraftMonitor
 {
@@ -11,32 +12,27 @@ namespace KrisHemenway.MinecraftMonitor
 	{
 		public Startup(IHostingEnvironment env)
 		{
-			var builder = new ConfigurationBuilder()
-				.SetBasePath(env.ContentRootPath)
-				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-				.AddEnvironmentVariables();
-
-			Configuration = builder.Build();
 		}
-
-		public IConfigurationRoot Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			// Add framework services.
+			services.AddOptions();
 			services.AddMvc();
+			services.Configure<Settings>(Program.Configuration);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime, IOptions<Settings> options)
 		{
 			app.UseMvc();
 
 			Scheduler = new StdSchedulerFactory().GetScheduler().Result;
 
-			foreach (var serverInfo in new ServerInfoStore().Find())
+			var servers = new ServerInfoStore(options).Find();
+			Log.Information("Servers: {Servers}", servers);
+
+			foreach (var serverInfo in servers)
 			{
 				new MinecraftStatusStore().Save(serverInfo, MinecraftStatus.Default);
 				Scheduler.ScheduleJob(MinecraftServerMonitorJob.CreateJob(serverInfo), MinecraftServerMonitorJob.CreateTrigger(serverInfo));
