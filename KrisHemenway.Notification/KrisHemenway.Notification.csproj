@@ -22,7 +22,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KrisHemenway.CommonCore\KrisHemenway.Common.csproj" />
+    <ProjectReference Include="..\KrisHemenway.Common\KrisHemenway.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">

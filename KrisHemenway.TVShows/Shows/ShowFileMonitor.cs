@@ -23,6 +23,6 @@ namespace KrisHemenway.TVShows.Shows
 
 		private static PhysicalFileProvider _fileProvider = new PhysicalFileProvider(Program.Settings.ExecutablePath);
 
-		private IChangeToken ChangeToken { get; private set; }
+		private IChangeToken ChangeToken { get; set; }
 	}
 }

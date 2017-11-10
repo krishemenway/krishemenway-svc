@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>KrisHemenway.TeamspeakMonitorCore</AssemblyName>
+    <AssemblyName>KrisHemenway.TeamspeakMonitor</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
@@ -18,7 +18,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KrisHemenway.CommonCore\KrisHemenway.Common.csproj" />
+    <ProjectReference Include="..\KrisHemenway.Common\KrisHemenway.Common.csproj" />
   </ItemGroup>
 
 </Project>

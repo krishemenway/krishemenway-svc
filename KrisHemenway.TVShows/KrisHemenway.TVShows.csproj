@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
     <StartupObject>KrisHemenway.TVShows.Program</StartupObject>
-    <AssemblyName>KrisHemenway.TVShowsCore</AssemblyName>
+    <AssemblyName>KrisHemenway.TVShows</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +26,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KrisHemenway.CommonCore\KrisHemenway.Common.csproj" />
+    <ProjectReference Include="..\KrisHemenway.Common\KrisHemenway.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">

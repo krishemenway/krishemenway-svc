@@ -5,15 +5,15 @@ VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KrisHemenway.AndroidApp", "KrisHemenway.AndroidApp\KrisHemenway.AndroidApp.csproj", "{A4582A80-FBB6-4F08-B003-C5376D47384B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.TVShows", "KrisHemenway.TVShowsCore\KrisHemenway.TVShows.csproj", "{4333AB48-7B35-4331-AFE8-C556D83DEC74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.TVShows", "KrisHemenway.TVShows\KrisHemenway.TVShows.csproj", "{4333AB48-7B35-4331-AFE8-C556D83DEC74}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.Common", "KrisHemenway.CommonCore\KrisHemenway.Common.csproj", "{8BB49355-BB9E-4766-B42F-7C2DD498E319}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.Common", "KrisHemenway.Common\KrisHemenway.Common.csproj", "{8BB49355-BB9E-4766-B42F-7C2DD498E319}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.Notification", "KrisHemenway.NotificationCore\KrisHemenway.Notification.csproj", "{4AADDBB7-61C6-442A-BC72-6362E0A9E873}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.Notification", "KrisHemenway.Notification\KrisHemenway.Notification.csproj", "{4AADDBB7-61C6-442A-BC72-6362E0A9E873}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.MinecraftMonitor", "KrisHemenway.MinecraftMonitorCore\KrisHemenway.MinecraftMonitor.csproj", "{E3D94EF9-A00A-404A-9046-9F6C8316D197}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.MinecraftMonitor", "KrisHemenway.MinecraftMonitor\KrisHemenway.MinecraftMonitor.csproj", "{E3D94EF9-A00A-404A-9046-9F6C8316D197}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.TeamspeakMonitor", "KrisHemenway.TeamspeakMonitorCore\KrisHemenway.TeamspeakMonitor.csproj", "{9C548F7C-0988-4D99-8442-6796B03EAB52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.TeamspeakMonitor", "KrisHemenway.TeamspeakMonitor\KrisHemenway.TeamspeakMonitor.csproj", "{9C548F7C-0988-4D99-8442-6796B03EAB52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
