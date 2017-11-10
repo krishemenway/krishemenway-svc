@@ -15,7 +15,10 @@ namespace KrisHemenway.MinecraftMonitor
 	{
 		public IReadOnlyList<ServerInfo> Find()
 		{
-			return Program.Configuration.GetValue<string[]>("Servers").Select(CreateServerInfo).ToList();
+			return Program.Configuration
+				.GetValue<string[]>("Servers")?
+				.Select(CreateServerInfo)
+				.ToList() ?? new List<ServerInfo>();
 		}
 
 		private ServerInfo CreateServerInfo(string serverAddress)
