@@ -1,7 +1,7 @@
 ﻿using KrisHemenway.TVShows.Jobs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KrisHemenway.TVShows.Seriess
+namespace KrisHemenway.TVShows.Shows
 {
 	[Route("api/tvshows/series")]
 	public class ShowController : Controller

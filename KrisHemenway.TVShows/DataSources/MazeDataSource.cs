@@ -1,6 +1,5 @@
 ﻿using KrisHemenway.TVShows.Episodes;
-using KrisHemenway.TVShows.Seriess;
-using Microsoft.Extensions.Logging;
+using KrisHemenway.TVShows.Shows;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -82,8 +81,8 @@ namespace KrisHemenway.TVShows
 		public MazeTVEpisodeImages Image { get; set; }
 		public string Summary { get; set; }
 
-		public DateTime AirDate { get; set; }
-		public DateTime Airstamp { get; set; }
+		public DateTime? AirDate { get; set; }
+		public DateTime? Airstamp { get; set; }
 		public TimeSpan? AirTime { get; set; }
 
 	}

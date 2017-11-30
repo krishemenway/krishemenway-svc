@@ -1,5 +1,5 @@
 ﻿using KrisHemenway.TVShows.Episodes;
-using KrisHemenway.TVShows.Seriess;
+using KrisHemenway.TVShows.Shows;
 using Serilog;
 using System;
 using System.Linq;

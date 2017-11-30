@@ -1,4 +1,4 @@
-﻿using KrisHemenway.TVShows.Seriess;
+﻿using KrisHemenway.TVShows.Shows;
 using Quartz;
 using Serilog;
 using System;

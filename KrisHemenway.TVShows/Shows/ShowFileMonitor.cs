@@ -1,4 +1,4 @@
-﻿using KrisHemenway.TVShows.Seriess;
+﻿using KrisHemenway.TVShows.Shows;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
 using System.Threading.Tasks;

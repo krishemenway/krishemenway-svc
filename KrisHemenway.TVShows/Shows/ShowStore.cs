@@ -3,7 +3,7 @@ using KrisHemenway.TVShows.Episodes;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KrisHemenway.TVShows.Seriess
+namespace KrisHemenway.TVShows.Shows
 {
 	public interface ISeriesStore
 	{

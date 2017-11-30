@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace KrisHemenway.TVShows.Seriess
+namespace KrisHemenway.TVShows.Shows
 {
 	public interface IShow
 	{
