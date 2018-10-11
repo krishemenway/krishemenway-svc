@@ -9,10 +9,7 @@ namespace KrisHemenway.NotificationCore
 		[HttpPost("send")]
 		public IActionResult SendNotification([FromBody] PushNotificationDetails details)
 		{
-			var notification = new NotificationStore().CreateNotification(details);
-			new FirebasePushNotificationSender().NotifyAll(notification);
-
-			return Ok();
+			return Ok(new SendNotificationRequestHandler().HandleRequest(details));
 		}
 	}
 }

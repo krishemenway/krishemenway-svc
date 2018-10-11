@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Quartz;
+using Quartz.Impl;
 
 namespace KrisHemenway.NotificationCore
 {
@@ -19,6 +21,10 @@ namespace KrisHemenway.NotificationCore
 		public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IApplicationLifetime applicationLifetime)
 		{
 			app.UseMvc();
+
+			Scheduler = new StdSchedulerFactory().GetScheduler().Result;
+			Scheduler.ScheduleJob(ReminderJob.CreateJob(), ReminderJob.CreateTrigger());
+			Scheduler.Start(applicationLifetime.ApplicationStopping);
 		}
 
 		private void FixJsonCamelCasing(JsonSerializerSettings settings)
@@ -30,5 +36,7 @@ namespace KrisHemenway.NotificationCore
 				res.NamingStrategy = null;  // <<!-- this removes the camelcasing
 			}
 		}
+
+		public static IScheduler Scheduler { get; private set; }
 	}
 }

@@ -9,7 +9,12 @@ using System.Text;
 
 namespace KrisHemenway.NotificationCore
 {
-	public class FirebasePushNotificationSender
+	public interface IFirebasePushNotificationSender
+	{
+		void NotifyAll(SentNotification notification);
+	}
+
+	public class FirebasePushNotificationSender : IFirebasePushNotificationSender
 	{
 		public FirebasePushNotificationSender(HttpClient httpClient = null)
 		{
