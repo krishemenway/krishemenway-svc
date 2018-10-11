@@ -5,17 +5,22 @@ using System.Linq;
 
 namespace KrisHemenway.TVShows.Shows
 {
-	public interface ISeriesStore
+	public interface IShowStore
 	{
 		IReadOnlyList<IShow> FindAll();
-		IShow Create(CreateSeriesRequest request);
+		IShow Create(CreateShowRequest request);
 	}
 
-	internal class ShowStore : ISeriesStore
+	internal class ShowStore : IShowStore
 	{
+		public ShowStore()
+		{
+			_episodeStore = new EpisodeStore();
+		}
+
 		public IReadOnlyList<IShow> FindAll()
 		{
-			const string seriesSql = @"
+			const string sql = @"
 				SELECT
 					s.id,
 					s.name,
@@ -26,41 +31,23 @@ namespace KrisHemenway.TVShows.Shows
 					s.path
 				FROM series s";
 
-			const string episodesSql = @"
-				SELECT
-					e.id,
-					e.title,
-					e.season,
-					e.episode_number as episodeinseries,
-					e.episode_in_season as episodeinseason,
-					e.airdate,
-					s.id as seriesid,
-					s.name as series,
-					e.rage_url as rageurl,
-					e.created_at as created,
-					e.updated_at as lastmodified,
-					e.path
-				FROM episodes e
-				INNER JOIN series s
-					on e.series_id = s.id";
-
 			using (var dbConnection = Database.CreateConnection())
 			{
-				var seriesById = dbConnection.Query<Show>(seriesSql).ToDictionary(x => x.Id, x => x);
-				var allEpisodes = dbConnection.Query<Episode>(episodesSql).ToList();
+				var shows = dbConnection.Query<Show>(sql).ToList();
+				var episodesByShow = _episodeStore.FindEpisodes(shows.ToArray());
 
-				foreach (var episode in allEpisodes)
+				foreach (var show in shows)
 				{
-					seriesById[episode.SeriesId].Episodes.Add(episode);
+					show.Episodes = episodesByShow[show];
 				}
 
-				return seriesById.Select(x => x.Value).ToList();
+				return shows;
 			}
 		}
 
 		public IShow FindOrNull(string name)
 		{
-			const string seriesSql = @"
+			const string sql = @"
 				SELECT
 					s.id,
 					s.name,
@@ -72,44 +59,26 @@ namespace KrisHemenway.TVShows.Shows
 				FROM series s
 				WHERE s.name = @Name";
 
-			const string episodesSql = @"
-				SELECT
-					e.id,
-					e.title,
-					e.season,
-					e.episode_number as episodeinseries,
-					e.episode_in_season as episodeinseason,
-					e.airdate,
-					s.id as seriesid,
-					s.name as series,
-					e.rage_url as rageurl,
-					e.created_at as created,
-					e.updated_at as lastmodified,
-					e.path
-				FROM episodes e
-				INNER JOIN series s
-					on e.series_id = s.id
-				WHERE s.id = @SeriesId";
-
 			using (var dbConnection = Database.CreateConnection())
 			{
-				var series = dbConnection.QueryFirstOrDefault<Show>(seriesSql, new { name });
+				var show = dbConnection.QueryFirstOrDefault<Show>(sql, new { name });
 
-				if (series == null)
+				if (show == null)
 				{
 					return null;
 				}
 
-				series.Episodes = dbConnection.Query<Episode>(episodesSql, new { SeriesId = series.Id }).ToList();
-				return series;
+				show.Episodes = _episodeStore.FindEpisodes(show)[show];
+
+				return show;
 			}
 		}
 
-		public IShow Create(CreateSeriesRequest request)
+		public IShow Create(CreateShowRequest request)
 		{
 			const string sql = @"
-				INSERT INTO series (id, name, rage_id, maze_id, path)
-				VALUES (default, @name, @rageid, @mazeid, @path)
+				INSERT INTO series (id, name, maze_id, path)
+				VALUES (default, @name, @mazeid, @path)
 				RETURNING id";
 
 			using (var dbConnection = Database.CreateConnection())
@@ -119,18 +88,17 @@ namespace KrisHemenway.TVShows.Shows
 					Id = dbConnection.Query<int>(sql, request).First(),
 					Name = request.Name,
 					MazeId = request.MazeId,
-					Path = request.Path,
-					RageId = request.RageId
+					Path = request.Path
 				};
 			}
-
 		}
+
+		private readonly IEpisodeStore _episodeStore;
 	}
 
-	public class CreateSeriesRequest
+	public class CreateShowRequest
 	{
 		public int? MazeId { get; set; }
-		public int? RageId { get; set; }
 		public string Name { get; set; }
 		public string Path { get; set; }
 	}

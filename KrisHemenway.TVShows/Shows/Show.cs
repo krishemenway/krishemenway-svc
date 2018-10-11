@@ -13,7 +13,7 @@ namespace KrisHemenway.TVShows.Shows
 		int? RageId { get; }
 		int? MazeId { get; }
 
-		List<Episode> Episodes { get; }
+		IReadOnlyList<IEpisode> Episodes { get; }
 
 		DateTime Created { get; }
 		DateTime LastModified { get; }
@@ -33,7 +33,7 @@ namespace KrisHemenway.TVShows.Shows
 		public int? RageId { get; set; }
 		public int? MazeId { get; set; }
 
-		public List<Episode> Episodes { get; set; }
+		public IReadOnlyList<IEpisode> Episodes { get; set; }
 
 		public DateTime Created { get; set; }
 		public DateTime LastModified { get; set; }

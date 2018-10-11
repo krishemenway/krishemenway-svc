@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using KrisHemenway.TVShows.Reports;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 
@@ -20,6 +21,12 @@ namespace KrisHemenway.TVShows.Episodes
 			var episodes = new EpisodeStore().FindEpisodesAiring(DateTime.Today, DateTime.Today.AddDays(3));
 			return Json(episodes);
 		}
+
+		[HttpGet("missing")]
+		public IActionResult MissingEpisodes()
+		{
+			return Json(new MissingEpisodesReportGenerator().GenerateReport());
+		}
 		
 		[HttpGet("calendar/{year}/{month}")]
 		public IActionResult GetEpisodesForMonth(int year, int month)
@@ -30,7 +37,7 @@ namespace KrisHemenway.TVShows.Episodes
 			var episodesInMonth = new EpisodeStore()
 				.FindEpisodesAiring(beginningOfMonth, endOfMonth)
 				.OrderBy(x => x.AirDate)
-				.ThenBy(x => x.SeriesId)
+				.ThenBy(x => x.ShowId)
 				.ThenBy(x => x.Season)
 				.ThenBy(x => x.EpisodeInSeason);
 

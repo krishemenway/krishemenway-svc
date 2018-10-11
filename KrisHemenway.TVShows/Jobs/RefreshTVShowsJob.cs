@@ -12,8 +12,8 @@ namespace KrisHemenway.TVShows.Jobs
 	{
 		public RefreshTVShowsJob()
 		{
-			_seriesStore = new ShowStore();
-			_refreshSeriesTask = new RefreshSeriesTask();
+			_showStore = new ShowStore();
+			_refreshShowTask = new RefreshShowTask();
 		}
 
 		public Task Execute(IJobExecutionContext context)
@@ -21,9 +21,9 @@ namespace KrisHemenway.TVShows.Jobs
 			return Task.Run(() => {
 				try
 				{
-					foreach (var series in _seriesStore.FindAll())
+					foreach (var show in _showStore.FindAll())
 					{
-						_refreshSeriesTask.Refresh(series);
+						_refreshShowTask.Refresh(show);
 						Thread.Sleep(1000);
 					}
 				}
@@ -62,7 +62,7 @@ namespace KrisHemenway.TVShows.Jobs
 		internal const int JobExecutionHour = 8;
 		internal const int JobExecutionMinute = 0;
 
-		private readonly ISeriesStore _seriesStore;
-		private readonly IRefreshSeriesTask _refreshSeriesTask;
+		private readonly IShowStore _showStore;
+		private readonly IRefreshShowTask _refreshShowTask;
 	}
 }

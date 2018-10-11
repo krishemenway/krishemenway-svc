@@ -6,14 +6,14 @@ using System.Linq;
 
 namespace KrisHemenway.TVShows.Jobs
 {
-	public interface IRefreshSeriesTask
+	public interface IRefreshShowTask
 	{
 		void Refresh(IShow show);
 	}
 
-	public class RefreshSeriesTask : IRefreshSeriesTask
+	public class RefreshShowTask : IRefreshShowTask
 	{
-		public RefreshSeriesTask(
+		public RefreshShowTask(
 			IEpisodeStore episodeStore = null,
 			IMazeDataSource mazeDataSource = null)
 		{

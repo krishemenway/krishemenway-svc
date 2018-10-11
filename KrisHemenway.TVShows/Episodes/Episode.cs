@@ -7,12 +7,14 @@ namespace KrisHemenway.TVShows.Episodes
 		int Id { get; }
 		string Title { get; }
 
-		string Series { get; }
-		int SeriesId { get; }
+		string ShowName { get; }
+		int ShowId { get; }
 		int EpisodeNumber { get; }
 
 		int Season { get; }
 		int EpisodeInSeason { get; }
+
+		string VideoPath { get; }
 
 		DateTime? AirDate { get; }
 		DateTime LastModified { get; }
@@ -24,12 +26,14 @@ namespace KrisHemenway.TVShows.Episodes
 		public int Id { get; set; }
 		public string Title { get; set; }
 
-		public string Series { get; set; }
-		public int SeriesId { get; set; }
+		public string ShowName { get; set; }
+		public int ShowId { get; set; }
 		public int EpisodeNumber { get; set; }
 
 		public int Season { get; set; }
 		public int EpisodeInSeason { get; set; }
+
+		public string VideoPath { get; set; }
 
 		public DateTime? AirDate { get; set; }
 		public DateTime LastModified { get; set; }
@@ -37,7 +41,7 @@ namespace KrisHemenway.TVShows.Episodes
 
 		public override string ToString()
 		{
-			return $"Id: {Id}; SeriesId: {SeriesId}; Series: {Series}; Season: {Season}; EP: {EpisodeInSeason}";
+			return $"Id: {Id}; ShowId: {ShowId}; Show: {ShowName}; Season: {Season}; EP: {EpisodeInSeason}";
 		}
 	}
 }

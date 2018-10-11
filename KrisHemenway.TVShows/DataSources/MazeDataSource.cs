@@ -11,27 +11,27 @@ namespace KrisHemenway.TVShows
 {
 	public interface IMazeDataSource
 	{
-		List<IEpisode> FindEpisodes(IShow series);
+		List<IEpisode> FindEpisodes(IShow show);
 	}
 
 	public class MazeDataSource : IMazeDataSource
 	{
-		public List<IEpisode> FindEpisodes(IShow series)
+		public List<IEpisode> FindEpisodes(IShow show)
 		{
 			var episodes = new List<IEpisode>();
 
-			if(!series.MazeId.HasValue)
+			if(!show.MazeId.HasValue)
 			{
 				return episodes;
 			}
 
 			try
 			{
-				episodes.AddRange(FindEpisodesFromMazeApi(series));
+				episodes.AddRange(FindEpisodesFromMazeApi(show));
 			}
 			catch(Exception exception)
 			{
-				throw new Exception($"Failed to fetch episode data for series {series.MazeId.Value}", exception);
+				throw new Exception($"Failed to fetch episode data for show {show.MazeId.Value}", exception);
 			}
 
 			return episodes;
@@ -52,7 +52,7 @@ namespace KrisHemenway.TVShows
 			}
 		}
 
-		private Episode CreateEpisode(MazeTVEpisode episode, IShow series)
+		private Episode CreateEpisode(MazeTVEpisode episode, IShow show)
 		{
 			return new Episode
 			{
@@ -60,8 +60,8 @@ namespace KrisHemenway.TVShows
 				AirDate = episode.AirDate,
 				Season = episode.Season,
 				EpisodeInSeason = episode.Number,
-				Series = series.Name,
-				SeriesId = series.Id
+				ShowName = show.Name,
+				ShowId = show.Id
 			};
 		}
 	}

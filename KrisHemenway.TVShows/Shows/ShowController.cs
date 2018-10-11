@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KrisHemenway.TVShows.Shows
 {
-	[Route("api/tvshows/series")]
+	[Route("api/tvshows/shows")]
 	public class ShowController : Controller
 	{
 		[HttpGet(nameof(All))]
@@ -13,23 +13,23 @@ namespace KrisHemenway.TVShows.Shows
 		}
 		
 		[HttpGet(nameof(Create))]
-		public IActionResult Create([FromQuery]CreateSeriesRequest createSeriesRequest)
+		public IActionResult Create([FromQuery]CreateShowRequest createShowRequest)
 		{
-			new RefreshSeriesTask().Refresh(new ShowStore().Create(createSeriesRequest));
+			new RefreshShowTask().Refresh(new ShowStore().Create(createShowRequest));
 			return Ok();
 		}
 
-		[HttpPost(nameof(RefreshSeries))]
-		public IActionResult RefreshSeries([FromQuery]string name)
+		[HttpPost(nameof(RefreshShow))]
+		public IActionResult RefreshShow([FromQuery]string name)
 		{
-			var series = new ShowStore().FindOrNull(name);
+			var show = new ShowStore().FindOrNull(name);
 
-			if (series == null)
+			if (show == null)
 			{
-				return Ok($"Unable to find series with name: {name}");
+				return Ok($"Unable to find show with name: {name}");
 			}
 
-			new RefreshSeriesTask().Refresh(series);
+			new RefreshShowTask().Refresh(show);
 			return Ok();
 		}
 	}
