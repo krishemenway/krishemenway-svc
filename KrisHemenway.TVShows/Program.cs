@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Serilog;
 using Serilog.Events;
 using System;
-using KrisHemenway.TVShows;
 
 namespace KrisHemenway.TVShows
 {

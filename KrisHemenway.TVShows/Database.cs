@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Npgsql;
+﻿using Npgsql;
 using System.Data;
 
 namespace KrisHemenway.TVShows
 {
-	class Database
+	public class Database
 	{
 		public static IDbConnection CreateConnection()
 		{
