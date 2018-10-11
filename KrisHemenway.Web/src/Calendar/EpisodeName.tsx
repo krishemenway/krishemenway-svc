@@ -1,0 +1,18 @@
+import * as React from 'react';
+import { Episode } from './EpisodesInMonthResponse';
+
+interface EpisodeParams {
+	Episode: Episode;
+}
+
+export class EpisodeName extends React.Component<EpisodeParams, {}> {
+	public render() {
+		return (
+			<div className="episode-name">
+				<span className="series-name gray-69">{this.props.Episode.Series}</span>
+				<span className="episode-identity">{this.props.Episode.Season + "x" + this.props.Episode.EpisodeInSeason}</span>
+				<span className="episode-name gray-69">{this.props.Episode.Title}</span>
+			</div>
+		);
+	}
+}

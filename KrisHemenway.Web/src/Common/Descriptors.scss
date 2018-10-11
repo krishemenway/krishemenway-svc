@@ -1,42 +1,4 @@
-@import 'Reset';
-@import 'MediaQueries'; 
-@import 'Calendar';
-
-* {
-	box-sizing: border-box;
-}
-
-html, body {
-	background-color: #010101;
-	background: url('/bg.png');
-}
-
-#app {
-	max-width: 1024px;
-	width: 100%;
-	margin: 0 auto;
-	position: relative;
-}
-
-a,li,h1,h2,h3,h4,h5,h6,input,button,p,ul,span,div {
-	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-	color: #E8E8E8;
-	background: transparent;
-	border: 0;
-	padding: 0;
-	margin: 0;
-	line-height: 1;
-	text-decoration: none;
-}
-
-a:hover { text-decoration: underline; }
-a:hover .no-hover-line { text-decoration: none; }
-a.no-hover-line:hover { text-decoration: none; }
-
-button {
-	cursor: pointer;
-	&:focus { outline:0; }
-}
+@import "Common/MediaQueries";
 
 .flex-even-distribution { flex-grow: 1; flex-basis: 0; }
 .flex-row-container { display: flex; flex-direction: row; flex-wrap: nowrap; }
@@ -93,34 +55,3 @@ button {
 .gray-69 { color: #696969; }
 .gray-c8 { color: #c8c8c8; }
 .gray-e8 { color: #e8e8e8; }
-
-.project-item {
-	width: 400px;
-	margin: 0 auto;
-	background-color: #222222;
-	display: block;
-	
-	border-top: 1px solid #242424;
-	border-bottom: 1px solid #464646;
-	
-	&:first-of-type {
-		border-top-left-radius: 6px;
-		border-top-right-radius: 6px;
-		border-top: 0;
-	}
-	
-	&:last-of-type {
-		border-bottom-left-radius: 6px;
-		border-bottom-right-radius: 6px;
-		border-bottom: 0;
-	}
-	
-	@include respond-to(mobile) {
-		width: auto;
-	}
-}
-
-.home-app {
-	height: 100%;
-	width: 100%;
-}

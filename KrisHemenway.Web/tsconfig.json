@@ -1,9 +1,9 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
-    "jsx": "react",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true
-  }
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es6",
+		"jsx": "react",
+		"sourceMap": true,
+		"emitDecoratorMetadata": true
+	}
 }

@@ -43,8 +43,15 @@ module.exports = function(grunt) {
 		
 		sass: {
 			build: {
-				options: { },
-				files: { '<%=paths.dist%>/app.css': '<%=paths.src%>/app.scss' }
+				options: {
+					includePaths: [
+						"<%=paths.src%>"
+					]
+				},
+				files: {
+					'<%=paths.dist%>/app.css': '<%=paths.src%>/home/app.scss',
+					'<%=paths.dist%>/calendar.css': '<%=paths.src%>/calendar/calendar.scss',
+				}
 			}
 		},
 
@@ -113,5 +120,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('default', ['clean', 'browserify', 'sass', 'copy']);
+	grunt.registerTask('build', ['clean', 'browserify', 'sass', 'copy']);
+	grunt.registerTask('default', ['build']);
 }
