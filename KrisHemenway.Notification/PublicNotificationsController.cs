@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace KrisHemenway.NotificationCore
 {
@@ -9,6 +10,12 @@ namespace KrisHemenway.NotificationCore
 		public IActionResult FindAllNotifications()
 		{
 			return Ok(new { Notifications = new NotificationStore().FindAll() });
+		}
+
+		[HttpGet("recent")]
+		public IActionResult FindRecentNotifications([FromQuery] DateTime fromTime)
+		{
+			return Ok(new { Notifications = new NotificationStore().FindAll(fromTime) });
 		}
 
 		[HttpPost("add")]

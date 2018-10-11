@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KrisHemenway.AndroidApp", "KrisHemenway.AndroidApp\KrisHemenway.AndroidApp.csproj", "{A4582A80-FBB6-4F08-B003-C5376D47384B}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.MinecraftMonitor", "KrisHemenway.MinecraftMonitor\KrisHemenway.MinecraftMonitor.csproj", "{E3D94EF9-A00A-404A-9046-9F6C8316D197}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.TeamspeakMonitor", "KrisHemenway.TeamspeakMonitor\KrisHemenway.TeamspeakMonitor.csproj", "{9C548F7C-0988-4D99-8442-6796B03EAB52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KrisHemenway.TomatoRouter", "KrisHemenway.TomatoRouter\KrisHemenway.TomatoRouter.csproj", "{BC56B86C-E61A-4F61-8615-E67982C8D903}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,18 @@ Global
 		{9C548F7C-0988-4D99-8442-6796B03EAB52}.Release|x64.Build.0 = Release|Any CPU
 		{9C548F7C-0988-4D99-8442-6796B03EAB52}.Release|x86.ActiveCfg = Release|Any CPU
 		{9C548F7C-0988-4D99-8442-6796B03EAB52}.Release|x86.Build.0 = Release|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Debug|x64.Build.0 = Debug|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Debug|x86.Build.0 = Debug|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Release|x64.ActiveCfg = Release|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Release|x64.Build.0 = Release|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC56B86C-E61A-4F61-8615-E67982C8D903}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
