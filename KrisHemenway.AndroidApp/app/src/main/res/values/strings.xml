@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Notifications</string>
+    <string name="notification_request_error_title">Request Failure</string>notification_request_error_ok
+    <string name="notification_request_error_ok">Ok</string>
+</resources>
