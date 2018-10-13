@@ -67,7 +67,7 @@ module.exports = function(grunt) {
 			markup: {
 				expand: true,
 				cwd: "<%=paths.src%>/",
-				src: ["app.html", "calendar.html"],
+				src: ["Home/App.html", "Calendar/Calendar.html"],
 				dest: "<%=paths.dist%>/",
 				flatten: true,
 				filter: 'isFile'
