@@ -36,4 +36,6 @@ export class App extends React.Component<{}, {}> {
 	}
 }
 
-reactDom.render(<App />, document.getElementById('app'));
+(window as any).initialize = () => {
+	reactDom.render(<App />, document.getElementById('app'));
+}

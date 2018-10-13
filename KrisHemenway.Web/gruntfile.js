@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 
 		browserify: {
 			build: {
-				src: ["<%=paths.src%>/App.tsx"],
+				src: ["<%=paths.src%>/Home/App.tsx"],
 				dest: "<%=paths.dist%>/app.js",
 				options: {
 					browserifyOptions: {
@@ -28,7 +28,7 @@ module.exports = function(grunt) {
 				}
 			},
 			calendar: {
-				src: ["<%=paths.src%>/Calendar.tsx"],
+				src: ["<%=paths.src%>/Calendar/Calendar.tsx"],
 				dest: "<%=paths.dist%>/calendar.js",
 				options: {
 					browserifyOptions: {

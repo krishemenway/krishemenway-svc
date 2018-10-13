@@ -5,8 +5,8 @@ export interface EpisodesInMonthResponse {
 export interface Episode {
 	Id: number;
 	Title: string;
-	Series: string;
-	SeriesId: number;
+	ShowName: string;
+	ShowId: number;
 	EpisodeNumber: number;
 	Season: number;
 	EpisodeInSeason: number;

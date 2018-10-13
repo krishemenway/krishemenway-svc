@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as reactDom from 'react-dom';
 import * as moment from "moment";
 import { Episode, EpisodesInMonthResponse } from "./EpisodesInMonthResponse";
 import { SeriesCalendar } from "./SeriesCalendar";
@@ -80,4 +81,8 @@ export class Calendar extends React.Component<{}, GlobalAppState> {
 
 		this.preloadBorderMonths();
 	}
+}
+
+(window as any).initialize = () => {
+	reactDom.render(<Calendar />, document.getElementById('app'));
 }
