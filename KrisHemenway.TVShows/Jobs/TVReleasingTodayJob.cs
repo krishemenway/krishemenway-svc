@@ -29,12 +29,12 @@ namespace KrisHemenway.TVShows.Jobs
 					}
 
 					var details = new PushNotificationDetails
-					{
-						Title = $"Airing Today",
-						Content = string.Join("\n", episodes.Select(episode => $"{episode.ShowName} - {episode.Season}x{episode.EpisodeInSeason} {episode.Title}")),
-						TypeName = nameof(TVReleasingTodayJob),
-						AlertNumber = episodes.Count
-					};
+						{
+							Title = $"Airing Today",
+							Content = string.Join("\n", episodes.Select(episode => $"{episode.ShowName} - {episode.Season}x{episode.EpisodeInSeason} - {episode.Title}")),
+							TypeName = nameof(TVReleasingTodayJob),
+							AlertNumber = episodes.Count
+						};
 
 					_pushNotificationSender.NotifyAll(details);
 				}
