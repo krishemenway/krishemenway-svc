@@ -1,5 +1,5 @@
 # krishemenway-svc
-.NET core services for notifications and things I want to do/track
+Services for notifications and things I want to do/track/show
 
 ## KrisHemenway.AndroidApp
 Android app written in Kotlin that will receive and display notifications from services
