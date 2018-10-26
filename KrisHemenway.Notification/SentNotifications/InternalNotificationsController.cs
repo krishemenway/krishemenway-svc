@@ -1,7 +1,7 @@
 ﻿using KrisHemenway.Common;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KrisHemenway.NotificationCore
+namespace KrisHemenway.Notification.SentNotifications
 {
 	[Route("internal/api/notifications")]
 	public class InternalNotificationsController : Controller

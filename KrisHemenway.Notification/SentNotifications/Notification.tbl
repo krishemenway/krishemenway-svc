@@ -1,0 +1,15 @@
+﻿CREATE TABLE public.notification
+(
+    title text COLLATE pg_catalog."default" NOT NULL,
+    content text COLLATE pg_catalog."default" NOT NULL,
+    type_name text COLLATE pg_catalog."default" NOT NULL,
+    sent_time timestamp without time zone NOT NULL,
+    notification_id uuid NOT NULL,
+    CONSTRAINT notification_pkey PRIMARY KEY (notification_id)
+)
+WITH (OIDS = FALSE)
+TABLESPACE pg_default;
+
+ALTER TABLE public.notification OWNER to postgres;
+GRANT ALL ON TABLE public.notification TO notifications;
+GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE public.notification TO notifications;

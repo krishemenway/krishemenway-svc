@@ -2,7 +2,7 @@
 using System.Linq;
 using Dapper;
 
-namespace KrisHemenway.NotificationCore
+namespace KrisHemenway.Notification.PushNotifications
 {
 	public interface IPushRecipientStore
 	{
@@ -18,7 +18,7 @@ namespace KrisHemenway.NotificationCore
 				SELECT
 					device_token as devicetoken
 				FROM
-					push.push_recipient
+					public.push_recipient
 				WHERE
 					deactivated_time IS NULL";
 
@@ -31,7 +31,7 @@ namespace KrisHemenway.NotificationCore
 		public void SaveRecipient(string deviceToken)
 		{
 			const string InsertPushRecipientSql = @"
-				INSERT INTO push.push_recipient 
+				INSERT INTO public.push_recipient 
 				(device_token)
 				SELECT @DeviceToken
 				WHERE NOT EXISTS (

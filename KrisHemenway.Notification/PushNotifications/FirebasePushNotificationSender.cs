@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using KrisHemenway.Notification.SentNotifications;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -7,7 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 
-namespace KrisHemenway.NotificationCore
+namespace KrisHemenway.Notification.PushNotifications
 {
 	public interface IFirebasePushNotificationSender
 	{

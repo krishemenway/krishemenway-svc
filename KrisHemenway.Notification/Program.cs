@@ -6,7 +6,7 @@ using Serilog;
 using System;
 using Serilog.Events;
 
-namespace KrisHemenway.NotificationCore
+namespace KrisHemenway.Notification
 {
 	public class Program
 	{

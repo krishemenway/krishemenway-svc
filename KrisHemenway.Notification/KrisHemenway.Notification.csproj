@@ -5,7 +5,7 @@
     <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
     <RootNamespace>KrisHemenway.Notification</RootNamespace>
     <AssemblyName>KrisHemenway.Notification</AssemblyName>
-    <StartupObject>KrisHemenway.NotificationCore.Program</StartupObject>
+    <StartupObject>KrisHemenway.Notification.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.5" />

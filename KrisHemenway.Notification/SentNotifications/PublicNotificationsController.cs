@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using KrisHemenway.Notification.PushNotifications;
+using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace KrisHemenway.NotificationCore
+namespace KrisHemenway.Notification.SentNotifications
 {
 	[Route("public/api")]
 	public class PublicNotificationsController : Controller

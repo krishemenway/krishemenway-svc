@@ -1,10 +1,11 @@
 ﻿using KrisHemenway.Common;
+using KrisHemenway.Notification.SentNotifications;
 using Quartz;
 using Serilog;
 using System;
 using System.Threading.Tasks;
 
-namespace KrisHemenway.NotificationCore
+namespace KrisHemenway.Notification.Reminders
 {
 	[DisallowConcurrentExecution]
 	public class ReminderJob : IJob

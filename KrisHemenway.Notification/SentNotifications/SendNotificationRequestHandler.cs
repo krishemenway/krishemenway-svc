@@ -1,6 +1,7 @@
 using KrisHemenway.Common;
+using KrisHemenway.Notification.PushNotifications;
 
-namespace KrisHemenway.NotificationCore
+namespace KrisHemenway.Notification.SentNotifications
 {
 	public class SendNotificationRequestHandler
 	{

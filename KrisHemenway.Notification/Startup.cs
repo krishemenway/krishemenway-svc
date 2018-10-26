@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using KrisHemenway.Notification.Reminders;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -7,7 +8,7 @@ using Newtonsoft.Json.Serialization;
 using Quartz;
 using Quartz.Impl;
 
-namespace KrisHemenway.NotificationCore
+namespace KrisHemenway.Notification
 {
 	public class Startup
 	{

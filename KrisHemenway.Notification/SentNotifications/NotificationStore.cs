@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KrisHemenway.NotificationCore
+namespace KrisHemenway.Notification.SentNotifications
 {
 	public interface INotificationStore
 	{
@@ -23,7 +23,7 @@ namespace KrisHemenway.NotificationCore
 					title,
 					content,
 					type_name as typename
-				FROM push.notification
+				FROM public.notification
 				WHERE sent_time > @AfterTime
 				ORDER BY sent_time DESC";
 
@@ -36,7 +36,7 @@ namespace KrisHemenway.NotificationCore
 		public SentNotification CreateNotification(PushNotificationDetails details)
 		{
 			const string sql = @"
-				INSERT INTO push.notification
+				INSERT INTO public.notification
 				(notification_id, sent_time, title, content, type_name)
 				VALUES
 				(@NotificationId, @SentTime, @Title, @Content, @TypeName)";
@@ -63,16 +63,5 @@ namespace KrisHemenway.NotificationCore
 			notification.SentTime = DateTime.SpecifyKind(notification.SentTime, DateTimeKind.Local);
 			return notification;
 		}
-	}
-
-	public class SentNotification
-	{
-		public Guid NotificationId { get; set; }
-
-		public string Title { get; set; }
-		public string Content { get; set; }
-
-		public string TypeName { get; set; }
-		public DateTime SentTime { get; set; }
 	}
 }
