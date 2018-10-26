@@ -4,17 +4,18 @@ namespace KrisHemenway.TVShows.Episodes
 {
 	public interface IEpisode
 	{
-		int Id { get; }
-		string Title { get; }
+		Guid EpisodeId { get; }
 
+		Guid ShowId { get; }
 		string ShowName { get; }
-		int ShowId { get; }
-		int EpisodeNumber { get; }
 
+		string Title { get; }
 		int Season { get; }
 		int EpisodeInSeason { get; }
+		int EpisodeInShow { get; }
 
 		string VideoPath { get; }
+		bool HasEpisode { get; }
 
 		DateTime? AirDate { get; }
 		DateTime LastModified { get; }
@@ -23,17 +24,18 @@ namespace KrisHemenway.TVShows.Episodes
 
 	public class Episode : IEpisode
 	{
-		public int Id { get; set; }
-		public string Title { get; set; }
+		public Guid EpisodeId { get; set; }
 
+		public Guid ShowId { get; set; }
 		public string ShowName { get; set; }
-		public int ShowId { get; set; }
-		public int EpisodeNumber { get; set; }
 
+		public string Title { get; set; }
 		public int Season { get; set; }
 		public int EpisodeInSeason { get; set; }
+		public int EpisodeInShow { get; set; }
 
 		public string VideoPath { get; set; }
+		public bool HasEpisode => !string.IsNullOrWhiteSpace(VideoPath);
 
 		public DateTime? AirDate { get; set; }
 		public DateTime LastModified { get; set; }
@@ -41,7 +43,7 @@ namespace KrisHemenway.TVShows.Episodes
 
 		public override string ToString()
 		{
-			return $"Id: {Id}; ShowId: {ShowId}; Show: {ShowName}; Season: {Season}; EP: {EpisodeInSeason}";
+			return $"Id: {EpisodeId}; ShowId: {ShowId}; Show: {ShowName}; Season: {Season}; EP: {EpisodeInSeason}";
 		}
 	}
 }

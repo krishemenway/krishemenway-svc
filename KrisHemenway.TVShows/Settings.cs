@@ -18,13 +18,13 @@ namespace KrisHemenway.TVShows
 		public int WebPort => Configuration.GetValue<int>("WebPort");
 		public string LogFile => Configuration.GetValue<string>("LogFile");
 
-		public string User => Configuration.GetValue<string>("PushServiceUser");
-		public string Password => Configuration.GetValue<string>("PushServicePassword");
+		public string DatabaseUser => Configuration.GetValue<string>("TVShowDatabaseUser");
+		public string DatabasePassword => Configuration.GetValue<string>("TVShowDatabasePassword");
 
-		public string Host => Configuration.GetValue<string>("PushServiceHost");
-		public string DatabaseName => Configuration.GetValue<string>("DatabaseName");
+		public string DatabaseHost => Configuration.GetValue<string>("TVShowDatabaseHost");
+		public int DatabasePort => Configuration.GetValue<int>("TVShowDatabasePort");
 
-		public IReadOnlyList<string> FileExtensions => Configuration.GetValue<string[]>("VideoFileExtensions");
+		public string DatabaseName => Configuration.GetValue<string>("TVShowDatabaseName");
 
 		public string ExecutablePath => Directory.GetCurrentDirectory();
 

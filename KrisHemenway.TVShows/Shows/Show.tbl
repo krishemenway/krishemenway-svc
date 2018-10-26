@@ -1,0 +1,16 @@
+﻿CREATE TABLE public.show
+(
+    show_id uuid NOT NULL DEFAULT uuid_generate_v4(),
+    name character varying COLLATE pg_catalog."default",
+    maze_id integer,
+    path character varying COLLATE pg_catalog."default",
+    created_at timestamp without time zone DEFAULT now(),
+    updated_at timestamp without time zone DEFAULT now(),
+    CONSTRAINT show_pkey PRIMARY KEY (show_id)
+)
+WITH ( OIDS = FALSE )
+TABLESPACE pg_default;
+
+ALTER TABLE public.show OWNER to tvshows;
+GRANT INSERT, SELECT, UPDATE, DELETE, TRIGGER ON TABLE public.show TO tvshows;
+GRANT ALL ON TABLE public.show TO tvshows;

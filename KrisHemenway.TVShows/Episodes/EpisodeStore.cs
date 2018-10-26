@@ -29,25 +29,28 @@ namespace KrisHemenway.TVShows.Episodes
 		{
 			const string sql = @"
 				SELECT
-					e.id,
+					e.episode_id,
 					e.title,
 					e.season,
-					e.episode_number as episodenumber,
+					e.episode_in_show as episodeinshow,
 					e.episode_in_season as episodeinseason,
 					e.airdate,
-					e.video_path as videopath,
-					s.id as showid,
+					e.path as videopath,
+					s.show_id as showid,
 					s.name as showname,
 					e.created_at as created,
 					e.updated_at as lastmodified,
 					e.path
-				FROM episodes e
-				INNER JOIN series s
-					on s.id = e.series_id
+				FROM episode e
+				INNER JOIN show s
+					on s.show_id = e.show_id
 				WHERE
 					airdate >= @Start
 					AND airdate <= @End
-				ORDER BY s.id ASC, e.season ASC, e.episode_in_season ASC";
+				ORDER BY
+					s.show_id ASC,
+					e.season ASC,
+					e.episode_in_season ASC";
 
 			using (var dbConnection = Database.CreateConnection())
 			{
@@ -59,25 +62,28 @@ namespace KrisHemenway.TVShows.Episodes
 		{
 			const string sql = @"
 				SELECT
-					e.id,
+					e.episode_id,
 					e.title,
 					e.season,
-					e.episode_number as episodenumber,
+					e.episode_in_show as episodeinshow,
 					e.episode_in_season as episodeinseason,
 					e.airdate,
-					e.video_path as videopath,
-					s.id as showid,
+					e.path as videopath,
+					s.show_id as showid,
 					s.name as showname,
 					e.created_at as created,
 					e.updated_at as lastmodified,
 					e.path
-				FROM episodes e
-				INNER JOIN series s
-					on s.id = e.series_id
+				FROM episode e
+				INNER JOIN show s
+					on s.show_id = e.show_id
 				WHERE
 					e.created_at >= (now() AT TIME ZONE 'UTC') - INTERVAL '24 hours'
 					AND e.created_at <= now() AT TIME ZONE 'UTC'
-				ORDER BY s.id ASC, e.season ASC, e.episode_in_season ASC";
+				ORDER BY
+					s.show_id ASC,
+					e.season ASC,
+					e.episode_in_season ASC";
 
 			using (var dbConnection = Database.CreateConnection())
 			{
@@ -89,34 +95,37 @@ namespace KrisHemenway.TVShows.Episodes
 		{
 			const string sql = @"
 				SELECT
-					e.id,
+					e.episode_id,
 					e.title,
 					e.season,
-					e.episode_number as episodenumber,
+					e.episode_in_show as episodeinshow,
 					e.episode_in_season as episodeinseason,
 					e.airdate,
-					e.video_path as videopath,
-					s.id as showid,
+					e.path as videopath,
+					s.show_id as showid,
 					s.name as showname,
 					e.created_at as created,
 					e.updated_at as lastmodified,
 					e.path
-				FROM episodes e
-				INNER JOIN series s
-					on s.id = e.series_id
+				FROM episode e
+				INNER JOIN show s
+					on s.show_id = e.show_id
 				WHERE
-					e.series_id IN @showids
-				ORDER BY s.id ASC, e.season ASC, e.episode_in_season ASC";
+					e.show_id = ANY(@showids)
+				ORDER BY
+					s.show_id ASC,
+					e.season ASC,
+					e.episode_in_season ASC";
 
 			using (var dbConnection = Database.CreateConnection())
 			{
 				var sqlParams = new
 					{
-						ShowIds = shows.Select(x => x.Id).ToList()
+						ShowIds = shows.Select(x => x.ShowId).ToList()
 					};
 
-				var showsById = shows.ToDictionary(x => x.Id, x => x);
-				var episodesByShow = shows.ToDictionary(x => x, x => new List<IEpisode>());
+				var showsById = shows.ToDictionary(show => show.ShowId, show => show);
+				var episodesByShow = shows.ToDictionary(show => show, show => new List<IEpisode>());
 
 				foreach(var episode in dbConnection.Query<Episode>(sql, sqlParams))
 				{
@@ -130,27 +139,27 @@ namespace KrisHemenway.TVShows.Episodes
 		public void SaveEpisode(IEpisode episode)
 		{
 			const string sql = @"
-				INSERT INTO episodes 
-					(title, season, episode_number, episode_in_season, airdate, series_id, created_at, updated_at)
+				INSERT INTO episode
+					(title, season, episode_in_show, episode_in_season, airdate, show_id, created_at, updated_at)
 				VALUES
-					(@Title, @Season, @EpisodeNumber, @EpisodeInSeason, @AirDate, @ShowId, current_timestamp, current_timestamp)";
+					(@Title, @Season, @EpisodeInShow, @EpisodeInSeason, @AirDate, @ShowId, current_timestamp, current_timestamp)";
 
 			using (var dbConnection = Database.CreateConnection())
 			{
-				dbConnection.Execute(sql, new { episode.Title, episode.Season, episode.EpisodeNumber, episode.EpisodeInSeason, episode.AirDate, episode.ShowId });
+				dbConnection.Execute(sql, new { episode.Title, episode.Season, episode.EpisodeInShow, episode.EpisodeInSeason, episode.AirDate, episode.ShowId });
 			}
 		}
 
 		public void UpdateEpisode(IEpisode episode)
 		{
 			const string sql = @"
-				UPDATE episodes
+				UPDATE episode
 				SET 
 					title = @Title,
 					airdate = @AirDate,
 					updated_at = current_timestamp
 				WHERE 
-					series_id = @ShowId
+					show_id = @ShowId
 					AND season = @Season
 					AND episode_in_season = @EpisodeInSeason";
 

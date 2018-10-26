@@ -6,11 +6,10 @@ namespace KrisHemenway.TVShows.Shows
 {
 	public interface IShow
 	{
-		int Id { get; }
+		Guid ShowId { get; }
 		string Name { get; }
-		string Path { get; }
 
-		int? RageId { get; }
+		string Path { get; }
 		int? MazeId { get; }
 
 		IReadOnlyList<IEpisode> Episodes { get; }
@@ -26,11 +25,11 @@ namespace KrisHemenway.TVShows.Shows
 			Episodes = new List<Episode>();
 		}
 
-		public int Id { get; set; }
+		public Guid ShowId { get; set; }
 		public string Name { get; set; }
+
 		public string Path { get; set; }
 
-		public int? RageId { get; set; }
 		public int? MazeId { get; set; }
 
 		public IReadOnlyList<IEpisode> Episodes { get; set; }

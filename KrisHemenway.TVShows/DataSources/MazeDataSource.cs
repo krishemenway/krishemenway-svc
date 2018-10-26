@@ -61,7 +61,7 @@ namespace KrisHemenway.TVShows
 				Season = episode.Season,
 				EpisodeInSeason = episode.Number,
 				ShowName = show.Name,
-				ShowId = show.Id
+				ShowId = show.ShowId
 			};
 		}
 	}

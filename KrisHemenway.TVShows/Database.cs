@@ -7,7 +7,7 @@ namespace KrisHemenway.TVShows
 	{
 		public static IDbConnection CreateConnection()
 		{
-			var connection = new NpgsqlConnection($"Host={Program.Settings.Host};Username={Program.Settings.User};Password={Program.Settings.Password};Database={Program.Settings.DatabaseName}");
+			var connection = new NpgsqlConnection($"Host={Program.Settings.DatabaseHost};Username={Program.Settings.DatabaseUser};Password={Program.Settings.DatabasePassword};Database={Program.Settings.DatabaseName};Port={Program.Settings.DatabasePort}");
 			connection.Open();
 			return connection;
 		}

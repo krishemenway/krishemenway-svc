@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using KrisHemenway.TVShows.Episodes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,14 +23,13 @@ namespace KrisHemenway.TVShows.Shows
 		{
 			const string sql = @"
 				SELECT
-					s.id,
+					s.show_id as showid,
 					s.name,
-					s.rage_id as rageid,
 					s.maze_id as mazeid,
 					s.created_at as created,
 					s.updated_at as lastmodified,
 					s.path
-				FROM series s";
+				FROM show s";
 
 			using (var dbConnection = Database.CreateConnection())
 			{
@@ -49,14 +49,13 @@ namespace KrisHemenway.TVShows.Shows
 		{
 			const string sql = @"
 				SELECT
-					s.id,
+					s.show_id as showid,
 					s.name,
-					s.rage_id as rageid,
 					s.maze_id as mazeid,
 					s.created_at as created,
 					s.updated_at as lastmodified,
 					s.path
-				FROM series s
+				FROM show s
 				WHERE s.name = @Name";
 
 			using (var dbConnection = Database.CreateConnection())
@@ -77,15 +76,15 @@ namespace KrisHemenway.TVShows.Shows
 		public IShow Create(CreateShowRequest request)
 		{
 			const string sql = @"
-				INSERT INTO series (id, name, maze_id, path)
+				INSERT INTO show (show_id, name, maze_id, path)
 				VALUES (default, @name, @mazeid, @path)
-				RETURNING id";
+				RETURNING show_id";
 
 			using (var dbConnection = Database.CreateConnection())
 			{
 				return new Show
 				{
-					Id = dbConnection.Query<int>(sql, request).First(),
+					ShowId = dbConnection.Query<Guid>(sql, request).Single(),
 					Name = request.Name,
 					MazeId = request.MazeId,
 					Path = request.Path
@@ -94,12 +93,5 @@ namespace KrisHemenway.TVShows.Shows
 		}
 
 		private readonly IEpisodeStore _episodeStore;
-	}
-
-	public class CreateShowRequest
-	{
-		public int? MazeId { get; set; }
-		public string Name { get; set; }
-		public string Path { get; set; }
 	}
 }
