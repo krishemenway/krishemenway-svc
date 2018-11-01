@@ -29,7 +29,7 @@ namespace KrisHemenway.TVShows.EpisodeRenamer
 			}
 			else
 			{
-				return Result<IReadOnlyList<IVideoFile>>.Failure("The path {path} was not found");
+				return Result<IReadOnlyList<IVideoFile>>.Failure($"The path {path} was not found");
 			}
 		}
 
