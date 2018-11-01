@@ -10,6 +10,7 @@ namespace KrisHemenway.TVShows.Episodes
 	{
 		void SaveEpisode(IEpisode episode);
 		void UpdateEpisode(IEpisode episode);
+		void UpdatePath(IEpisode episode, string path);
 
 		IReadOnlyDictionary<IShow, IReadOnlyList<IEpisode>> FindEpisodes(params IShow[] shows);
 
@@ -166,6 +167,24 @@ namespace KrisHemenway.TVShows.Episodes
 			using (var dbConnection = Database.CreateConnection())
 			{
 				dbConnection.Execute(sql, new { episode.ShowId, episode.Season, episode.EpisodeInSeason, episode.Title, episode.AirDate });
+			}
+		}
+
+		public void UpdatePath(IEpisode episode, string path)
+		{
+			const string sql = @"
+				UPDATE episode
+				SET 
+					path = @Path,
+					updated_at = current_timestamp
+				WHERE 
+					show_id = @ShowId
+					AND season = @Season
+					AND episode_in_season = @EpisodeInSeason";
+
+			using (var dbConnection = Database.CreateConnection())
+			{
+				dbConnection.Execute(sql, new { episode.ShowId, episode.Season, episode.EpisodeInSeason, path });
 			}
 		}
 	}

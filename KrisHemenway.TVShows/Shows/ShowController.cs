@@ -1,4 +1,5 @@
-﻿using KrisHemenway.TVShows.Jobs;
+﻿using KrisHemenway.Common;
+using KrisHemenway.TVShows.Jobs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KrisHemenway.TVShows.Shows
@@ -7,11 +8,12 @@ namespace KrisHemenway.TVShows.Shows
 	public class ShowController : Controller
 	{
 		[HttpGet(nameof(All))]
+		[ProducesResponseType(200, Type = typeof(AllShowsResponse))]
 		public IActionResult All()
 		{
-			return Json(new ShowStore().FindAll());
+			return Json(new AllShowsRequestHandler().HandleRequest());
 		}
-		
+
 		[HttpGet(nameof(Create))]
 		public IActionResult Create([FromQuery]CreateShowRequest createShowRequest)
 		{

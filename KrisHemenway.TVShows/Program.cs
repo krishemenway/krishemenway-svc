@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
 using System;
+using System.IO;
 
 namespace KrisHemenway.TVShows
 {
@@ -10,11 +12,20 @@ namespace KrisHemenway.TVShows
 	{
 		public static void Main(string[] args)
 		{
+			var configuration = new ConfigurationBuilder()
+				.SetBasePath(Directory.GetCurrentDirectory())
+				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+				.AddEnvironmentVariables()
+				.AddCommandLine(args)
+				.Build();
+
+			Settings = new Settings(configuration);
+
 			SetupLogging();
 
 			try
 			{
-				StartWebHost();
+				StartWebHost(configuration);
 			}
 			catch (Exception exception)
 			{
@@ -37,11 +48,11 @@ namespace KrisHemenway.TVShows
 				.CreateLogger();
 		}
 
-		private static void StartWebHost()
+		private static void StartWebHost(IConfigurationRoot configuration)
 		{
 			WebHost = new WebHostBuilder()
 				.UseKestrel()
-				.UseConfiguration(Settings.Configuration)
+				.UseConfiguration(configuration)
 				.UseStartup<Startup>()
 				.UseSerilog()
 				.UseUrls($"http://*:{Settings.WebPort}")
@@ -50,7 +61,7 @@ namespace KrisHemenway.TVShows
 			WebHost.Run();
 		}
 
-		public static Settings Settings { get; private set; } = new Settings();
+		public static Settings Settings { get; private set; }
 		public static IWebHost WebHost { get; private set; }
 	}
 }

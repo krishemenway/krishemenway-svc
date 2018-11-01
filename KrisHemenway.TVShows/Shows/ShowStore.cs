@@ -9,6 +9,8 @@ namespace KrisHemenway.TVShows.Shows
 	public interface IShowStore
 	{
 		IReadOnlyList<IShow> FindAll();
+		IShow FindOrNull(string name);
+		IShow FindByPath(IReadOnlyList<string> paths);
 		IShow Create(CreateShowRequest request);
 	}
 
@@ -33,6 +35,11 @@ namespace KrisHemenway.TVShows.Shows
 
 			using (var dbConnection = Database.CreateConnection())
 			{
+				if (_cachedShows != null && _cachedShows.Any())
+				{
+					return _cachedShows;
+				}
+
 				var shows = dbConnection.Query<Show>(sql).ToList();
 				var episodesByShow = _episodeStore.FindEpisodes(shows.ToArray());
 
@@ -41,8 +48,14 @@ namespace KrisHemenway.TVShows.Shows
 					show.Episodes = episodesByShow[show];
 				}
 
+				_cachedShows = shows;
 				return shows;
 			}
+		}
+
+		public IShow FindByPath(IReadOnlyList<string> paths)
+		{
+			return FindAll().SingleOrDefault(s => paths.Any(path => s.Path.Equals(path, StringComparison.CurrentCultureIgnoreCase)));
 		}
 
 		public IShow FindOrNull(string name)
@@ -83,14 +96,17 @@ namespace KrisHemenway.TVShows.Shows
 			using (var dbConnection = Database.CreateConnection())
 			{
 				return new Show
-				{
-					ShowId = dbConnection.Query<Guid>(sql, request).Single(),
-					Name = request.Name,
-					MazeId = request.MazeId,
-					Path = request.Path
-				};
+					{
+						ShowId = dbConnection.Query<Guid>(sql, request).Single(),
+						Name = request.Name,
+						MazeId = request.MazeId,
+						Path = request.Path,
+					};
 			}
 		}
+
+		[ThreadStatic]
+		private static IReadOnlyList<IShow> _cachedShows;
 
 		private readonly IEpisodeStore _episodeStore;
 	}

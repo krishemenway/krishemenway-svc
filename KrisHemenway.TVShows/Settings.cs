@@ -1,33 +1,57 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace KrisHemenway.TVShows
 {
-	public class Settings
+	public interface ISettings
 	{
-		public Settings()
+		int WebPort { get; }
+		string LogFile { get; }
+
+		string DatabaseUser { get; }
+		string DatabasePassword { get; }
+
+		string DatabaseHost { get; }
+		int DatabasePort { get; }
+
+		string DatabaseName { get; }
+
+		string ExecutablePath { get; }
+
+		IReadOnlyList<string> RenameVideoFileExtensions { get; }
+		string RenameDateFormat { get; }
+		string RenameFormat { get; }
+
+		int RenamePadNumbers { get; }
+	}
+
+	public class Settings : ISettings
+	{
+		public Settings(IConfigurationRoot configuration)
 		{
-			Configuration = new ConfigurationBuilder()
-				.SetBasePath(Directory.GetCurrentDirectory())
-				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-				.AddEnvironmentVariables()
-				.Build();
+			_configuration = configuration;
 		}
 
-		public int WebPort => Configuration.GetValue<int>("WebPort");
-		public string LogFile => Configuration.GetValue<string>("LogFile");
+		public int WebPort => _configuration.GetValue<int>("WebPort");
+		public string LogFile => _configuration.GetValue<string>("LogFile");
 
-		public string DatabaseUser => Configuration.GetValue<string>("TVShowDatabaseUser");
-		public string DatabasePassword => Configuration.GetValue<string>("TVShowDatabasePassword");
+		public string DatabaseUser => _configuration.GetValue<string>("TVShowDatabaseUser");
+		public string DatabasePassword => _configuration.GetValue<string>("TVShowDatabasePassword");
 
-		public string DatabaseHost => Configuration.GetValue<string>("TVShowDatabaseHost");
-		public int DatabasePort => Configuration.GetValue<int>("TVShowDatabasePort");
+		public string DatabaseHost => _configuration.GetValue<string>("TVShowDatabaseHost");
+		public int DatabasePort => _configuration.GetValue<int>("TVShowDatabasePort");
 
-		public string DatabaseName => Configuration.GetValue<string>("TVShowDatabaseName");
+		public string DatabaseName => _configuration.GetValue<string>("TVShowDatabaseName");
+
+		public IReadOnlyList<string> RenameVideoFileExtensions => _configuration.GetSection("RenameVideoFileExtensions").Get<string[]>();
+		public string RenameDateFormat => _configuration.GetValue<string>("RenameDateFormat");
+		public string RenameFormat => _configuration.GetValue<string>("RenameFormat");
+		public int RenamePadNumbers => _configuration.GetValue<int>("RenamePadNumbers");
 
 		public string ExecutablePath => Directory.GetCurrentDirectory();
 
-		public static IConfigurationRoot Configuration { get; private set; }
+		private readonly IConfigurationRoot _configuration;
 	}
 }
