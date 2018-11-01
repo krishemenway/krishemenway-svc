@@ -36,6 +36,5 @@ namespace KrisHemenway.TVShows.EpisodeRenamer
 		}
 
 		private readonly IEpisodeFilenameParser _episodeFilenameParser;
-		private readonly IEpisodeStore _episodeStore;
 	}
 }
