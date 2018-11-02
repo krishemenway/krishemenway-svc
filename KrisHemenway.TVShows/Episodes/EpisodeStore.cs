@@ -30,7 +30,7 @@ namespace KrisHemenway.TVShows.Episodes
 		{
 			const string sql = @"
 				SELECT
-					e.episode_id,
+					e.episode_id as episodeid,
 					e.title,
 					e.season,
 					e.episode_in_show as episodeinshow,
@@ -63,7 +63,7 @@ namespace KrisHemenway.TVShows.Episodes
 		{
 			const string sql = @"
 				SELECT
-					e.episode_id,
+					e.episode_id as episodeid,
 					e.title,
 					e.season,
 					e.episode_in_show as episodeinshow,
@@ -96,7 +96,7 @@ namespace KrisHemenway.TVShows.Episodes
 		{
 			const string sql = @"
 				SELECT
-					e.episode_id,
+					e.episode_id as episodeid,
 					e.title,
 					e.season,
 					e.episode_in_show as episodeinshow,
