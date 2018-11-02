@@ -1,5 +1,5 @@
-﻿using KrisHemenway.TVShows.Shows;
-using System;
+﻿using KrisHemenway.Common;
+using KrisHemenway.TVShows.Shows;
 using System.Linq;
 
 namespace KrisHemenway.TVShows.Reports
@@ -13,12 +13,16 @@ namespace KrisHemenway.TVShows.Reports
 
 		public MissingEpisodesReport GenerateReport()
 		{
+			var allShowReports = _showStore.FindAll()
+				.Select(CreateReportForShow)
+				.ToList();
+
 			return new MissingEpisodesReport
 				{
-					AllShows = _showStore.FindAll()
-						.Select(CreateReportForShow)
-						.Where(show => show.MissingEpisodeCount > 0)
-						.ToList(),
+					AllShows = allShowReports.ToList(),
+					TotalMissingEpisodesPercentage = allShowReports
+						.Select(show => show.MissingEpisodesPercentage)
+						.Aggregate((previousPercentage, missingPercentage) => previousPercentage + missingPercentage),
 				};
 		}
 
@@ -27,8 +31,8 @@ namespace KrisHemenway.TVShows.Reports
 			return new MissingEpisodesForShowReport
 				{
 					Name = show.Name,
-					MissingEpisodes = show.Episodes.Where(episode => !episode.HasEpisode && episode.AirDate <= DateTime.Today).ToList(),
-					TotalEpisodes = show.Episodes.Count,
+					MissingEpisodes = show.Episodes.Where(episode => episode.IsMissing).ToList(),
+					MissingEpisodesPercentage = show.Episodes.CreatePercentageOf(episode => episode.IsMissing),
 				};
 		}
 

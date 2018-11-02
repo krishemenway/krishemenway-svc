@@ -16,6 +16,7 @@ namespace KrisHemenway.TVShows.Episodes
 
 		string VideoPath { get; }
 		bool HasEpisode { get; }
+		bool IsMissing { get; }
 
 		DateTime? AirDate { get; }
 		DateTime LastModified { get; }
@@ -38,8 +39,12 @@ namespace KrisHemenway.TVShows.Episodes
 		public bool HasEpisode => !string.IsNullOrWhiteSpace(VideoPath);
 
 		public DateTime? AirDate { get; set; }
+		public bool HasAired => AirDate.HasValue && AirDate.Value.Date <= DateTime.Today;
+
 		public DateTime LastModified { get; set; }
 		public DateTime Created { get; set; }
+
+		public bool IsMissing => !HasEpisode && HasAired;
 
 		public override string ToString()
 		{
