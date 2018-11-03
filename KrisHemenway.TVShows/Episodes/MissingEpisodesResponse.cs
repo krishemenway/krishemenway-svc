@@ -1,16 +1,15 @@
 ﻿using KrisHemenway.Common;
-using KrisHemenway.TVShows.Episodes;
 using System.Collections.Generic;
 
-namespace KrisHemenway.TVShows.Reports
+namespace KrisHemenway.TVShows.Episodes
 {
-	public class MissingEpisodesReport
+	public class MissingEpisodesResponse
 	{
-		public IReadOnlyList<MissingEpisodesForShowReport> AllShows {get; set; }
+		public IReadOnlyList<MissingEpisodesForShow> AllShows {get; set; }
 		public Percentage TotalMissingEpisodesPercentage { get; set; }
 	}
 
-	public class MissingEpisodesForShowReport
+	public class MissingEpisodesForShow
 	{
 		public string Name { get; set; }
 		public IReadOnlyList<IEpisode> MissingEpisodes { get; set; }

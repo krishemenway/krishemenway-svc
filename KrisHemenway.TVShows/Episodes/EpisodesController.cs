@@ -1,47 +1,36 @@
-﻿using KrisHemenway.TVShows.Reports;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace KrisHemenway.TVShows.Episodes
 {
 	[Route("api/tvshows/episodes")]
 	public class EpisodesController : Controller
 	{
-		[HttpGet("new")]
-		public IActionResult GetNewEpisodes()
+		[HttpGet(nameof(RecentlyAdded))]
+		[ProducesResponseType(200, Type = typeof(RecentlyAddedEpisodesResponse))]
+		public IActionResult RecentlyAdded()
 		{
-			var episodes = new EpisodeStore().FindNewEpisodes();
-			return Json(episodes);
+			return Json(new RecentlyAddedEpisodesRequestHandler().HandleRequest());
 		}
 		
-		[HttpGet("upcoming")]
-		public IActionResult GetUpcomingEpisodes()
+		[HttpGet(nameof(Upcoming))]
+		[ProducesResponseType(200, Type = typeof(UpcomingEpisodesResponse))]
+		public IActionResult Upcoming()
 		{
-			var episodes = new EpisodeStore().FindEpisodesAiring(DateTime.Today, DateTime.Today.AddDays(3));
-			return Json(episodes);
+			return Json(new UpcomingEpisodesRequestHandler().HandleRequest());
 		}
 
-		[HttpGet("missing")]
-		public IActionResult MissingEpisodes()
+		[HttpGet(nameof(Missing))]
+		[ProducesResponseType(200, Type = typeof(MissingEpisodesResponse))]
+		public IActionResult Missing()
 		{
-			return Json(new MissingEpisodesReportGenerator().GenerateReport());
+			return Json(new MissingEpisodesRequestHandler().HandleRequest());
 		}
 		
 		[HttpGet("calendar/{year}/{month}")]
-		public IActionResult GetEpisodesForMonth(int year, int month)
+		[ProducesResponseType(200, Type = typeof(EpisodesForMonthResponse))]
+		public IActionResult GetEpisodesForMonth([FromRoute]EpisodesForMonthRequest request)
 		{
-			var beginningOfMonth = new DateTime(year, month, 1);
-			var endOfMonth = beginningOfMonth.AddMonths(1).AddDays(-1);
-
-			var episodesInMonth = new EpisodeStore()
-				.FindEpisodesAiring(beginningOfMonth, endOfMonth)
-				.OrderBy(x => x.AirDate)
-				.ThenBy(x => x.ShowId)
-				.ThenBy(x => x.Season)
-				.ThenBy(x => x.EpisodeInSeason);
-
-			return Json(new { EpisodesInMonth = episodesInMonth });
+			return Json(new EpisodesForMonthRequestHandler().HandleRequest(request));
 		}
 	}
 }

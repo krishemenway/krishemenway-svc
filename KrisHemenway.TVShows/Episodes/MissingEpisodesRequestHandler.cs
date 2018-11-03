@@ -2,22 +2,22 @@
 using KrisHemenway.TVShows.Shows;
 using System.Linq;
 
-namespace KrisHemenway.TVShows.Reports
+namespace KrisHemenway.TVShows.Episodes
 {
-	public class MissingEpisodesReportGenerator
+	public class MissingEpisodesRequestHandler
 	{
-		public MissingEpisodesReportGenerator(IShowStore showStore = null)
+		public MissingEpisodesRequestHandler(IShowStore showStore = null)
 		{
 			_showStore = showStore ?? new ShowStore();
 		}
 
-		public MissingEpisodesReport GenerateReport()
+		public MissingEpisodesResponse HandleRequest()
 		{
 			var allShowReports = _showStore.FindAll()
 				.Select(CreateReportForShow)
 				.ToList();
 
-			return new MissingEpisodesReport
+			return new MissingEpisodesResponse
 				{
 					AllShows = allShowReports.ToList(),
 					TotalMissingEpisodesPercentage = allShowReports
@@ -26,9 +26,9 @@ namespace KrisHemenway.TVShows.Reports
 				};
 		}
 
-		private MissingEpisodesForShowReport CreateReportForShow(IShow show)
+		private MissingEpisodesForShow CreateReportForShow(IShow show)
 		{
-			return new MissingEpisodesForShowReport
+			return new MissingEpisodesForShow
 				{
 					Name = show.Name,
 					MissingEpisodes = show.Episodes.Where(episode => episode.IsMissing).ToList(),
