@@ -1,5 +1,4 @@
 ﻿using KrisHemenway.Common;
-using KrisHemenway.TVShows.Jobs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KrisHemenway.TVShows.Shows
@@ -15,24 +14,17 @@ namespace KrisHemenway.TVShows.Shows
 		}
 
 		[HttpGet(nameof(Create))]
+		[ProducesResponseType(200, Type = typeof(Result))]
 		public IActionResult Create([FromQuery]CreateShowRequest createShowRequest)
 		{
-			new RefreshShowTask().Refresh(new ShowStore().Create(createShowRequest));
-			return Ok();
+			return Ok(new CreateShowRequestHandler().HandleRequest(createShowRequest));
 		}
 
 		[HttpPost(nameof(RefreshShow))]
-		public IActionResult RefreshShow([FromQuery]string name)
+		[ProducesResponseType(200, Type = typeof(Result))]
+		public IActionResult RefreshShow([FromQuery]RefreshShowRequest request)
 		{
-			var show = new ShowStore().FindOrNull(name);
-
-			if (show == null)
-			{
-				return Ok($"Unable to find show with name: {name}");
-			}
-
-			new RefreshShowTask().Refresh(show);
-			return Ok();
+			return Ok(new RefreshShowRequestHandler().HandleRequest(request));
 		}
 	}
 }

@@ -9,9 +9,10 @@ namespace KrisHemenway.TVShows.Shows
 	public interface IShowStore
 	{
 		IReadOnlyList<IShow> FindAll();
-		IShow FindOrNull(string name);
-		IShow FindByPath(IReadOnlyList<string> paths);
 		IShow Create(CreateShowRequest request);
+
+		bool TryFindByName(string name, out IShow show);
+		bool TryFindByPath(IReadOnlyList<string> paths, out IShow show);
 	}
 
 	internal class ShowStore : IShowStore
@@ -53,12 +54,35 @@ namespace KrisHemenway.TVShows.Shows
 			}
 		}
 
-		public IShow FindByPath(IReadOnlyList<string> paths)
+		public bool TryFindByPath(IReadOnlyList<string> paths, out IShow show)
 		{
-			return FindAll().SingleOrDefault(s => paths.Any(path => s.Path.Equals(path, StringComparison.CurrentCultureIgnoreCase)));
+			const string sql = @"
+				SELECT
+					s.show_id as showid,
+					s.name,
+					s.maze_id as mazeid,
+					s.created_at as created,
+					s.updated_at as lastmodified,
+					s.path
+				FROM show s
+				WHERE lower(s.path) = ANY(@Paths)";
+
+			using (var dbConnection = Database.CreateConnection())
+			{
+				var writableShow = dbConnection.QueryFirstOrDefault<Show>(sql, new { Paths = paths.Select(x => x.ToLower()).ToList() });
+				show = writableShow;
+
+				if (show == null)
+				{
+					return false;
+				}
+
+				writableShow.Episodes = _episodeStore.FindEpisodes(show)[show];
+				return show != null;
+			}
 		}
 
-		public IShow FindOrNull(string name)
+		public bool TryFindByName(string name, out IShow show)
 		{
 			const string sql = @"
 				SELECT
@@ -73,16 +97,16 @@ namespace KrisHemenway.TVShows.Shows
 
 			using (var dbConnection = Database.CreateConnection())
 			{
-				var show = dbConnection.QueryFirstOrDefault<Show>(sql, new { name });
+				var writableShow = dbConnection.QueryFirstOrDefault<Show>(sql, new { name });
+				show = writableShow;
 
 				if (show == null)
 				{
-					return null;
+					return false;
 				}
 
-				show.Episodes = _episodeStore.FindEpisodes(show)[show];
-
-				return show;
+				writableShow.Episodes = _episodeStore.FindEpisodes(show)[show];
+				return show != null;
 			}
 		}
 

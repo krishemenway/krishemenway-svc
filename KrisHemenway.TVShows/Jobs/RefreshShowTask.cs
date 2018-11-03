@@ -1,4 +1,5 @@
-﻿using KrisHemenway.TVShows.Episodes;
+﻿using KrisHemenway.Common;
+using KrisHemenway.TVShows.Episodes;
 using KrisHemenway.TVShows.Shows;
 using Serilog;
 using System;
@@ -8,7 +9,7 @@ namespace KrisHemenway.TVShows.Jobs
 {
 	public interface IRefreshShowTask
 	{
-		void Refresh(IShow show);
+		Result Refresh(IShow show);
 	}
 
 	public class RefreshShowTask : IRefreshShowTask
@@ -21,11 +22,11 @@ namespace KrisHemenway.TVShows.Jobs
 			_mazeDataSource = mazeDataSource ?? new MazeDataSource();
 		}
 
-		public void Refresh(IShow show)
+		public Result Refresh(IShow show)
 		{
 			if (!show.MazeId.HasValue)
 			{
-				return;
+				return Result.Failure($"Could not refresh show {show.Name} because it was missing a maze id");
 			}
 
 			foreach (var episode in _mazeDataSource.FindEpisodes(show))
@@ -41,6 +42,8 @@ namespace KrisHemenway.TVShows.Jobs
 					UpdateEpisode(episode);
 				}
 			}
+
+			return Result.Successful;
 		}
 
 		private void CreateEpisode(IEpisode episode)

@@ -61,7 +61,7 @@ namespace KrisHemenway.TVShows
 			WebHost.Run();
 		}
 
-		public static Settings Settings { get; private set; }
-		public static IWebHost WebHost { get; private set; }
+		public static Settings Settings { get; internal set; }
+		public static IWebHost WebHost { get; internal set; }
 	}
 }

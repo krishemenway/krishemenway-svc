@@ -14,3 +14,6 @@ TABLESPACE pg_default;
 ALTER TABLE public.show OWNER to tvshows;
 GRANT INSERT, SELECT, UPDATE, DELETE, TRIGGER ON TABLE public.show TO tvshows;
 GRANT ALL ON TABLE public.show TO tvshows;
+
+CREATE UNIQUE INDEX idx_show_path ON public.show (lower(path))
+CREATE INDEX idx_show_name ON public.show (name)

@@ -16,8 +16,7 @@ namespace KrisHemenway.TVShows.EpisodeRenamer
 
 		public bool TryIdentifyVideo(IVideoFile file, out IShow show)
 		{
-			show = _showStore.FindByPath(file.GetAllParentDirectoryPaths());
-			return show != null;
+			return _showStore.TryFindByPath(file.GetAllParentDirectoryPaths(), out show);
 		}
 
 		private readonly IShowStore _showStore;
