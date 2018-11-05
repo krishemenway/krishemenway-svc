@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using KrisHemenway.Common;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KrisHemenway.TVShows.Jobs
 {
@@ -9,21 +10,21 @@ namespace KrisHemenway.TVShows.Jobs
 		public IActionResult ExecuteRefreshShowsJob()
 		{
 			Startup.Scheduler.TriggerJob(RefreshTVShowsJob.JobKey);
-			return Json(true);
+			return Json(Result.Successful);
 		}
 		
 		[HttpPost(nameof(ExecuteThisJustInJob))]
 		public IActionResult ExecuteThisJustInJob()
 		{
 			Startup.Scheduler.TriggerJob(ThisJustInJob.JobKey);
-			return Json(true);
+			return Json(Result.Successful);
 		}
 		
 		[HttpPost(nameof(ExecuteReleasingTodayJob))]
 		public IActionResult ExecuteReleasingTodayJob()
 		{
 			Startup.Scheduler.TriggerJob(TVReleasingTodayJob.JobKey);
-			return Json(true);
+			return Json(Result.Successful);
 		}
 	}
 }
