@@ -16,10 +16,10 @@ namespace KrisHemenway.TVShows.Jobs
 	{
 		public RefreshShowTask(
 			IEpisodeStore episodeStore = null,
-			IMazeDataSource mazeDataSource = null)
+			IMazeDataSource mazeShowEpisodeClient = null)
 		{
 			_episodeStore = episodeStore ?? new EpisodeStore();
-			_mazeDataSource = mazeDataSource ?? new MazeDataSource();
+			_mazeShowEpisodeClient = mazeShowEpisodeClient ?? new MazeShowEpisodeClient();
 		}
 
 		public Result Refresh(IShow show)
@@ -29,21 +29,38 @@ namespace KrisHemenway.TVShows.Jobs
 				return Result.Failure($"Could not refresh show {show.Name} because it was missing a maze id");
 			}
 
-			foreach (var episode in _mazeDataSource.FindEpisodes(show))
-			{
-				var existingEpisode = show.Episodes.SingleOrDefault(x => x.Season == episode.Season && x.EpisodeInSeason == episode.EpisodeInSeason);
+			var episodesResult = _mazeShowEpisodeClient.FindEpisodes(show);
 
-				if (existingEpisode == null)
-				{
-					CreateEpisode(episode);
-				}
-				else if (ShouldUpdateEpisode(existingEpisode, episode))
-				{
-					UpdateEpisode(episode);
-				}
+			if (!episodesResult.Success)
+			{
+				return Result.Failure(episodesResult.ErrorMessage);
 			}
 
+			CreateOrUpdateEpisodes(show, episodesResult);
+
 			return Result.Successful;
+		}
+
+		private void CreateOrUpdateEpisodes(IShow show, Result<System.Collections.Generic.IReadOnlyList<IEpisode>> episodesResult)
+		{
+			foreach (var episode in episodesResult.Data)
+			{
+				CreateOrUpdateEpisode(show, episode);
+			}
+		}
+
+		private void CreateOrUpdateEpisode(IShow show, IEpisode episode)
+		{
+			var existingEpisode = show.Episodes.SingleOrDefault(x => x.Season == episode.Season && x.EpisodeInSeason == episode.EpisodeInSeason);
+
+			if (existingEpisode == null)
+			{
+				CreateEpisode(episode);
+			}
+			else if (ShouldUpdateEpisode(existingEpisode, episode))
+			{
+				UpdateEpisode(episode);
+			}
 		}
 
 		private void CreateEpisode(IEpisode episode)
@@ -74,6 +91,6 @@ namespace KrisHemenway.TVShows.Jobs
 		}
 
 		private readonly IEpisodeStore _episodeStore;
-		private readonly IMazeDataSource _mazeDataSource;
+		private readonly IMazeDataSource _mazeShowEpisodeClient;
 	}
 }
