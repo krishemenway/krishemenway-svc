@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 
-namespace KrisHemenway.TVShows
+namespace KrisHemenway.TVShows.MazeDataSource
 {
 	public interface IMazeDataSource
 	{

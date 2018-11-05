@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KrisHemenway.TVShows
+namespace KrisHemenway.TVShows.MazeDataSource
 {
 	public class MazeShowEpisode
 	{

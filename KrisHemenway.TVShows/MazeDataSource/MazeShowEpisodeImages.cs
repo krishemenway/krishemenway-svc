@@ -1,4 +1,4 @@
-﻿namespace KrisHemenway.TVShows
+﻿namespace KrisHemenway.TVShows.MazeDataSource
 {
 	public class MazeShowEpisodeImages
 	{
