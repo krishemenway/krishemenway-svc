@@ -2,6 +2,8 @@ package com.krishemenway.notifications
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -17,6 +20,7 @@ import java.time.format.DateTimeFormatter
 
 class NotificationsAdapter(private val _context: Context, private val notifications: MutableList<Notification> = mutableListOf()) : BaseAdapter() {
     fun refresh() {
+        this.setNotificationsFromResponse(Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(this._context).getString("LastNotificationsResponse", "{\"Notifications\": []}"), NotificationResponse::class.java))
         makeRequest()
     }
 
@@ -55,9 +59,8 @@ class NotificationsAdapter(private val _context: Context, private val notificati
         Log.d("NotificationAdapter", "Requesting Notifications @ $notificationRequestUrl")
         val request = GsonRequest(notificationRequestUrl, NotificationResponse::class.java, HashMap(),
             Response.Listener { response ->
-                notifications.clear()
-                notifications.addAll(response.notifications)
-                this.notifyDataSetChanged()
+                PreferenceManager.getDefaultSharedPreferences(this._context).edit().putString("LastNotificationsResponse", Gson().toJson(response)).apply()
+                this.setNotificationsFromResponse(response)
             },
             Response.ErrorListener { error ->
                 AlertDialog.Builder(this._context)
@@ -69,6 +72,12 @@ class NotificationsAdapter(private val _context: Context, private val notificati
         )
 
         Volley.newRequestQueue(_context).add(request)
+    }
+
+    private fun setNotificationsFromResponse(response: NotificationResponse) {
+        notifications.clear()
+        notifications.addAll(response.notifications)
+        this.notifyDataSetChanged()
     }
 
     companion object {
