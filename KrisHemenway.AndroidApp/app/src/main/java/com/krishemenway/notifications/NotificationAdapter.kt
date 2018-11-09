@@ -17,10 +17,11 @@ import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class NotificationsAdapter(private val _context: Context, private val notifications: MutableList<Notification> = mutableListOf()) : BaseAdapter() {
     fun refresh() {
-        this.setNotificationsFromResponse(Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(this._context).getString("LastNotificationsResponse", "{\"Notifications\": []}"), NotificationResponse::class.java))
+        loadPreviousResponse()
         makeRequest()
     }
 
@@ -52,6 +53,13 @@ class NotificationsAdapter(private val _context: Context, private val notificati
         return view
     }
 
+    private fun loadPreviousResponse() {
+        val emptyNotificationsResponse = Gson().toJson(emptyNotificationsResponse())
+        val previousResponseJson = preferences().getString(PREVIOUS_RESPONSE_KEY, emptyNotificationsResponse)
+        val response = Gson().fromJson(previousResponseJson, NotificationResponse::class.java)
+        this.setNotificationsFromResponse(response)
+    }
+
     private fun makeRequest() {
         val notificationsSinceDate = LocalDate.now().minusDays(24).format(NotificationRequestFormat)
         val notificationRequestUrl = "https://www.krishemenway.com/api/notifications/recent?fromTime=$notificationsSinceDate"
@@ -59,7 +67,7 @@ class NotificationsAdapter(private val _context: Context, private val notificati
         Log.d("NotificationAdapter", "Requesting Notifications @ $notificationRequestUrl")
         val request = GsonRequest(notificationRequestUrl, NotificationResponse::class.java, HashMap(),
             Response.Listener { response ->
-                PreferenceManager.getDefaultSharedPreferences(this._context).edit().putString("LastNotificationsResponse", Gson().toJson(response)).apply()
+                preferences().edit().putString(PREVIOUS_RESPONSE_KEY, Gson().toJson(response)).apply()
                 this.setNotificationsFromResponse(response)
             },
             Response.ErrorListener { error ->
@@ -80,8 +88,18 @@ class NotificationsAdapter(private val _context: Context, private val notificati
         this.notifyDataSetChanged()
     }
 
+    private fun emptyNotificationsResponse(): NotificationResponse {
+        return NotificationResponse(arrayOf())
+    }
+
+    private fun preferences(): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(this._context)
+    }
+
     companion object {
-        private val NotificationRequestFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        private val NotificationDisplayFormat = SimpleDateFormat("yyyy | MM | dd")
+        private val NotificationRequestFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US)
+        private val NotificationDisplayFormat = SimpleDateFormat("yyyy | MM | dd", Locale.US)
     }
 }
+
+private const val PREVIOUS_RESPONSE_KEY = "PREVIOUS_RESPONSE_KEY"
