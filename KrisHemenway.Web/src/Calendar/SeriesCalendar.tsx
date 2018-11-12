@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { FullMonthName } from './FullMonthName';
 import { CalendarState } from './Calendar';
 import { EpisodeName } from './EpisodeName';
-import { Episode } from './EpisodesInMonthResponse';
+import { Episode } from '../Episodes/Episode';
 
 interface SeriesCalendarParams {
 	CalendarState: CalendarState;
