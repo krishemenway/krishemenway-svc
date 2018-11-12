@@ -1,7 +1,8 @@
 import * as React from "react";
-import * as reactDom from 'react-dom';
+import * as reactDom from "react-dom";
 import * as moment from "moment";
-import { Episode, EpisodesInMonthResponse } from "./EpisodesInMonthResponse";
+import { Episode } from "../Episodes/Episode";
+import { EpisodesInMonthResponse } from "./EpisodesInMonthResponse";
 import { SeriesCalendar } from "./SeriesCalendar";
 
 export interface CalendarState {
