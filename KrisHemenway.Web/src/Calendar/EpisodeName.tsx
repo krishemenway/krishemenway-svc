@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Episode } from './EpisodesInMonthResponse';
+import * as React from "react";
+import { Episode } from "./EpisodesInMonthResponse";
 
 interface EpisodeParams {
 	Episode: Episode;
