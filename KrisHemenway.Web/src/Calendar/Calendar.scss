@@ -32,6 +32,9 @@ button {
 }
 
 .calendar {
+	margin: 0 auto;
+	max-width: 900px;
+
 	.current-month {
 		cursor: default;
 	}
@@ -74,9 +77,10 @@ button {
 
 	.episode-listings {
 		flex-basis: auto;
+		z-index: 1;
 	
 		@include respond-to(phone) {
-			margin-bottom: 30px;
+			margin: 0 20px 30px 0;
 		}
 	}
 
@@ -87,6 +91,7 @@ button {
 
 	.day-of-week {
 		position: absolute;
+		z-index: 0;
 		bottom: 3px;
 		right: 3px;
 		letter-spacing: 2px;
