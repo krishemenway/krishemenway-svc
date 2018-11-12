@@ -4,20 +4,22 @@ module.exports = function(grunt) {
 		paths: {
 			src: ['./src'],
 			dist: ['./dist'],
-			misc: ['./misc_projects']
+			misc: ['./misc_projects'],
+			build: ['./build']
 		},
 
 		clean: {
 			options: {
 				force: true
 			},
-			dist: ['<%= paths.dist %>/**/*']
+			dist: ['<%= paths.dist %>/**/*'],
+			build: ['<%= paths.build %>/**/*']
 		},
 
 		browserify: {
 			build: {
 				src: ["<%=paths.src%>/Home/App.tsx"],
-				dest: "<%=paths.dist%>/app.js",
+				dest: "<%=paths.build%>/app.js",
 				options: {
 					browserifyOptions: {
 						plugin: [
@@ -29,7 +31,7 @@ module.exports = function(grunt) {
 			},
 			calendar: {
 				src: ["<%=paths.src%>/Calendar/Calendar.tsx"],
-				dest: "<%=paths.dist%>/calendar.js",
+				dest: "<%=paths.build%>/calendar.js",
 				options: {
 					browserifyOptions: {
 						plugin: [
@@ -49,8 +51,8 @@ module.exports = function(grunt) {
 					]
 				},
 				files: {
-					'<%=paths.dist%>/app.css': '<%=paths.src%>/home/app.scss',
-					'<%=paths.dist%>/calendar.css': '<%=paths.src%>/calendar/calendar.scss',
+					'<%=paths.build%>/app.css': '<%=paths.src%>/home/app.scss',
+					'<%=paths.build%>/calendar.css': '<%=paths.src%>/calendar/calendar.scss',
 				}
 			}
 		},
@@ -75,6 +77,13 @@ module.exports = function(grunt) {
 			misc: {
 				expand: true,
 				cwd: "<%=paths.misc%>/",
+				src: ['**/*'],
+				dest: "<%=paths.dist%>/",
+				flatten: false
+			},
+			buildToDist: {
+				expand: true,
+				cwd: "<%=paths.build%>/",
 				src: ['**/*'],
 				dest: "<%=paths.dist%>/",
 				flatten: false
@@ -120,6 +129,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('build', ['clean', 'browserify', 'sass', 'copy']);
+	grunt.registerTask('build', ['clean:build', 'browserify', 'sass', 'clean:dist', 'copy']);
 	grunt.registerTask('default', ['build']);
 }
