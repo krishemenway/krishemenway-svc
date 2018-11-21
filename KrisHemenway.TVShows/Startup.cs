@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Quartz;
 using Quartz.Impl;
+using System;
 
 namespace KrisHemenway.TVShows
 {
@@ -16,11 +17,20 @@ namespace KrisHemenway.TVShows
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvcCore().AddJsonFormatters(FixJsonCamelCasing);
+
+			services.AddDistributedMemoryCache();
+			services.AddSession(options =>
+			{
+				// Set a short timeout for easy testing.
+				options.IdleTimeout = TimeSpan.FromDays(1);
+				options.Cookie.HttpOnly = true;
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IApplicationLifetime applicationLifetime)
 		{
+			app.UseSession();
 			app.UseMvc();
 
 			Scheduler = new StdSchedulerFactory().GetScheduler().Result;

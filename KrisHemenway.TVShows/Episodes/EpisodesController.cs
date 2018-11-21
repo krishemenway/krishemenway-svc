@@ -32,5 +32,25 @@ namespace KrisHemenway.TVShows.Episodes
 		{
 			return Json(new EpisodesForMonthRequestHandler().HandleRequest(request));
 		}
+
+		[HttpGet("download")]
+		[DownloadAuthenticationRequired]
+		public IActionResult DownloadEpisode(DownloadEpisodeRequest request)
+		{
+			var response = new DownloadEpisodeRequestHandler().HandleRequest(request);
+
+			if (!response.Success)
+			{
+				return Ok("Something went wrong with the download");
+			}
+
+			return File(response.Data.FileStream, response.Data.ContentType, response.Data.FileName);
+		}
+
+		[HttpGet("authenticate")]
+		public IActionResult AuthenticateRequest([FromQuery]DownloadAuthenticationRequest request)
+		{
+			return Json(new DownloadAuthenticationRequestHandler().HandleRequest(request, HttpContext.Session));
+		}
 	}
 }

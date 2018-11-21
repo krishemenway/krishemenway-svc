@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace KrisHemenway.TVShows
 {
@@ -18,13 +17,15 @@ namespace KrisHemenway.TVShows
 
 		string DatabaseName { get; }
 
-		string ExecutablePath { get; }
-
 		IReadOnlyList<string> RenameVideoFileExtensions { get; }
 		string RenameDateFormat { get; }
 		string RenameFormat { get; }
 
 		int RenamePadNumbers { get; }
+
+		string DownloadPassword { get; }
+
+		string ExecutablePath { get; }
 	}
 
 	public class Settings : ISettings
@@ -49,6 +50,8 @@ namespace KrisHemenway.TVShows
 		public string RenameDateFormat => _configuration.GetValue<string>("RenameDateFormat");
 		public string RenameFormat => _configuration.GetValue<string>("RenameFormat");
 		public int RenamePadNumbers => _configuration.GetValue<int>("RenamePadNumbers");
+
+		public string DownloadPassword => _configuration.GetValue<string>("DownloadPassword");
 
 		public string ExecutablePath => Directory.GetCurrentDirectory();
 
