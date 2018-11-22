@@ -47,8 +47,8 @@ namespace KrisHemenway.TVShows.Episodes
 			return File(response.Data.FileStream, response.Data.ContentType, response.Data.FileName);
 		}
 
-		[HttpGet("authenticate")]
-		public IActionResult AuthenticateRequest([FromQuery]DownloadAuthenticationRequest request)
+		[HttpPost("authenticate")]
+		public IActionResult AuthenticateRequest([FromBody]DownloadAuthenticationRequest request)
 		{
 			return Json(new DownloadAuthenticationRequestHandler().HandleRequest(request, HttpContext.Session));
 		}
