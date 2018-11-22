@@ -46,16 +46,16 @@ module.exports = function(grunt) {
 		},
 		
 		sass: {
+			options: {
+				implementation: sass,
+				includePaths: [
+					"<%=paths.src%>"
+				]
+			},
 			build: {
-				options: {
-					implementation: sass,
-					includePaths: [
-						"<%=paths.src%>"
-					]
-				},
 				files: {
-					'<%=paths.build%>/app.css': '<%=paths.src%>/home/app.scss',
-					'<%=paths.build%>/calendar.css': '<%=paths.src%>/calendar/calendar.scss',
+					'<%=paths.build%>/app.css': '<%=paths.src%>/Home/App.scss',
+					'<%=paths.build%>/calendar.css': '<%=paths.src%>/Calendar/Calendar.scss',
 				}
 			}
 		},

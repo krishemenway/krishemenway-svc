@@ -1,13 +1,15 @@
-import * as React from 'react';
-import * as moment from 'moment';
-import { FullMonthName } from './FullMonthName';
-import { CalendarState } from './Calendar';
-import { EpisodeName } from './EpisodeName';
-import { Episode } from '../Episodes/Episode';
+import * as React from "react";
+import * as moment from "moment";
+import { FullMonthName } from "./FullMonthName";
+import { CalendarState } from "./Calendar";
+import { EpisodeName } from "./EpisodeName";
+import { Episode } from "../Episodes/Episode";
+import { DownloadLogin } from "./DownloadLogin";
 
 interface SeriesCalendarParams {
 	CalendarState: CalendarState;
 	OnChangeMonth: Function;
+	OnAuthenticated: () => void;
 }
 
 export class SeriesCalendar extends React.Component<SeriesCalendarParams, {}> {
@@ -15,20 +17,22 @@ export class SeriesCalendar extends React.Component<SeriesCalendarParams, {}> {
 		return (
 			<div className="calendar">
 				<div className="months flex-row-container">
-					<button className="previous-month flex-even-distribution font-28 phone-font-16 padding-vertical" onClick={() => this.clickMonth(this.props.CalendarState.CurrentMonth.clone().subtract(1, 'month'))}>
-						<FullMonthName Month={this.props.CalendarState.CurrentMonth.clone().subtract(1, 'month')} />
+					<button className="previous-month flex-even-distribution font-28 phone-font-16 padding-vertical" onClick={() => this.clickMonth(this.props.CalendarState.CurrentMonth.clone().subtract(1, "month"))}>
+						<FullMonthName Month={this.props.CalendarState.CurrentMonth.clone().subtract(1, "month")} />
 					</button>
 
 					<div className="current-month flex-even-distribution font-34 phone-font-24 padding-vertical">
 						<FullMonthName Month={this.props.CalendarState.CurrentMonth} />
 					</div>
 
-					<button className="next-month flex-even-distribution font-28 phone-font-16 padding-vertical" onClick={() => this.clickMonth(this.props.CalendarState.CurrentMonth.clone().add(1, 'month'))}>
-						<FullMonthName Month={this.props.CalendarState.CurrentMonth.clone().add(1, 'month')} />
+					<button className="next-month flex-even-distribution font-28 phone-font-16 padding-vertical" onClick={() => this.clickMonth(this.props.CalendarState.CurrentMonth.clone().add(1, "month"))}>
+						<FullMonthName Month={this.props.CalendarState.CurrentMonth.clone().add(1, "month")} />
 					</button>
 				</div>
 
 				<div className="days">{this.renderDays()}</div>
+
+				{!this.props.CalendarState.ShowDownload && <DownloadLogin OnAuthenticated={this.props.OnAuthenticated} />}
 			</div>
 		);
 	}
@@ -39,7 +43,7 @@ export class SeriesCalendar extends React.Component<SeriesCalendarParams, {}> {
 	
 	private renderDays() {
 		let firstDay = moment(this.props.CalendarState.CurrentMonth.format("YYYY-MM-01"));
-		let lastDay = firstDay.clone().add(1, 'month').subtract(1, 'day');
+		let lastDay = firstDay.clone().add(1, "month").subtract(1, "day");
 
 		let days = [];
 		for(let i = 1; i <= lastDay.date(); i++) 
