@@ -12,6 +12,7 @@ namespace KrisHemenway.TVShows.Episodes
 		void UpdateEpisode(IEpisode episode);
 		void UpdatePath(IEpisode episode, string path);
 
+		IReadOnlyList<IEpisode> FindEpisodes(params Guid[] episodeIds);
 		IReadOnlyDictionary<IShow, IReadOnlyList<IEpisode>> FindEpisodes(params IShow[] shows);
 
 		IReadOnlyList<IEpisode> FindNewEpisodes();
@@ -21,6 +22,38 @@ namespace KrisHemenway.TVShows.Episodes
 
 	class EpisodeStore : IEpisodeStore
 	{
+		public IReadOnlyList<IEpisode> FindEpisodes(params Guid[] episodeIds)
+		{
+			const string sql = @"
+				SELECT
+					e.episode_id as episodeid,
+					e.title,
+					e.season,
+					e.episode_in_show as episodeinshow,
+					e.episode_in_season as episodeinseason,
+					e.airdate,
+					e.path as videopath,
+					s.show_id as showid,
+					s.name as showname,
+					e.created_at as created,
+					e.updated_at as lastmodified,
+					e.path
+				FROM episode e
+				INNER JOIN show s
+					on s.show_id = e.show_id
+				WHERE
+					e.episode_id = ANY(@EpisodeIds)
+				ORDER BY
+					s.show_id ASC,
+					e.season ASC,
+					e.episode_in_season ASC";
+
+			using (var dbConnection = Database.CreateConnection())
+			{
+				return dbConnection.Query<Episode>(sql, new { episodeIds }).ToList();
+			}
+		}
+
 		public IReadOnlyList<IEpisode> FindEpisodesAiring(DateTime onDate)
 		{
 			return FindEpisodesAiring(onDate, onDate);
