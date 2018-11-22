@@ -76,7 +76,7 @@ export class SeriesCalendar extends React.Component<SeriesCalendarParams, {}> {
 		return episodes.map((episode, index) => {
 			return (
 				<div className="margin-vertical-half no-bookend-margin-vertical" key={index}>
-					<EpisodeName Episode={episode} />
+					<EpisodeName Episode={episode} ShowDownload={this.props.CalendarState.ShowDownload} />
 				</div>
 			);
 		}, this);

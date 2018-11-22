@@ -1,5 +1,5 @@
 export interface Episode {
-	Id: number;
+	EpisodeId: number;
 	Title: string;
 	ShowName: string;
 	ShowId: number;
@@ -7,4 +7,5 @@ export interface Episode {
 	Season: number;
 	EpisodeInSeason: number;
 	AirDate: string;
+	HasEpisode: boolean;
 }

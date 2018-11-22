@@ -52,6 +52,7 @@
 .phone-font-24 { @include respond-to(mobile) { font-size: 24px; } }
 .phone-font-28 { @include respond-to(mobile) { font-size: 28px; } } 
 
+.gray-90 { color: #909090; }
 .gray-69 { color: #696969; }
 .gray-c8 { color: #c8c8c8; }
 .gray-e8 { color: #e8e8e8; }

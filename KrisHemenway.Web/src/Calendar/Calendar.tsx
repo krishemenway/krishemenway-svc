@@ -6,54 +6,50 @@ import { EpisodesInMonthResponse } from "./EpisodesInMonthResponse";
 import { SeriesCalendar } from "./SeriesCalendar";
 
 export interface CalendarState {
+	ShowDownload: boolean;
 	CurrentMonth: moment.Moment;
 	EpisodesPerDay: HashTable<Array<Episode>>;
 }
 
-interface GlobalAppState {
-	CalendarState: CalendarState;
-}
-
 interface CalendarProps { }
 
-export class Calendar extends React.Component<CalendarProps, GlobalAppState> {
+export class Calendar extends React.Component<CalendarProps, CalendarState> {
 	constructor(props: CalendarProps) {
 		super(props);
 
 		this.state = {
-			CalendarState: {
-				CurrentMonth: moment().local(),
-				EpisodesPerDay: {}
-			}
+			ShowDownload: false,
+			CurrentMonth: moment().local(),
+			EpisodesPerDay: {}
 		};
 	}
 
 	public componentDidMount() {
-		this.loadEpisodesForMonth(this.state.CalendarState.CurrentMonth);
+		this.loadEpisodesForMonth(this.state.CurrentMonth);
 		this.preloadBorderMonths();
 	}
 
 	public render() {
 		return (
-			<SeriesCalendar CalendarState={this.state.CalendarState} OnChangeMonth={this.onChangeMonth} />
+			<SeriesCalendar CalendarState={this.state} OnChangeMonth={this.onChangeMonth} />
 		)
 	}
 
 	private preloadBorderMonths = () : void => {
-		this.loadEpisodesForMonth(this.state.CalendarState.CurrentMonth.clone().subtract(1, "month"));
-		this.loadEpisodesForMonth(this.state.CalendarState.CurrentMonth.clone().add(1, 'month'));
+		this.loadEpisodesForMonth(this.state.CurrentMonth.clone().subtract(1, "month"));
+		this.loadEpisodesForMonth(this.state.CurrentMonth.clone().add(1, 'month'));
 	}
 
 	private loadEpisodesForMonth = (date: moment.Moment) : void => {
-		if(this.state.CalendarState.EpisodesPerDay[date.format("YYYY-MM-01")] == null)
+		if(this.state.EpisodesPerDay[date.format("YYYY-MM-01")] == null)
 		{
-			this.state.CalendarState.EpisodesPerDay[date.format("YYYY-MM-01")] = [];
+			this.state.EpisodesPerDay[date.format("YYYY-MM-01")] = [];
 			$.getJSON("/api/tvshows/episodes/calendar/" + date.format("YYYY/MM"), this.onReceivedCalendarData);
 		}
 	}
 
 	private onReceivedCalendarData = (data: EpisodesInMonthResponse, status: string, request: XMLHttpRequest) : void => {
-		var episodesPerDay : HashTable<Array<Episode>> = this.state.CalendarState.EpisodesPerDay;
+		var episodesPerDay : HashTable<Array<Episode>> = this.state.EpisodesPerDay;
 
 		data.EpisodesInMonth.forEach((episode) => {
 			var airDate = moment(episode.AirDate);
@@ -66,20 +62,12 @@ export class Calendar extends React.Component<CalendarProps, GlobalAppState> {
 			episodesPerDay[airDate.format("YYYY-MM-DD")].push(episode);
 		});
 
-		this.setState({
-			CalendarState: {
-				CurrentMonth: this.state.CalendarState.CurrentMonth,
-				EpisodesPerDay: episodesPerDay
-			}
-		});
+		this.setState({ EpisodesPerDay: episodesPerDay, ShowDownload: data.ShowDownload });
 	}
 	
 	private onChangeMonth = (newMonth: moment.Moment) : void => {
 		this.setState({
-			CalendarState: { 
-				CurrentMonth: newMonth,
-				EpisodesPerDay: this.state.CalendarState.EpisodesPerDay
-			}
+			CurrentMonth: newMonth,
 		});
 
 		this.preloadBorderMonths();
