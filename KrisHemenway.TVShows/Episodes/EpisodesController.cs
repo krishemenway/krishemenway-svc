@@ -30,7 +30,7 @@ namespace KrisHemenway.TVShows.Episodes
 		[ProducesResponseType(200, Type = typeof(EpisodesForMonthResponse))]
 		public IActionResult GetEpisodesForMonth([FromRoute]EpisodesForMonthRequest request)
 		{
-			return Json(new EpisodesForMonthRequestHandler().HandleRequest(request));
+			return Json(new EpisodesForMonthRequestHandler().HandleRequest(request, HttpContext.Session));
 		}
 
 		[HttpGet("download")]

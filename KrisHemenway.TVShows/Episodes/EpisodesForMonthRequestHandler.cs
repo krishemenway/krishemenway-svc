@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Linq;
 
 namespace KrisHemenway.TVShows.Episodes
@@ -10,13 +11,14 @@ namespace KrisHemenway.TVShows.Episodes
 			_episodeStore = episodeStore ?? new EpisodeStore();
 		}
 
-		public EpisodesForMonthResponse HandleRequest(EpisodesForMonthRequest request)
+		public EpisodesForMonthResponse HandleRequest(EpisodesForMonthRequest request, ISession session)
 		{
 			var beginningOfMonth = new DateTime(request.Year, request.Month, 1);
 			var endOfMonth = beginningOfMonth.AddMonths(1).AddDays(-1);
 
 			return new EpisodesForMonthResponse
 				{
+					ShowDownload = DownloadAuthenticationRequiredAttribute.HasAuthenticated(session),
 					EpisodesInMonth = _episodeStore.FindEpisodesAiring(beginningOfMonth, endOfMonth)
 						.OrderBy(x => x.AirDate)
 						.ThenBy(x => x.ShowId)
