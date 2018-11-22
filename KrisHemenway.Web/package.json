@@ -13,10 +13,10 @@
     "node": "10.13.0"
   },
   "dependencies": {
-    "@types/react": "^16.7.6",
-    "@types/react-dom": "^16.0.9",
+    "@types/jquery": "^3.3.22",
     "@types/moment": "^2.13.0",
-    "@types/jquery": "^3.3.22"
+    "@types/react": "^16.7.6",
+    "@types/react-dom": "^16.0.9"
   },
   "devDependencies": {
     "react": "^16.6.3",
@@ -31,6 +31,7 @@
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-sass": "^3.0.2"
+    "grunt-sass": "^3.0.2",
+    "express": "^4.16.4"
   }
 }
