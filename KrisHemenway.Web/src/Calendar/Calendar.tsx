@@ -41,8 +41,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 	}
 
 	private loadEpisodesForMonth = (date: moment.Moment) : void => {
-		if(this.state.EpisodesPerDay[date.format("YYYY-MM-01")] == null)
-		{
+		if (this.state.EpisodesPerDay[date.format("YYYY-MM-01")] == null) {
 			this.state.EpisodesPerDay[date.format("YYYY-MM-01")] = [];
 			$.getJSON("/api/tvshows/episodes/calendar/" + date.format("YYYY/MM"), this.onReceivedCalendarData);
 		}
@@ -66,10 +65,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 	}
 	
 	private onChangeMonth = (newMonth: moment.Moment) : void => {
-		this.setState({
-			CurrentMonth: newMonth,
-		});
-
+		this.setState({ CurrentMonth: newMonth });
 		this.preloadBorderMonths();
 	}
 }
