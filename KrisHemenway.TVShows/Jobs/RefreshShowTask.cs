@@ -1,5 +1,6 @@
 ﻿using KrisHemenway.Common;
 using KrisHemenway.TVShows.Episodes;
+using KrisHemenway.TVShows.MazeDataSource;
 using KrisHemenway.TVShows.Shows;
 using Serilog;
 using System;
