@@ -6,29 +6,31 @@
     "type": "git",
     "url": "git://github.com/krishemenway/krishemenway-svc.git"
   },
-  "scripts": { },
+  "scripts": {},
   "author": "Kris Hemenway <krishemenway@gmail.com>",
   "license": "ISC",
+  "engines": {
+    "node": "10.13.0"
+  },
   "dependencies": {
-    "@types/react": "^15.0.2",
-    "@types/react-dom": "^15.0.2",
+    "@types/react": "^16.7.6",
+    "@types/react-dom": "^16.0.9",
     "@types/moment": "^2.13.0",
-    "@types/jquery": "^3.2.16"
+    "@types/jquery": "^3.3.22"
   },
   "devDependencies": {
-    "browserify": "*",
-    "tsify": "3.0.3",
-    "typescript": "^2.6.1",
-    "grunt": "^1.0.1",
-    "grunt-browserify": "^5.2.0",
-    "grunt-contrib-clean": "^1.1.0",
-    "grunt-contrib-watch": "^1.0.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "moment": "^2.22.2",
+    "jquery": "^3.3.1",
+    "typescript": "^3.1.6",
+    "tsify": "^4.0.0",
+    "node-sass": "^4.10.0",
+    "grunt": "^1.0.3",
+    "grunt-browserify": "5.3.0",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-watch": "^1.1.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-sass": "^2.0.0",
-    "react": "^15.0.2",
-    "react-dom": "^15.0.2",
-    "redux": "^3.3.0",
-    "moment": "^2.19.1",
-    "jquery": "^3.2.1"
+    "grunt-sass": "^3.0.2"
   }
 }

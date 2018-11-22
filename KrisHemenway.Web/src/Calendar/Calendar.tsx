@@ -14,9 +14,11 @@ interface GlobalAppState {
 	CalendarState: CalendarState;
 }
 
-export class Calendar extends React.Component<{}, GlobalAppState> {
-	constructor() {
-		super();
+interface CalendarProps { }
+
+export class Calendar extends React.Component<CalendarProps, GlobalAppState> {
+	constructor(props: CalendarProps) {
+		super(props);
 
 		this.state = {
 			CalendarState: {
