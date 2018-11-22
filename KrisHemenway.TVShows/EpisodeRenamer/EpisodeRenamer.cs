@@ -57,8 +57,12 @@ namespace KrisHemenway.TVShows.EpisodeRenamer
 				{
 					_episodeStore.UpdatePath(episode, newFilePath);
 				}
+				else
+				{
+					return result;
+				}
 			}
-			else if (!episode.HasEpisode)
+			else if (episode.VideoPath != newFilePath)
 			{
 				_episodeStore.UpdatePath(episode, file.FullPath);
 			}

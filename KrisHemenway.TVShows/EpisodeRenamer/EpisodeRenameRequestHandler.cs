@@ -1,4 +1,5 @@
 ﻿using KrisHemenway.Common;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,6 +19,8 @@ namespace KrisHemenway.TVShows.EpisodeRenamer
 
 		public Result<IReadOnlyList<EpisodeRenameStatus>> HandleRequest(EpisodeRenameRequest request)
 		{
+			Log.Information("Renaming {Path}", request.Path);
+
 			var videoScannerResult = _videoFileScanner.Scan(request.Path.Replace("/", "\\"));
 
 			if (!videoScannerResult.Success)
