@@ -31,13 +31,13 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 
 	public render() {
 		return (
-			<SeriesCalendar CalendarState={this.state} OnChangeMonth={this.onChangeMonth} />
+			<SeriesCalendar CalendarState={this.state} OnChangeMonth={this.onChangeMonth} OnAuthenticated={() => { this.setState({ ShowDownload: true }); }} />
 		)
 	}
 
 	private preloadBorderMonths = () : void => {
 		this.loadEpisodesForMonth(this.state.CurrentMonth.clone().subtract(1, "month"));
-		this.loadEpisodesForMonth(this.state.CurrentMonth.clone().add(1, 'month'));
+		this.loadEpisodesForMonth(this.state.CurrentMonth.clone().add(1, "month"));
 	}
 
 	private loadEpisodesForMonth = (date: moment.Moment) : void => {
@@ -71,5 +71,5 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 }
 
 (window as any).initialize = () => {
-	reactDom.render(<Calendar />, document.getElementById('app'));
+	reactDom.render(<Calendar />, document.getElementById("app"));
 }
