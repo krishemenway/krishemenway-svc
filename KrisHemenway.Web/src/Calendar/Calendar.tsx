@@ -1,24 +1,29 @@
 import * as React from "react";
 import * as reactDom from "react-dom";
 import * as moment from "moment";
+import * as jQuery from "jquery";
 import { Episode } from "../Episodes/Episode";
-import { EpisodesInMonthResponse } from "./EpisodesInMonthResponse";
-import { SeriesCalendar } from "./SeriesCalendar";
+import { EpisodesInMonthResponse } from "../Episodes/EpisodesInMonthResponse";
+import SeriesCalendar from "./SeriesCalendar";
+import MonthNavigation from "./MonthNavigation";
+import DownloadLogin from "./DownloadLogin";
+import * as AppBackground from "../Common/AppBackground.png";
+import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
 
 export interface CalendarState {
-	ShowDownload: boolean;
+	IsAuthenticated: boolean;
 	CurrentMonth: moment.Moment;
 	EpisodesPerDay: HashTable<Array<Episode>>;
 }
 
-interface CalendarProps { }
+interface CalendarProps extends WithStyles<typeof styles> { }
 
 export class Calendar extends React.Component<CalendarProps, CalendarState> {
 	constructor(props: CalendarProps) {
 		super(props);
 
 		this.state = {
-			ShowDownload: false,
+			IsAuthenticated: false,
 			CurrentMonth: moment().local(),
 			EpisodesPerDay: {}
 		};
@@ -31,8 +36,24 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 
 	public render() {
 		return (
-			<SeriesCalendar CalendarState={this.state} OnChangeMonth={this.onChangeMonth} OnAuthenticated={() => { this.setState({ ShowDownload: true }); }} />
-		)
+			<div className={this.props.classes.calendarApp}>
+				<div className={this.props.classes.widthWrapper}>
+					<MonthNavigation
+						CalendarState={this.state}
+						OnChangeMonth={(month) => this.setState({ CurrentMonth: month })} />
+
+					<SeriesCalendar
+						CalendarState={this.state}
+						OnChangeMonth={this.onChangeMonth}
+					/>
+
+					<DownloadLogin
+						OnAuthenticated={() => this.setState({ IsAuthenticated: true })}
+						IsAuthenticated={this.state.IsAuthenticated}
+					/>
+				</div>
+			</div>
+		);
 	}
 
 	private preloadBorderMonths = () : void => {
@@ -43,7 +64,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 	private loadEpisodesForMonth = (date: moment.Moment) : void => {
 		if (this.state.EpisodesPerDay[date.format("YYYY-MM-01")] == null) {
 			this.state.EpisodesPerDay[date.format("YYYY-MM-01")] = [];
-			$.getJSON("/api/tvshows/episodes/calendar/" + date.format("YYYY/MM"), this.onReceivedCalendarData);
+			jQuery.getJSON("/api/tvshows/episodes/calendar/" + date.format("YYYY/MM"), this.onReceivedCalendarData);
 		}
 	}
 
@@ -61,7 +82,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 			episodesPerDay[airDate.format("YYYY-MM-DD")].push(episode);
 		});
 
-		this.setState({ EpisodesPerDay: episodesPerDay, ShowDownload: data.ShowDownload });
+		this.setState({ EpisodesPerDay: episodesPerDay, IsAuthenticated: data.ShowDownload });
 	}
 	
 	private onChangeMonth = (newMonth: moment.Moment) : void => {
@@ -70,6 +91,19 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 	}
 }
 
+const styles = createStyles({
+	calendarApp: { },
+	widthWrapper: {
+		margin: "0 auto",
+		maxWidth: "900px",
+		padding: "0 0 100px 0",
+		background: "rgba(0,0,0,.2)",
+	},
+});
+
+const CalendarWithStyle = withStyles(styles)(Calendar);
+
 (window as any).initialize = () => {
-	reactDom.render(<Calendar />, document.getElementById("app"));
+	reactDom.render(<CalendarWithStyle />, document.getElementById("app"));
+	document.getElementsByTagName("body")[0].style.background = `url('${AppBackground}') #010101`;
 }

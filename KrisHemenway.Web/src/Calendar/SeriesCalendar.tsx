@@ -1,46 +1,25 @@
 import * as React from "react";
 import * as moment from "moment";
-import { FullMonthName } from "./FullMonthName";
+import Text from "../Common/Text";
+import EpisodeName from "../Episodes/EpisodeName";
 import { CalendarState } from "./Calendar";
-import { EpisodeName } from "./EpisodeName";
 import { Episode } from "../Episodes/Episode";
-import { DownloadLogin } from "./DownloadLogin";
+import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
 
-interface SeriesCalendarParams {
+interface SeriesCalendarParams extends WithStyles<typeof styles> {
 	CalendarState: CalendarState;
 	OnChangeMonth: Function;
-	OnAuthenticated: () => void;
 }
 
 export class SeriesCalendar extends React.Component<SeriesCalendarParams, {}> {
 	public render() {
 		return (
-			<div className="calendar">
-				<div className="months flex-row-container">
-					<button className="previous-month flex-even-distribution font-28 phone-font-16 padding-vertical" onClick={() => this.clickMonth(this.props.CalendarState.CurrentMonth.clone().subtract(1, "month"))}>
-						<FullMonthName Month={this.props.CalendarState.CurrentMonth.clone().subtract(1, "month")} />
-					</button>
-
-					<div className="current-month flex-even-distribution font-34 phone-font-24 padding-vertical">
-						<FullMonthName Month={this.props.CalendarState.CurrentMonth} />
-					</div>
-
-					<button className="next-month flex-even-distribution font-28 phone-font-16 padding-vertical" onClick={() => this.clickMonth(this.props.CalendarState.CurrentMonth.clone().add(1, "month"))}>
-						<FullMonthName Month={this.props.CalendarState.CurrentMonth.clone().add(1, "month")} />
-					</button>
-				</div>
-
-				<div className="days">{this.renderDays()}</div>
-
-				{!this.props.CalendarState.ShowDownload && <DownloadLogin OnAuthenticated={this.props.OnAuthenticated} />}
+			<div className={this.props.classes.days}>
+				{this.renderDays()}
 			</div>
 		);
 	}
-	
-	private clickMonth(month: moment.Moment) {
-		this.props.OnChangeMonth(month);
-	}
-	
+
 	private renderDays() {
 		let firstDay = moment(this.props.CalendarState.CurrentMonth.format("YYYY-MM-01"));
 		let lastDay = firstDay.clone().add(1, "month").subtract(1, "day");
@@ -53,7 +32,7 @@ export class SeriesCalendar extends React.Component<SeriesCalendarParams, {}> {
 
 		return days;
 	}
-	
+
 	private renderDay(dayOfMonth: number) {
 		var dayOfMonthString = dayOfMonth.toString().length == 1 ? "0"+dayOfMonth.toString():dayOfMonth.toString(); 
 		var date = moment(this.props.CalendarState.CurrentMonth.format("YYYY-MM-") + dayOfMonthString);
@@ -61,28 +40,83 @@ export class SeriesCalendar extends React.Component<SeriesCalendarParams, {}> {
 		var renderedEpisodes = episodes != null && episodes.length > 0 ? this.renderEpisodes(episodes) : null;
 
 		return (
-			<div className="day-episode-listings padding-vertical flex-row-container" key={dayOfMonth}>
-				<div className="listing-date padding-horizontal">
-					<span className="day font-26">{date.format("DD")}</span>
-					<span className="month font-20 gray-69">{date.format("MMM")}</span>
+			<div className={this.props.classes.dayEpisodeListings} key={dayOfMonth}>
+				<div className={this.props.classes.listingDate}>
+					<Text className={this.props.classes.listingDayOfMonth} Text={date.format("DD")} />
+					<Text className={this.props.classes.listingMonth} Text={date.format("MMM")} />
 				</div>
 
-				<div className="episode-listings">
-					{renderedEpisodes}
-				</div>
-
-				<div className="day-of-week font-24 bold">{date.format("dddd")}</div>
+				<div className={this.props.classes.episodes}>{renderedEpisodes}</div>
+				<Text className={this.props.classes.dayOfWeek} Text={date.format("dddd")} />
 			</div>
 		);
 	}
 
-	private renderEpisodes(episodes: Array<Episode>) {
+	private renderEpisodes(episodes: Episode[]) {
 		return episodes.map((episode, index) => {
 			return (
-				<div className="margin-vertical-half no-bookend-margin-vertical" key={index}>
-					<EpisodeName Episode={episode} ShowDownload={this.props.CalendarState.ShowDownload} />
+				<div className={this.props.classes.episodeNames} key={index}>
+					<EpisodeName Episode={episode} ShowDownload={this.props.CalendarState.IsAuthenticated} />
 				</div>
 			);
 		}, this);
 	}
 }
+
+const styles = (theme: Theme) => createStyles({
+	dayOfWeek: {
+		fontSize: "24px",
+		fontWeight: "bold",
+		position: "absolute",
+		zIndex: 0,
+		bottom: "3px",
+		right: "3px",
+		letterSpacing: "2px",
+		textTransform: "uppercase",
+		color: "#1a1a1a",
+		cursor: "default",
+	},
+	days: { },
+	dayEpisodeListings: {
+		border: "1px solid #383838",
+		borderWidth: "1px 0 0 0",
+		position: "relative",
+		padding: "10px 0",
+		display: "flex",
+		flexDirection: "row",
+		flexWrap: "nowrap",
+	
+		"&:hover": {
+			backgroundColor: "rgba(0,0,0,.2)",
+			borderColor: "#191919",
+		},
+	},
+	listingDate: {
+		padding: "0 10px",
+	},
+	listingDayOfMonth: {
+		fontSize: "26px",
+		color: "#E8E8E8",
+	},
+	listingMonth: {
+		fontSize: "20px",
+		color: "#696969",
+	},
+	episodes: {
+		flexBasis: "auto",
+		zIndex: 1,
+	},
+	episodeNames: {
+		margin: "5px 0",
+
+		"&:first-child": {
+			marginTop: "0",
+		},
+
+		"&:last-child": {
+			marginBottom: "0",
+		},
+	},
+});
+
+export default withStyles(styles)(SeriesCalendar);

@@ -1,4 +1,4 @@
-import { Episode } from "../Episodes/Episode";
+import { Episode } from "./Episode";
 
 export interface EpisodesInMonthResponse {
 	EpisodesInMonth: Array<Episode>;

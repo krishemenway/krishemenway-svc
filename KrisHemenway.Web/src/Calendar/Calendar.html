@@ -1,19 +1,22 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="/calendar.css" rel="stylesheet" />
+		<link href="///cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet" />
+		<style>* { box-sizing: border-box; margin: 0; padding: 0; background: transparent; border: 0 transparent solid; }</style>
 	</head>
 	<body>
 		<div id="app"></div>
+		<script src="///cdnjs.cloudflare.com/ajax/libs/react/16.8.2/umd/react.production.min.js" type="text/javascript"></script>
+		<script src="///cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.2/umd/react-dom.production.min.js" type="text/javascript"></script>
+		<script src="///cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" type="text/javascript"></script>
 		<script src="///cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
 		<script src="///cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js" type="text/javascript"></script>
 		<script src="/calendar.js" type="text/javascript"></script>
 		<script type="text/javascript">
 			window.initialize();
 			if ('addEventListener' in document) {
-				document.addEventListener('DOMContentLoaded', function() {
-					FastClick.attach(document.body);
-				}, false);
+				document.addEventListener('DOMContentLoaded', function() { FastClick.attach(document.body); }, false);
 			}
 		</script>
 	</body>
