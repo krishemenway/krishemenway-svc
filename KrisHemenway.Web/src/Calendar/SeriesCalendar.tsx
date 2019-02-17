@@ -8,7 +8,6 @@ import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/s
 
 interface SeriesCalendarParams extends WithStyles<typeof styles> {
 	CalendarState: CalendarState;
-	OnChangeMonth: Function;
 }
 
 export class SeriesCalendar extends React.Component<SeriesCalendarParams, {}> {

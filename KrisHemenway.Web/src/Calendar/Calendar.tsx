@@ -44,7 +44,6 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 
 					<SeriesCalendar
 						CalendarState={this.state}
-						OnChangeMonth={this.onChangeMonth}
 					/>
 
 					<DownloadLogin
