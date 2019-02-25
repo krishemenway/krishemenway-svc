@@ -95,7 +95,7 @@ const styles = createStyles({
 	widthWrapper: {
 		margin: "0 auto",
 		maxWidth: "900px",
-		padding: "0 0 100px 0",
+		padding: "0 10px 100px 10px",
 		background: "rgba(0,0,0,.2)",
 	},
 });
