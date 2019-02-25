@@ -7,12 +7,14 @@ import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/s
 interface EpisodeParams extends WithStyles<typeof styles> {
 	Episode: Episode;
 	ShowDownload: boolean;
+	className?: string;
+	style?: React.CSSProperties;
 }
 
 export class EpisodeName extends React.Component<EpisodeParams, {}> {
 	public render() {
 		return (
-			<div>
+			<div className={this.props.className}>
 				<Text className={this.props.classes.showName} Text={this.props.Episode.ShowName} />
 				<Text className={this.props.classes.episodeIdentity} Text={`${this.props.Episode.Season}x${this.props.Episode.EpisodeInSeason}`} />
 				<Text className={this.props.classes.episodeTitle} Text={this.props.Episode.Title} />

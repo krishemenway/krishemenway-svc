@@ -4,11 +4,14 @@ import * as moment from "moment";
 import * as jQuery from "jquery";
 import { Episode } from "../Episodes/Episode";
 import { EpisodesInMonthResponse } from "../Episodes/EpisodesInMonthResponse";
-import SeriesCalendar from "./SeriesCalendar";
+import CalendarMonth from "./CalendarMonth";
 import MonthNavigation from "./MonthNavigation";
 import DownloadLogin from "./DownloadLogin";
+import ListOf from "../Common/ListOf";
+import EpisodeName from "../Episodes/EpisodeName";
 import * as AppBackground from "../Common/AppBackground.png";
-import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles } from "@material-ui/core/styles";
+const EpisodeList = ListOf<Episode>();
 
 export interface CalendarState {
 	IsAuthenticated: boolean;
@@ -39,11 +42,14 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 			<div className={this.props.classes.calendarApp}>
 				<div className={this.props.classes.widthWrapper}>
 					<MonthNavigation
-						CalendarState={this.state}
-						OnChangeMonth={(month) => this.setState({ CurrentMonth: month })} />
+						CurrentMonth={this.state.CurrentMonth}
+						OnChangeMonth={(month) => this.onChangeMonth(month)} />
 
-					<SeriesCalendar
-						CalendarState={this.state}
+					<CalendarMonth
+						Month={this.state.CurrentMonth}
+						DayRenderers={[
+							{ type: "episodes", render: (day) => this.renderEpisodesForDay(day) },
+						]}
 					/>
 
 					<DownloadLogin
@@ -52,6 +58,17 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 					/>
 				</div>
 			</div>
+		);
+	}
+
+	private renderEpisodesForDay(date: moment.Moment) {
+		return (
+			<EpisodeList
+				className={this.props.classes.episodes}
+				key={`episodes-${date.format("YYYY-MM-DD")}`}
+				items={this.state.EpisodesPerDay[date.format("YYYY-MM-DD")]}
+				renderItem={(episode) => <EpisodeName className={this.props.classes.episodeName} Episode={episode} ShowDownload={this.state.IsAuthenticated} />}
+			/>
 		);
 	}
 
@@ -97,6 +114,21 @@ const styles = createStyles({
 		maxWidth: "900px",
 		padding: "0 10px 100px 10px",
 		background: "rgba(0,0,0,.2)",
+	},
+	episodes: {
+		flexBasis: "auto",
+		zIndex: 1,
+	},
+	episodeName: {
+		margin: "5px 0",
+
+		"&:first-child": {
+			marginTop: "0",
+		},
+
+		"&:last-child": {
+			marginBottom: "0",
+		},
 	},
 });
 

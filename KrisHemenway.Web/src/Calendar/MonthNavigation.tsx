@@ -1,11 +1,10 @@
 import * as React from "react";
 import FullMonthName from "./FullMonthName";
-import { CalendarState } from "./Calendar";
 import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
 import moment = require("moment");
 
 interface MonthNavigationParams extends WithStyles<typeof styles> {
-	CalendarState: CalendarState;
+	CurrentMonth: moment.Moment;
 	OnChangeMonth: (month: moment.Moment) => void;
 }
 
@@ -13,17 +12,17 @@ export class MonthNavigation extends React.Component<MonthNavigationParams, {}> 
 	public render() {
 		return (
 			<div className={this.props.classes.monthNavigation}>
-				<button className={this.props.classes.clickableMonth} onClick={() => this.props.OnChangeMonth(this.props.CalendarState.CurrentMonth.clone().subtract(1, "month"))}>
-					<FullMonthName Month={this.props.CalendarState.CurrentMonth.clone().subtract(1, "month")} />
+				<button className={this.props.classes.clickableMonth} onClick={() => this.props.OnChangeMonth(this.props.CurrentMonth.clone().subtract(1, "month"))}>
+					<FullMonthName Month={this.props.CurrentMonth.clone().subtract(1, "month")} />
 					<div className={this.props.classes.clickMonthUnderline} />
 				</button>
 
 				<div className={this.props.classes.currentMonth}>
-					<FullMonthName Month={this.props.CalendarState.CurrentMonth} />
+					<FullMonthName Month={this.props.CurrentMonth} />
 				</div>
 
-				<button className={this.props.classes.clickableMonth} onClick={() => this.props.OnChangeMonth(this.props.CalendarState.CurrentMonth.clone().add(1, "month"))}>
-					<FullMonthName Month={this.props.CalendarState.CurrentMonth.clone().add(1, "month")} />
+				<button className={this.props.classes.clickableMonth} onClick={() => this.props.OnChangeMonth(this.props.CurrentMonth.clone().add(1, "month"))}>
+					<FullMonthName Month={this.props.CurrentMonth.clone().add(1, "month")} />
 					<div className={this.props.classes.clickMonthUnderline} />
 				</button>
 			</div>
