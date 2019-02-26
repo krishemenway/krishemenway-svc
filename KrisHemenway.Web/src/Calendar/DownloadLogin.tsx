@@ -43,7 +43,7 @@ export class DownloadLogin extends React.Component<DownloadLoginParams, Download
 						{!!this.state.ErrorText && <Text className={this.props.classes.error} Text={this.state.ErrorText} />}
 
 						<div className={this.props.classes.loginButtons}>
-							<button className={this.props.classes.loginButton} type="button" onClick={() => this.setState({LoginOpen: false})}>Cancel</button>
+							<button className={this.props.classes.loginButton} type="button" onClick={() => this.setState({LoginOpen: false, Password: "", ErrorText: ""})}>Cancel</button>
 							<button className={this.props.classes.loginButton} type="submit">Login</button>
 						</div>
 					</form>
