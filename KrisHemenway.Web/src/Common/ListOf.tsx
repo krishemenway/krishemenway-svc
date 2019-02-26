@@ -12,15 +12,15 @@ interface ListPropsOf<TItem> extends WithStyles<typeof styles> {
 
 class ListOf<TItem> extends React.Component<ListPropsOf<TItem>, {}> {
 	public render() {
-		return <div key={this.props.key} className={this.props.className} style={this.props.style}>{this.renderItems()}</div>;
-	}
-	
-	private renderItems() {
 		if (!this.props.items || this.props.items.length === 0) {
 			return "";
 		}
 
-		return this.props.items.map((item) => this.props.renderItem(item));
+		return (
+			<div key={this.props.key} className={this.props.className} style={this.props.style}>
+				{this.props.items.map((item) => this.props.renderItem(item))}
+			</div>
+		);
 	}
 }
 
