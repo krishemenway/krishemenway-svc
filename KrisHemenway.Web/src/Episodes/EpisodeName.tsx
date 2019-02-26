@@ -30,7 +30,7 @@ export class EpisodeName extends React.Component<EpisodeParams, {}> {
 
 		return (
 			<a className={this.props.classes.downloadIcon} href={this.episodeDownloadUrl()}>
-				<CloudDownload width={16} />
+				<CloudDownload style={{ width: "16px", height: "16px", position: "relative", top: "3px" }}  />
 			</a>
 		);
 	}
@@ -56,6 +56,7 @@ const styles = (theme: Theme) => createStyles({
 		display: "inline-block",
 		verticalAlign: "bottom",
 		marginLeft: "8px",
+		color: "#F0F0F0",
 	},
 });
 
