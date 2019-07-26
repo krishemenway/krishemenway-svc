@@ -1,11 +1,13 @@
 ﻿using KrisHemenway.Common;
 using KrisHemenway.TVShows.Jobs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KrisHemenway.TVShows.Shows
 {
-	public class RefreshShowRequestHandler
+	[Route("api/tvshows/shows")]
+	public class RefreshShowRequestController : ControllerBase
 	{
-		public RefreshShowRequestHandler(
+		public RefreshShowRequestController(
 			IShowStore showStore = null,
 			IRefreshShowTask refreshShowTask = null)
 		{
@@ -13,7 +15,9 @@ namespace KrisHemenway.TVShows.Shows
 			_refreshShowTask = refreshShowTask ?? new RefreshShowTask();
 		}
 
-		public Result HandleRequest(RefreshShowRequest request)
+		[HttpPost(nameof(RefreshShow))]
+		[ProducesResponseType(200, Type = typeof(Result))]
+		public Result RefreshShow([FromBody] RefreshShowRequest request)
 		{
 			if (!_showStore.TryFindByName(request.Name, out var show))
 			{

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace KrisHemenway.TVShows.Episodes
 {
-	public class UpcomingEpisodesRequestHandler
+	[Route("api/tvshows/episodes")]
+	public class UpcomingEpisodesRequestController : ControllerBase
 	{
-		public UpcomingEpisodesRequestHandler(
+		public UpcomingEpisodesRequestController(
 			IEpisodeStore episodeStore = null,
 			Func<DateTime> getCurrentDateFunc = null)
 		{
@@ -12,7 +14,9 @@ namespace KrisHemenway.TVShows.Episodes
 			_getCurrentDateFunc = getCurrentDateFunc ?? (() => DateTime.Today);
 		}
 
-		public UpcomingEpisodesResponse HandleRequest()
+		[HttpGet(nameof(Upcoming))]
+		[ProducesResponseType(200, Type = typeof(UpcomingEpisodesResponse))]
+		public ActionResult<UpcomingEpisodesResponse> Upcoming()
 		{
 			return new UpcomingEpisodesResponse
 				{

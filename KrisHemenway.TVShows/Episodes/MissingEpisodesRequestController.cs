@@ -1,17 +1,21 @@
 ﻿using KrisHemenway.Common;
 using KrisHemenway.TVShows.Shows;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace KrisHemenway.TVShows.Episodes
 {
-	public class MissingEpisodesRequestHandler
+	[Route("api/tvshows/episodes")]
+	public class MissingEpisodesRequestHandler : ControllerBase
 	{
 		public MissingEpisodesRequestHandler(IShowStore showStore = null)
 		{
 			_showStore = showStore ?? new ShowStore();
 		}
 
-		public MissingEpisodesResponse HandleRequest()
+		[HttpGet(nameof(Missing))]
+		[ProducesResponseType(200, Type = typeof(MissingEpisodesResponse))]
+		public ActionResult<MissingEpisodesResponse> Missing()
 		{
 			var allShowReports = _showStore.FindAll()
 				.Select(CreateReportForShow)
