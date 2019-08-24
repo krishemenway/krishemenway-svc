@@ -1,17 +1,42 @@
-image: microsoft/dotnet:latest
-
 stages:
     - build
-    - test
 
-before_script:
-    - "dotnet restore KrisHemenway.Notification"
-    - "dotnet restore KrisHemenway.TeamspeakMonitor"
-    - "dotnet restore KrisHemenway.TVShows"
-
-build:
+build:notification:
+    image: mcr.microsoft.com/dotnet/core/sdk:2.2
     stage: build
     script:
-        - "dotnet build KrisHemenway.Notification"
-        - "dotnet build KrisHemenway.TeamspeakMonitor"
-        - "dotnet build KrisHemenway.TVShows"
+        - "dotnet publish KrisHemenway.Notification -o ../notification"
+    artifacts:
+        name: "$CI_JOB_NAME"
+        paths:
+            - notification
+            
+build:minecraftmonitor:
+    image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    stage: build
+    script:
+        - "dotnet publish KrisHemenway.MinecraftMonitor -o ../minecraftmonitor"
+    artifacts:
+        name: "$CI_JOB_NAME"
+        paths:
+            - minecraftmonitor
+
+build:teamspeakmonitor:
+    image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    stage: build
+    script:
+        - "dotnet publish KrisHemenway.TeamspeakMonitor -o ../teamspeakmonitor"
+    artifacts:
+        name: "$CI_JOB_NAME"
+        paths:
+            - teamspeakmonitor
+
+build:tvshows:
+    image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    stage: build
+    script:
+        - "dotnet publish KrisHemenway.TVShows -o ../tvshows"
+    artifacts:
+        name: "$CI_JOB_NAME"
+        paths:
+            - tvshows
