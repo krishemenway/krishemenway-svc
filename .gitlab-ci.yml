@@ -1,6 +1,18 @@
 stages:
     - build
 
+build:web:
+    image: node:10.13.0
+    stage: build
+    script:
+        - "cd KrisHemenway.Web"
+        - "npm ci"
+        - "npm run build"
+    artifacts:
+        name: "$CI_JOB_NAME"
+        paths:
+            - KrisHemenway.Web/dist
+
 build:notification:
     image: mcr.microsoft.com/dotnet/core/sdk:2.2
     stage: build
