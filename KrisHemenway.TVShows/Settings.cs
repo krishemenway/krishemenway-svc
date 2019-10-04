@@ -24,6 +24,7 @@ namespace KrisHemenway.TVShows
 		int RenamePadNumbers { get; }
 
 		string DownloadPassword { get; }
+		bool CanDownload { get; }
 
 		string ExecutablePath { get; }
 	}
@@ -52,6 +53,7 @@ namespace KrisHemenway.TVShows
 		public int RenamePadNumbers => _configuration.GetValue<int>("RenamePadNumbers");
 
 		public string DownloadPassword => _configuration.GetValue<string>("DownloadPassword");
+		public bool CanDownload => _configuration.GetValue<bool>("CanDownload");
 
 		public string ExecutablePath => Directory.GetCurrentDirectory();
 

@@ -1,38 +1,30 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace KrisHemenway.TeamspeakMonitor
 {
 	public class Startup
 	{
-		public Startup(IHostingEnvironment env)
-		{
-		}
-
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvcCore().AddJsonFormatters(FixJsonCamelCasing);
+			services.AddMvcCore().AddJsonOptions(FixJsonCamelCasing);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime)
+		public void Configure(IApplicationBuilder app)
 		{
-			app.UseMvc();
+			app.UseRouting();
+			app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
 			new TeamspeakUserMonitor().StartMonitoring();
 		}
 
-		private void FixJsonCamelCasing(JsonSerializerSettings settings)
+		private void FixJsonCamelCasing(JsonOptions options)
 		{
-			var resolver = settings.ContractResolver;
-			if (resolver != null)
-			{
-				var res = resolver as DefaultContractResolver;
-				res.NamingStrategy = null;  // <<!-- this removes the camelcasing
-			}
+			// this unsets the default behavior (camelCase); "what you see is what you get" is now default
+			options.JsonSerializerOptions.PropertyNamingPolicy = null;
 		}
 	}
 }

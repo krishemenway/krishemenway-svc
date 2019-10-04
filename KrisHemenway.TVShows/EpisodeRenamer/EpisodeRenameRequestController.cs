@@ -1,13 +1,15 @@
 ﻿using KrisHemenway.Common;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace KrisHemenway.TVShows.EpisodeRenamer
 {
-	public class EpisodeRenameRequestHandler
+	[Route("api/tvshows")]
+	public class EpisodeRenameRequestController : ControllerBase
 	{
-		public EpisodeRenameRequestHandler(
+		public EpisodeRenameRequestController(
 			IVideoFileScanner videoFileScanner = null,
 			IEpisodeIdentifier episodeIdentifier = null,
 			IEpisodeRenamer episodeRenamer = null)
@@ -17,7 +19,8 @@ namespace KrisHemenway.TVShows.EpisodeRenamer
 			_episodeRenamer = episodeRenamer ?? new EpisodeRenamer();
 		}
 
-		public Result<IReadOnlyList<EpisodeRenameStatus>> HandleRequest(EpisodeRenameRequest request)
+		[HttpPost(nameof(Rename))]
+		public ActionResult<Result<IReadOnlyList<EpisodeRenameStatus>>> Rename([FromBody] EpisodeRenameRequest request)
 		{
 			Log.Information("Renaming {Path}", request.Path);
 

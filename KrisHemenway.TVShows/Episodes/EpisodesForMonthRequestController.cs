@@ -1,24 +1,28 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 
 namespace KrisHemenway.TVShows.Episodes
 {
-	public class EpisodesForMonthRequestHandler
+	[Route("api/tvshows/episodes")]
+	public class EpisodesForMonthRequestController : ControllerBase
 	{
-		public EpisodesForMonthRequestHandler(IEpisodeStore episodeStore = null)
+		public EpisodesForMonthRequestController(IEpisodeStore episodeStore = null)
 		{
 			_episodeStore = episodeStore ?? new EpisodeStore();
 		}
 
-		public EpisodesForMonthResponse HandleRequest(EpisodesForMonthRequest request, ISession session)
+		[HttpGet("calendar/{year}/{month}")]
+		[ProducesResponseType(200, Type = typeof(EpisodesForMonthResponse))]
+		public ActionResult<EpisodesForMonthResponse> EpisodesForMonth([FromRoute] EpisodesForMonthRequest request)
 		{
 			var beginningOfMonth = new DateTime(request.Year, request.Month, 1);
 			var endOfMonth = beginningOfMonth.AddMonths(1).AddDays(-1);
 
 			return new EpisodesForMonthResponse
 				{
-					ShowDownload = DownloadAuthenticationRequiredAttribute.HasAuthenticated(session),
+					ShowDownload = DownloadAuthenticationRequiredAttribute.HasAuthenticated(HttpContext.Session),
 					EpisodesInMonth = _episodeStore.FindEpisodesAiring(beginningOfMonth, endOfMonth)
 						.OrderBy(x => x.AirDate)
 						.ThenBy(x => x.ShowId)

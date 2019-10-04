@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <AssemblyName>KrisHemenway.Common</AssemblyName>
-    <RootNamespace>KrisHemenway.Common</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp2.1</TargetFramework>
+		<AssemblyName>KrisHemenway.Common</AssemblyName>
+		<RootNamespace>KrisHemenway.Common</RootNamespace>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+	</ItemGroup>
 
 </Project>

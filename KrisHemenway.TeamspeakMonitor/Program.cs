@@ -11,7 +11,6 @@ namespace KrisHemenway.TeamspeakMonitor
 				.UseKestrel()
 				.UseConfiguration(Settings.Configuration)
 				.UseStartup<Startup>()
-				.UseApplicationInsights()
 				.UseUrls($"http://*:{Settings.WebPort}")
 				.Build()
 				.Run();
