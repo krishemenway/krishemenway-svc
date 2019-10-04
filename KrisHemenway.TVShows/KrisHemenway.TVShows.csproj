@@ -4,7 +4,6 @@
 		<TargetFramework>netcoreapp3.0</TargetFramework>
 
 		<OutputType>Exe</OutputType>
-		<PublishTrimmed>true</PublishTrimmed>
 		<PublishReadyToRun>true</PublishReadyToRun>
 		<PublishSingleFile>true</PublishSingleFile>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
