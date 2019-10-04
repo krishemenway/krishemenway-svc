@@ -1,10 +1,8 @@
 ﻿using KrisHemenway.Notification.Reminders;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Impl;
 
@@ -15,27 +13,23 @@ namespace KrisHemenway.Notification
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvcCore().AddJsonFormatters(FixJsonCamelCasing);
+			services.AddMvcCore().AddJsonOptions(FixJsonCamelCasing);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IApplicationLifetime applicationLifetime)
+		public void Configure(IApplicationBuilder app, IHostApplicationLifetime hostApplicationLifetime)
 		{
-			app.UseMvc();
+			app.UseRouting();
+			app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 			Scheduler = new StdSchedulerFactory().GetScheduler().Result;
 			Scheduler.ScheduleJob(ReminderJob.CreateJob(), ReminderJob.CreateTrigger());
-			Scheduler.Start(applicationLifetime.ApplicationStopping);
+			Scheduler.Start(hostApplicationLifetime.ApplicationStopping);
 		}
 
-		private void FixJsonCamelCasing(JsonSerializerSettings settings)
+		private void FixJsonCamelCasing(JsonOptions options)
 		{
-			var resolver = settings.ContractResolver;
-			if (resolver != null)
-			{
-				var res = resolver as DefaultContractResolver;
-				res.NamingStrategy = null;  // <<!-- this removes the camelcasing
-			}
+			options.JsonSerializerOptions.PropertyNamingPolicy = null;
 		}
 
 		public static IScheduler Scheduler { get; private set; }
