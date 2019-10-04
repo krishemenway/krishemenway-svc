@@ -1,18 +1,17 @@
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
 	entry: {
 		app: "./src/Home/App.tsx",
-		calendar: "./src/Calendar/Calendar.tsx"
+		calendar: "./src/Calendar/Calendar.tsx",
+		hacker: "./src/FalloutHacker/Hacker.tsx"
 	},
 
 	output: {
 		filename: "[name].js",
 		path: __dirname + "/dist"
 	},
-
-	devtool: "source-map",
 
 	resolve: {
 		extensions: [".ts", ".tsx", ".js", ".json"],
@@ -22,12 +21,11 @@ module.exports = {
 		rules: [
 			{ test: /\.(png|jpg|gif)$/, use: [{ loader: "file-loader", options: {} }], },
 			{ test: /\.tsx?$/, loader: "ts-loader" },
-			{ enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
 		]
 	},
 
 	plugins: [
-		new CleanWebpackPlugin(["./build", "./dist"]),
+		new CleanWebpackPlugin(),
 		new CopyPlugin([
 			{ from: "./src/favicon.ico", to: ".", flatten: false },
 			{ from: "./src/**/*.html", to: ".", flatten: true },
