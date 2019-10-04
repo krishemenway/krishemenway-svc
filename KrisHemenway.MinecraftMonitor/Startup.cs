@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Quartz;
 using Quartz.Impl;
@@ -10,10 +10,6 @@ namespace KrisHemenway.MinecraftMonitor
 {
 	public class Startup
 	{
-		public Startup(IHostingEnvironment env)
-		{
-		}
-
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
@@ -23,9 +19,10 @@ namespace KrisHemenway.MinecraftMonitor
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime, IOptions<Settings> options)
+		public void Configure(IApplicationBuilder app, IHostApplicationLifetime applicationLifetime, IOptions<Settings> options)
 		{
-			app.UseMvc();
+			app.UseRouting();
+			app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 			Scheduler = new StdSchedulerFactory().GetScheduler().Result;
 
