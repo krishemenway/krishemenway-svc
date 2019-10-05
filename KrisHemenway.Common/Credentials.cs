@@ -1,5 +1,4 @@
-﻿
-namespace KrisHemenway.Common
+﻿namespace KrisHemenway.Common
 {
 	public class Credentials
 	{

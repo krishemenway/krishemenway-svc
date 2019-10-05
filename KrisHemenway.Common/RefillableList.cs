@@ -12,7 +12,7 @@ namespace KrisHemenway.Common
 
 		public T Next()
 		{
-			if(_currentQueue == null || !_currentQueue.Any())
+			if (_currentQueue == null || !_currentQueue.Any())
 			{
 				_currentQueue = new Queue<T>(_fillListDelegate(_fillIteration++));
 			}
