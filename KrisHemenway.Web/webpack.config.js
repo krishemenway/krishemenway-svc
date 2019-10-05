@@ -4,8 +4,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
 	entry: {
 		app: "./src/Home/App.tsx",
-		calendar: "./src/Calendar/Calendar.tsx",
-		hacker: "./src/FalloutHacker/Hacker.tsx"
+		calendar: "./src/Calendar/Calendar.tsx"
 	},
 
 	output: {
