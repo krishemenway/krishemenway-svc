@@ -1,12 +1,14 @@
-﻿using System;
+﻿using KrisHemenway.TVShows.Shows;
+using StronglyTyped.GuidIds;
+using System;
 
 namespace KrisHemenway.TVShows.Episodes
 {
 	public interface IEpisode
 	{
-		Guid EpisodeId { get; }
+		Id<Episode> EpisodeId { get; }
 
-		Guid ShowId { get; }
+		Id<Show> ShowId { get; }
 		string ShowName { get; }
 
 		string Title { get; }
@@ -25,9 +27,9 @@ namespace KrisHemenway.TVShows.Episodes
 
 	public class Episode : IEpisode
 	{
-		public Guid EpisodeId { get; set; }
+		public Id<Episode> EpisodeId { get; set; }
 
-		public Guid ShowId { get; set; }
+		public Id<Show> ShowId { get; set; }
 		public string ShowName { get; set; }
 
 		public string Title { get; set; }

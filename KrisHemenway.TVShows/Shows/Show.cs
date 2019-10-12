@@ -1,4 +1,5 @@
 ﻿using KrisHemenway.TVShows.Episodes;
+using StronglyTyped.GuidIds;
 using System;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace KrisHemenway.TVShows.Shows
 {
 	public interface IShow
 	{
-		Guid ShowId { get; }
+		Id<Show> ShowId { get; }
 		string Name { get; }
 
 		string Path { get; }
@@ -25,7 +26,7 @@ namespace KrisHemenway.TVShows.Shows
 			Episodes = new List<Episode>();
 		}
 
-		public Guid ShowId { get; set; }
+		public Id<Show> ShowId { get; set; }
 		public string Name { get; set; }
 
 		public string Path { get; set; }

@@ -1,5 +1,7 @@
 ﻿using Dapper;
 using KrisHemenway.TVShows.Episodes;
+using StronglyTyped.GuidIds;
+using StronglyTyped.GuidIds.Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,11 @@ namespace KrisHemenway.TVShows.Shows
 
 	internal class ShowStore : IShowStore
 	{
+		static ShowStore()
+		{
+			TypeHandlerForIdOf<Show>.Register();
+		}
+
 		public ShowStore()
 		{
 			_episodeStore = new EpisodeStore();
@@ -121,7 +128,7 @@ namespace KrisHemenway.TVShows.Shows
 			{
 				return new Show
 					{
-						ShowId = dbConnection.Query<Guid>(sql, request).Single(),
+						ShowId = dbConnection.Query<Id<Show>>(sql, request).Single(),
 						Name = request.Name,
 						MazeId = request.MazeId,
 						Path = request.Path,
