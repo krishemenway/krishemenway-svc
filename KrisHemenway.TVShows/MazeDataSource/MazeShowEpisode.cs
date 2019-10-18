@@ -20,6 +20,5 @@ namespace KrisHemenway.TVShows.MazeDataSource
 		public DateTime? AirDate { get; set; }
 		public DateTime? Airstamp { get; set; }
 		public TimeSpan? AirTime { get; set; }
-
 	}
 }

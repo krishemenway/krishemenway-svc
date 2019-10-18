@@ -26,6 +26,7 @@ namespace KrisHemenway.TVShows.Episodes
 		static EpisodeStore()
 		{
 			TypeHandlerForIdOf<Episode>.Register();
+			TypeHandlerForIdOf<Show>.Register();
 		}
 
 		public IReadOnlyList<IEpisode> FindEpisodes(params Guid[] episodeIds)
