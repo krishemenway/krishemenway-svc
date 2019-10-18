@@ -38,6 +38,7 @@ build:tvshows:
     stage: build
     script:
         - "dotnet publish KrisHemenway.TVShows --output ../tvshows"
+        - "ls tvshows"
     artifacts:
         name: "$CI_JOB_NAME"
         paths:
