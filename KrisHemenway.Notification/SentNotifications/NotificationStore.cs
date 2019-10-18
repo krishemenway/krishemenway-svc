@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using KrisHemenway.Common;
+using StronglyTyped.GuidIds.Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace KrisHemenway.Notification.SentNotifications
 
 	public class NotificationStore : INotificationStore
 	{
+		static NotificationStore()
+		{
+			TypeHandlerForIdOf<SentNotification>.Register();
+		}
+
 		public IReadOnlyList<SentNotification> FindAll(DateTime? afterTime = null)
 		{
 			const string sql = @"
@@ -29,7 +35,10 @@ namespace KrisHemenway.Notification.SentNotifications
 
 			using (var connection = Database.CreateConnection())
 			{
-				return connection.Query<SentNotification>(sql, new { AfterTime = afterTime ?? DateTime.MinValue }).Select(BuildSentNotification).ToList();
+				return connection
+					.Query<SentNotification>(sql, new { AfterTime = afterTime ?? DateTime.MinValue })
+					.Select(BuildSentNotification)
+					.ToList();
 			}
 		}
 
@@ -37,15 +46,14 @@ namespace KrisHemenway.Notification.SentNotifications
 		{
 			const string sql = @"
 				INSERT INTO public.notification
-				(notification_id, sent_time, title, content, type_name)
+				(sent_time, title, content, type_name)
 				VALUES
-				(@NotificationId, @SentTime, @Title, @Content, @TypeName)";
+				(@SentTime, @Title, @Content, @TypeName)";
 
 			using (var connection = Database.CreateConnection())
 			{
 				var notification = new SentNotification
 				{
-					NotificationId = Guid.NewGuid(),
 					Title = details.Title,
 					Content = details.Content,
 					SentTime = DateTime.Now,

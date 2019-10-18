@@ -1,10 +1,11 @@
-﻿using System;
+﻿using StronglyTyped.GuidIds;
+using System;
 
 namespace KrisHemenway.Notification.SentNotifications
 {
 	public class SentNotification
 	{
-		public Guid NotificationId { get; set; }
+		public Id<SentNotification> NotificationId { get; set; }
 
 		public string Title { get; set; }
 		public string Content { get; set; }

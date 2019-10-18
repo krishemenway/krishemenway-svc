@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 
 namespace KrisHemenway.Notification.PushNotifications
@@ -17,11 +16,6 @@ namespace KrisHemenway.Notification.PushNotifications
 
 	public class FirebasePushNotificationSender : IFirebasePushNotificationSender
 	{
-		public FirebasePushNotificationSender(HttpClient httpClient = null)
-		{
-			_httpClient = httpClient ?? new HttpClient();
-		}
-
 		public async void NotifyAll(SentNotification notification)
 		{
 			var buildMessageJson = new FCMPushNotification<NotificationData>
@@ -57,8 +51,6 @@ namespace KrisHemenway.Notification.PushNotifications
 				Log.LogInformation($"Notification for {notification.TypeName} response from FCM: {responseStream.ReadToEnd()}");
 			}
 		}
-
-		private readonly HttpClient _httpClient;
 
 		private static string FirebaseServerKey
 		{
