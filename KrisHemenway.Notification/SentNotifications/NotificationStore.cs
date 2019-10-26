@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using KrisHemenway.Common;
-using StronglyTyped.GuidIds.Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +14,6 @@ namespace KrisHemenway.Notification.SentNotifications
 
 	public class NotificationStore : INotificationStore
 	{
-		static NotificationStore()
-		{
-			TypeHandlerForIdOf<SentNotification>.Register();
-		}
-
 		public IReadOnlyList<SentNotification> FindAll(DateTime? afterTime = null)
 		{
 			const string sql = @"

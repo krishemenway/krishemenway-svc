@@ -19,11 +19,6 @@ namespace KrisHemenway.TVShows.Shows
 
 	internal class ShowStore : IShowStore
 	{
-		static ShowStore()
-		{
-			TypeHandlerForIdOf<Show>.Register();
-		}
-
 		public ShowStore()
 		{
 			_episodeStore = new EpisodeStore();

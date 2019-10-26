@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using KrisHemenway.TVShows.Shows;
-using StronglyTyped.GuidIds.Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +22,6 @@ namespace KrisHemenway.TVShows.Episodes
 
 	public class EpisodeStore : IEpisodeStore
 	{
-		static EpisodeStore()
-		{
-			TypeHandlerForIdOf<Episode>.Register();
-			TypeHandlerForIdOf<Show>.Register();
-		}
-
 		public IReadOnlyList<IEpisode> FindEpisodes(params Guid[] episodeIds)
 		{
 			const string sql = @"

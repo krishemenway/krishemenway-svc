@@ -1,11 +1,17 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Npgsql;
+using StronglyTyped.GuidIds.Dapper;
 using System.Data;
 
 namespace KrisHemenway.Notification
 {
 	public static class Database
 	{
+		static Database()
+		{
+			DapperIdRegistrar.RegisterAll();
+		}
+
 		public static IDbConnection CreateConnection()
 		{
 			var connection = new NpgsqlConnection($"Host={Host};Username={User};Password={Password};Database={DatabaseName};Port={Port}");
