@@ -17,7 +17,7 @@ class App extends React.Component<AppProps, {}> {
 					<ProjectLink
 						Title="TV Show Release Calendar"
 						Description="complete calendar listing of all the TV Shows being tracked"
-						Location="https://www.krishemenway.com/calendar.html"
+						Location="/Calendar.html"
 					/>
 
 					<ProjectLink
@@ -29,13 +29,19 @@ class App extends React.Component<AppProps, {}> {
 					<ProjectLink
 						Title="Automated Typing Center for America"
 						Description="what is happening right now."
-						Location="https://www.krishemenway.com/im-busy"
+						Location="/im-busy"
 					/>
 
 					<ProjectLink
 						Title="Supermarket Ninja (mobile)"
 						Description="swipin food away at the cash register!"
-						Location="https://www.krishemenway.com/supermarketninja"
+						Location="/supermarketninja"
+					/>
+
+					<ProjectLink
+						Title="TV Show Completion"
+						Description="Completion for TV Shows"
+						Location="/MissingEpisodes.html"
 					/>
 				</div>
 			</div>
