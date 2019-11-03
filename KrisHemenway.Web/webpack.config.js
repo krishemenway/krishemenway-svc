@@ -4,6 +4,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
 	entry: {
 		app: "./src/Home/App.tsx",
+		missingepisodes: "./src/MissingEpisodes/MissingEpisodes.tsx",
 		calendar: "./src/Calendar/Calendar.tsx"
 	},
 
@@ -24,7 +25,7 @@ module.exports = {
 	},
 
 	plugins: [
-		new CleanWebpackPlugin(),
+		new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
 		new CopyPlugin([
 			{ from: "./src/favicon.ico", to: ".", flatten: false },
 			{ from: "./src/**/*.html", to: ".", flatten: true },
