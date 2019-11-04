@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Remove="Episodes\EpisodeIdentifier.cs" />
+		<None Remove="app-*.log" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -23,7 +23,7 @@
 		<PackageReference Include="StronglyTyped.GuidIds" Version="3.0.0" />
 		<PackageReference Include="StronglyTyped.GuidIds.Dapper" Version="3.2.0" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
 		<ProjectReference Include="..\KrisHemenway.Common\KrisHemenway.Common.csproj" />
 	</ItemGroup>
