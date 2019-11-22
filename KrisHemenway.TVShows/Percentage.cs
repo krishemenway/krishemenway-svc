@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KrisHemenway.Common
+namespace KrisHemenway.TVShows
 {
 	public class Percentage
 	{
@@ -19,7 +19,7 @@ namespace KrisHemenway.Common
 
 		public override string ToString()
 		{
-			return Value.ToString();
+			return $"{Value.ToString("G2")} %";
 		}
 
 		public override bool Equals(object obj)
@@ -42,7 +42,7 @@ namespace KrisHemenway.Common
 	{
 		public static Percentage CreatePercentageOf<T>(this IEnumerable<T> collection, Func<T, bool> calculatePercentageWithFilter)
 		{
-			return new Percentage(collection.Where(calculatePercentageWithFilter).Count(), collection.Count());
+			return new Percentage(collection.Count(calculatePercentageWithFilter), collection.Count());
 		}
 	}
 }
