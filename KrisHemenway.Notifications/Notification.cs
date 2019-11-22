@@ -1,11 +1,11 @@
 ﻿using StronglyTyped.GuidIds;
 using System;
 
-namespace KrisHemenway.Notification.SentNotifications
+namespace KrisHemenway.Notifications
 {
-	public class SentNotification
+	public class Notification
 	{
-		public Id<SentNotification> NotificationId { get; set; }
+		public Id<Notification> NotificationId { get; set; }
 
 		public string Title { get; set; }
 		public string Content { get; set; }

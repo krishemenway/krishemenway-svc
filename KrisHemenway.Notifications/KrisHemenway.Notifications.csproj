@@ -9,6 +9,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="notifications-*.log" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Dapper" Version="2.0.30" />
 		<PackageReference Include="Npgsql" Version="4.1.1" />
 		<PackageReference Include="Quartz" Version="3.0.7" />

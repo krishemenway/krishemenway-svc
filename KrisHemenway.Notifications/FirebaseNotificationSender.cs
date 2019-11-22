@@ -1,5 +1,4 @@
-﻿using KrisHemenway.Notification.SentNotifications;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -7,16 +6,16 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace KrisHemenway.Notification.PushNotifications
+namespace KrisHemenway.Notifications
 {
-	public interface IFirebasePushNotificationSender
+	public interface IFirebaseNotificationSender
 	{
-		void NotifyAll(SentNotification notification);
+		void NotifyAll(Notification notification);
 	}
 
-	public class FirebasePushNotificationSender : IFirebasePushNotificationSender
+	public class FirebaseNotificationSender : IFirebaseNotificationSender
 	{
-		public async void NotifyAll(SentNotification notification)
+		public async void NotifyAll(Notification notification)
 		{
 			var buildMessageJson = new FCMPushNotification<NotificationData>
 				{
@@ -57,7 +56,7 @@ namespace KrisHemenway.Notification.PushNotifications
 			get { return Program.Configuration.GetValue<string>("FirebaseKey"); }
 		}
 
-		private readonly ILogger<FirebasePushNotificationSender> Log = new LoggerFactory().CreateLogger<FirebasePushNotificationSender>();
+		private readonly ILogger<FirebaseNotificationSender> Log = new LoggerFactory().CreateLogger<FirebaseNotificationSender>();
 	}
 
 	public class NotificationData

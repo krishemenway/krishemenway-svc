@@ -1,12 +1,11 @@
-﻿using KrisHemenway.Notification.Reminders;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Impl;
 
-namespace KrisHemenway.Notification
+namespace KrisHemenway.Notifications
 {
 	public class Startup
 	{
@@ -23,7 +22,6 @@ namespace KrisHemenway.Notification
 			app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 			Scheduler = new StdSchedulerFactory().GetScheduler().Result;
-			Scheduler.ScheduleJob(ReminderJob.CreateJob(), ReminderJob.CreateTrigger());
 			Scheduler.Start(hostApplicationLifetime.ApplicationStopping);
 		}
 

@@ -3,7 +3,7 @@ using Npgsql;
 using StronglyTyped.GuidIds.Dapper;
 using System.Data;
 
-namespace KrisHemenway.Notification
+namespace KrisHemenway.Notifications
 {
 	public static class Database
 	{

@@ -4,17 +4,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KrisHemenway.Notification.SentNotifications
+namespace KrisHemenway.Notifications
 {
 	public interface INotificationStore
 	{
-		IReadOnlyList<SentNotification> FindAll(DateTime? afterTime = null);
-		SentNotification CreateNotification(PushNotificationDetails details);
+		IReadOnlyList<Notification> FindAll(DateTime? afterTime = null);
+		Notification CreateNotification(PushNotificationDetails details);
 	}
 
 	public class NotificationStore : INotificationStore
 	{
-		public IReadOnlyList<SentNotification> FindAll(DateTime? afterTime = null)
+		public IReadOnlyList<Notification> FindAll(DateTime? afterTime = null)
 		{
 			const string sql = @"
 				SELECT
@@ -30,13 +30,13 @@ namespace KrisHemenway.Notification.SentNotifications
 			using (var connection = Database.CreateConnection())
 			{
 				return connection
-					.Query<SentNotification>(sql, new { AfterTime = afterTime ?? DateTime.MinValue })
+					.Query<Notification>(sql, new { AfterTime = afterTime ?? DateTime.MinValue })
 					.Select(BuildSentNotification)
 					.ToList();
 			}
 		}
 
-		public SentNotification CreateNotification(PushNotificationDetails details)
+		public Notification CreateNotification(PushNotificationDetails details)
 		{
 			const string sql = @"
 				INSERT INTO public.notification
@@ -46,7 +46,7 @@ namespace KrisHemenway.Notification.SentNotifications
 
 			using (var connection = Database.CreateConnection())
 			{
-				var notification = new SentNotification
+				var notification = new Notification
 				{
 					Title = details.Title,
 					Content = details.Content,
@@ -60,7 +60,7 @@ namespace KrisHemenway.Notification.SentNotifications
 			}
 		}
 
-		private SentNotification BuildSentNotification(SentNotification notification)
+		private Notification BuildSentNotification(Notification notification)
 		{
 			notification.SentTime = DateTime.SpecifyKind(notification.SentTime, DateTimeKind.Local);
 			return notification;

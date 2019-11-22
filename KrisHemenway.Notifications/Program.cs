@@ -6,7 +6,7 @@ using Serilog;
 using System;
 using Serilog.Events;
 
-namespace KrisHemenway.Notification
+namespace KrisHemenway.Notifications
 {
 	public class Program
 	{
@@ -45,7 +45,7 @@ namespace KrisHemenway.Notification
 				.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 				.Enrich.FromLogContext()
 				.WriteTo.Console()
-				.WriteTo.RollingFile("app-{Date}.log")
+				.WriteTo.RollingFile("notifications-{Date}.log")
 				.CreateLogger();
 		}
 

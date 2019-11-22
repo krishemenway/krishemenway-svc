@@ -2,12 +2,12 @@
 using System.Linq;
 using Dapper;
 
-namespace KrisHemenway.Notification.PushNotifications
+namespace KrisHemenway.Notifications
 {
 	public interface IPushRecipientStore
 	{
 		List<PushRecipient> FindPushRecipients();
-		void SaveRecipient(string deviceToken);
+		void AddPushRecipient(string deviceToken);
 	}
 
 	public class PushRecipientStore : IPushRecipientStore
@@ -28,7 +28,7 @@ namespace KrisHemenway.Notification.PushNotifications
 			}
 		}
 
-		public void SaveRecipient(string deviceToken)
+		public void AddPushRecipient(string deviceToken)
 		{
 			const string InsertPushRecipientSql = @"
 				INSERT INTO public.push_recipient 
