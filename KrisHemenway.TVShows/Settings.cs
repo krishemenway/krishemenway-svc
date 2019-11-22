@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
-using System.IO;
 
 namespace KrisHemenway.TVShows
 {
@@ -25,8 +24,6 @@ namespace KrisHemenway.TVShows
 
 		string DownloadPassword { get; }
 		bool CanDownload { get; }
-
-		string ExecutablePath { get; }
 	}
 
 	public class Settings : ISettings
@@ -54,8 +51,6 @@ namespace KrisHemenway.TVShows
 
 		public string DownloadPassword => _configuration.GetValue<string>("DownloadPassword");
 		public bool CanDownload => _configuration.GetValue<bool>("CanDownload");
-
-		public string ExecutablePath => Directory.GetCurrentDirectory();
 
 		private readonly IConfigurationRoot _configuration;
 	}

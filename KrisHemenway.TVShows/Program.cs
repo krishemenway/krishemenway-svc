@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
 using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace KrisHemenway.TVShows
@@ -13,7 +14,7 @@ namespace KrisHemenway.TVShows
 		public static void Main(string[] args)
 		{
 			var configuration = new ConfigurationBuilder()
-				.SetBasePath(Directory.GetCurrentDirectory())
+				.SetBasePath(ExecutablePath)
 				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
 				.AddEnvironmentVariables()
 				.AddCommandLine(args)
@@ -60,6 +61,8 @@ namespace KrisHemenway.TVShows
 
 			WebHost.Run();
 		}
+
+		public static string ExecutablePath { get; set; } = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
 
 		public static Settings Settings { get; internal set; }
 		public static IWebHost WebHost { get; internal set; }

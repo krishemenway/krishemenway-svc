@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KrisHemenway.TVShows.Shows
 {
-	[Route("api/tvshows/shows")]
+	[Route("shows")]
 	public class CreateShowRequestController : ControllerBase
 	{
 		public CreateShowRequestController(
@@ -15,14 +15,12 @@ namespace KrisHemenway.TVShows.Shows
 			_refreshShowTask = refreshShowTask ?? new RefreshShowTask();
 		}
 
-		[HttpGet(nameof(Create))]
+		[HttpPost(nameof(Create))]
 		[ProducesResponseType(200, Type = typeof(Result))]
-		public ActionResult<Result> Create(CreateShowRequest createShowRequest)
+		public ActionResult<Result> Create([FromBody] CreateShowRequest createShowRequest)
 		{
 			var show = _showStore.Create(createShowRequest);
-			_refreshShowTask.Refresh(show);
-
-			return Result.Successful;
+			return _refreshShowTask.Refresh(show);
 		}
 
 		private readonly IShowStore _showStore;
