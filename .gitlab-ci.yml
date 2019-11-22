@@ -13,15 +13,15 @@ build:web:
         paths:
             - KrisHemenway.Web/dist
 
-build:notification:
+build:notifications:
     image: mcr.microsoft.com/dotnet/core/sdk:3.0
     stage: build
     script:
-        - "dotnet publish KrisHemenway.Notification --output ./notification"
+        - "dotnet publish KrisHemenway.Notifications --output ./notifications"
     artifacts:
         name: "$CI_JOB_NAME"
         paths:
-            - notification
+            - notifications
 
 build:tvshows:
     image: mcr.microsoft.com/dotnet/core/sdk:3.0
