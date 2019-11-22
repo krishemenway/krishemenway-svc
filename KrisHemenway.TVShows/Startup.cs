@@ -25,7 +25,7 @@ namespace KrisHemenway.TVShows
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IHostApplicationLifetime hostApplicationLifetime)
+		public void Configure(IApplicationBuilder app, IHostApplicationLifetime hostApplicationLifetime)
 		{
 			app.UseSession();
 			app.UseRouting();
