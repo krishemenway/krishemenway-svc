@@ -1,5 +1,4 @@
-﻿using KrisHemenway.Common;
-using KrisHemenway.TVShows.Shows;
+﻿using KrisHemenway.TVShows.Shows;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
