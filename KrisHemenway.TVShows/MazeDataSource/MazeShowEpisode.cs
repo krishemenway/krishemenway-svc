@@ -1,24 +1,20 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace KrisHemenway.TVShows.MazeDataSource
 {
 	public class MazeShowEpisode
 	{
-		public int Id { get; set; }
-
-		public string Url { get; set; }
+		[JsonPropertyName("name")]
 		public string Name { get; set; }
 
+		[JsonPropertyName("season")]
 		public int Season { get; set; }
+
+		[JsonPropertyName("number")]
 		public int Number { get; set; }
 
-		public int Runtime { get; set; }
-
-		public MazeShowEpisodeImages Image { get; set; }
-		public string Summary { get; set; }
-
+		[JsonPropertyName("airdate")]
 		public DateTime? AirDate { get; set; }
-		public DateTime? Airstamp { get; set; }
-		public TimeSpan? AirTime { get; set; }
 	}
 }

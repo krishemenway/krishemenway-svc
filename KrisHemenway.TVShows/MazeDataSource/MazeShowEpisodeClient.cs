@@ -1,13 +1,12 @@
-﻿using KrisHemenway.Common;
-using KrisHemenway.TVShows.Episodes;
+﻿using KrisHemenway.TVShows.Episodes;
 using KrisHemenway.TVShows.Shows;
-using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 
 namespace KrisHemenway.TVShows.MazeDataSource
 {
@@ -31,7 +30,7 @@ namespace KrisHemenway.TVShows.MazeDataSource
 			}
 			catch(Exception exception)
 			{
-				Log.Error($"Failed to fetch episode data for show {show.MazeId.Value}", exception);
+				Log.Error("Failed to fetch episode data for show {MazeId}: {@Exception}", show.MazeId.Value, exception);
 				return Result<IReadOnlyList<IEpisode>>.Failure($"Failed to fetch episode data for show {show.MazeId.Value}");
 			}
 		}
@@ -42,12 +41,13 @@ namespace KrisHemenway.TVShows.MazeDataSource
 			var response = request.GetResponseAsync();
 
 			response.Wait();
-			
+
 			using (var streamReader = new StreamReader(response.Result.GetResponseStream()))
 			{
-				return JsonConvert.DeserializeObject<IReadOnlyList<MazeShowEpisode>>(streamReader.ReadToEnd())
-					.Select(episode => CreateEpisode(episode, show))
-					.ToList();
+				var responseString = streamReader.ReadToEnd();
+				var mazeEpisodes = JsonSerializer.Deserialize<IReadOnlyList<MazeShowEpisode>>(responseString);
+
+				return mazeEpisodes.Select(episode => CreateEpisode(episode, show)).ToList();
 			}
 		}
 

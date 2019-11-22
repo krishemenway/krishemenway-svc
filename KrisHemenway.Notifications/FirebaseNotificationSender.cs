@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Serilog;
 using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace KrisHemenway.Notifications
 {
@@ -40,14 +41,14 @@ namespace KrisHemenway.Notifications
 
 			using (var requestStream = await webRequest.GetRequestStreamAsync())
 			{
-				var requestBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(buildMessageJson));
+				var requestBytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(buildMessageJson));
 				requestStream.Write(requestBytes, 0, requestBytes.Length);
 			}
 
 			using (var response = await webRequest.GetResponseAsync())
 			using (var responseStream = new StreamReader(response.GetResponseStream()))
 			{
-				Log.LogInformation($"Notification for {notification.TypeName} response from FCM: {responseStream.ReadToEnd()}");
+				Log.Information("Notification for {NotificationType} response from FCM: {Response}", notification.TypeName, responseStream.ReadToEnd());
 			}
 		}
 
@@ -55,8 +56,6 @@ namespace KrisHemenway.Notifications
 		{
 			get { return Program.Configuration.GetValue<string>("FirebaseKey"); }
 		}
-
-		private readonly ILogger<FirebaseNotificationSender> Log = new LoggerFactory().CreateLogger<FirebaseNotificationSender>();
 	}
 
 	public class NotificationData
@@ -68,34 +67,34 @@ namespace KrisHemenway.Notifications
 	
 	public class FCMNotificationOptions
 	{
-		[JsonProperty(PropertyName = "body")]
+		[JsonPropertyName("body")]
 		public string Body { get; set; }
 
-		[JsonProperty(PropertyName = "title")]
+		[JsonPropertyName("title")]
 		public string Title { get; set; }
 
-		[JsonProperty(PropertyName = "icon")]
+		[JsonPropertyName("icon")]
 		public string Icon { get; set; }
 
-		[JsonProperty(PropertyName = "color")]
+		[JsonPropertyName("color")]
 		public string Color { get; set; }
 
-		[JsonProperty(PropertyName = "click_action")]
+		[JsonPropertyName("click_action")]
 		public string ClickAction { get; set; }
 
-		[JsonProperty(PropertyName = "tag")]
+		[JsonPropertyName("tag")]
 		public string Tag { get; set; }
 	}
 
 	public class FCMPushNotification<T>
 	{
-		[JsonProperty(PropertyName = "to")]
+		[JsonPropertyName("to")]
 		public string To { get; set; }
 
-		[JsonProperty(PropertyName = "data")]
+		[JsonPropertyName("data")]
 		public T Data { get; set; }
 
-		[JsonProperty(PropertyName = "notification")]
+		[JsonPropertyName("notification")]
 		public FCMNotificationOptions Notification { get; set; }
 	}
 }

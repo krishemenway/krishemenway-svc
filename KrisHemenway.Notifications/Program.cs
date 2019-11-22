@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
 using Serilog.Events;
+using System.Diagnostics;
 
 namespace KrisHemenway.Notifications
 {
@@ -56,17 +57,15 @@ namespace KrisHemenway.Notifications
 				.UseConfiguration(Configuration)
 				.UseStartup<Startup>()
 				.UseSerilog()
-				.UseUrls($"http://*:{WebPort}")
+				.UseUrls($"http://*:{Configuration.GetValue<int>("WebPort")}")
 				.Build();
 
 			WebHost.Run();
 		}
 
-		public static int WebPort => Configuration.GetValue<int>("WebPort");
-
 		public static IConfigurationRoot Configuration { get; private set; }
 		public static IWebHost WebHost { get; private set; }
 
-		public static string ExecutablePath => Directory.GetCurrentDirectory();
+		public static string ExecutablePath { get; set; } = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
 	}
 }

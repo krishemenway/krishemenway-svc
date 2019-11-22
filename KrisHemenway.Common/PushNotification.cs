@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 
 namespace KrisHemenway.Common
 {
@@ -26,7 +26,7 @@ namespace KrisHemenway.Common
 
 		public void NotifyAll(PushNotificationDetails details)
 		{
-			var content = new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json");
+			var content = new StringContent(JsonSerializer.Serialize(details), Encoding.UTF8, "application/json");
 			_httpClient.PostAsync("http://localhost:8105/internal/api/notifications/send", content);
 		}
 
