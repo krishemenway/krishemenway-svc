@@ -27,18 +27,9 @@ namespace KrisHemenway.Common
 		public void NotifyAll(PushNotificationDetails details)
 		{
 			var content = new StringContent(JsonConvert.SerializeObject(details), Encoding.UTF8, "application/json");
-			var response = _httpClient.PostAsync("http://localhost:8105/internal/api/notifications/send", content).Result;
+			_httpClient.PostAsync("http://localhost:8105/internal/api/notifications/send", content);
 		}
 
 		private readonly HttpClient _httpClient;
-	}
-
-	public class Notification
-	{
-		public string title { get; set; }
-		public string body { get; set; }
-		public string type { get; set; }
-		public int typeid { get; set; }
-		public int alertnumber { get; set; }
 	}
 }
