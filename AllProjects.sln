@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.TVShows", "Kri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.Common", "KrisHemenway.Common\KrisHemenway.Common.csproj", "{8BB49355-BB9E-4766-B42F-7C2DD498E319}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.Notification", "KrisHemenway.Notification\KrisHemenway.Notification.csproj", "{4AADDBB7-61C6-442A-BC72-6362E0A9E873}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.MinecraftMonitor", "KrisHemenway.MinecraftMonitor\KrisHemenway.MinecraftMonitor.csproj", "{E3D94EF9-A00A-404A-9046-9F6C8316D197}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KrisHemenway.Notification", "KrisHemenway.Notifications\KrisHemenway.Notifications.csproj", "{4AADDBB7-61C6-442A-BC72-6362E0A9E873}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2D58563A-87E0-4E6D-B22A-2DEB6DAF1A1C}"
 	ProjectSection(SolutionItems) = preProject
@@ -64,18 +62,6 @@ Global
 		{4AADDBB7-61C6-442A-BC72-6362E0A9E873}.Release|x64.Build.0 = Release|Any CPU
 		{4AADDBB7-61C6-442A-BC72-6362E0A9E873}.Release|x86.ActiveCfg = Release|Any CPU
 		{4AADDBB7-61C6-442A-BC72-6362E0A9E873}.Release|x86.Build.0 = Release|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Debug|x64.Build.0 = Debug|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Debug|x86.Build.0 = Debug|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Release|x64.ActiveCfg = Release|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Release|x64.Build.0 = Release|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Release|x86.ActiveCfg = Release|Any CPU
-		{E3D94EF9-A00A-404A-9046-9F6C8316D197}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

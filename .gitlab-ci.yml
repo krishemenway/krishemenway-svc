@@ -23,16 +23,6 @@ build:notification:
         paths:
             - notification
 
-build:minecraftmonitor:
-    image: mcr.microsoft.com/dotnet/core/sdk:3.0
-    stage: build
-    script:
-        - "dotnet publish KrisHemenway.MinecraftMonitor --output ./minecraftmonitor"
-    artifacts:
-        name: "$CI_JOB_NAME"
-        paths:
-            - minecraftmonitor
-
 build:tvshows:
     image: mcr.microsoft.com/dotnet/core/sdk:3.0
     stage: build
