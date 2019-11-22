@@ -1,6 +1,7 @@
 ﻿using Npgsql;
 using StronglyTyped.GuidIds.Dapper;
 using System.Data;
+using System.Reflection;
 
 namespace KrisHemenway.TVShows
 {
@@ -8,7 +9,7 @@ namespace KrisHemenway.TVShows
 	{
 		static Database()
 		{
-			DapperIdRegistrar.RegisterAll();
+			DapperIdRegistrar.RegisterAll(Assembly.GetExecutingAssembly());
 		}
 
 		public static IDbConnection CreateConnection()
