@@ -48,7 +48,7 @@ namespace KrisHemenway.TVShows.Jobs
 		internal static ITrigger CreateTrigger()
 		{
 			var schedule = DailyTimeIntervalScheduleBuilder.Create()
-				.StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(8, 45))
+				.StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(20, 00))
 				.EndingDailyAfterCount(1)
 				.OnEveryDay();
 
