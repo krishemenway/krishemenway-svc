@@ -3,7 +3,7 @@ name: .NET Core
 on: [push]
 
 jobs:
-  build tvshows:
+  build-tvshows:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,9 +16,10 @@ jobs:
       run: dotnet publish KrisHemenway.TVShows --configuration Release --output ./tvshows
     - uses: actions/upload-artifact@v1
       with:
-        name: tvshows service
+        name: tvshows-service
         path: ./tvshows
-  build notifications:
+
+  build-notifications:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,5 +32,21 @@ jobs:
       run: dotnet publish KrisHemenway.Notifications --configuration Release --output ./notifications
     - uses: actions/upload-artifact@v1
       with:
-        name: notifications service
+        name: notifications-service
+        path: ./notifications
+
+  build-web:
+    runs-on: ubuntu-16.04
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+        registry-url: 'https://registry.npmjs.org'
+    - run: cd KrisHemenway.Web
+    - run: npm ci
+    - run: npm run build
+    - uses: actions/upload-artifact@v1
+      with:
+        name: web
         path: ./notifications
