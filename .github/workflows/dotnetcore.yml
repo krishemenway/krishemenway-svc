@@ -36,7 +36,7 @@ jobs:
         path: ./notifications
 
   build-web:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
@@ -50,4 +50,4 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: web
-        path: ./KrisHemenway.Web/notifications
+        path: ./KrisHemenway.Web/dist
