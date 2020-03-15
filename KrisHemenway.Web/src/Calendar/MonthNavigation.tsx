@@ -1,36 +1,36 @@
 import * as React from "react";
 import FullMonthName from "./FullMonthName";
-import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import moment = require("moment");
 
-interface MonthNavigationParams extends WithStyles<typeof styles> {
+interface MonthNavigationProps {
 	CurrentMonth: moment.Moment;
 	OnChangeMonth: (month: moment.Moment) => void;
 }
 
-export class MonthNavigation extends React.Component<MonthNavigationParams, {}> {
-	public render() {
-		return (
-			<div className={this.props.classes.monthNavigation}>
-				<button className={this.props.classes.clickableMonth} onClick={() => this.props.OnChangeMonth(this.props.CurrentMonth.clone().subtract(1, "month"))}>
-					<FullMonthName Month={this.props.CurrentMonth.clone().subtract(1, "month")} />
-					<div className={this.props.classes.clickMonthUnderline} />
-				</button>
+const MonthNavigation: React.FC<MonthNavigationProps> = (props) => {
+	const classes = useMonthNavigationStyles();
+	
+	return (
+		<div className={classes.monthNavigation}>
+			<button className={classes.clickableMonth} onClick={() => props.OnChangeMonth(props.CurrentMonth.clone().subtract(1, "month"))}>
+				<FullMonthName Month={props.CurrentMonth.clone().subtract(1, "month")} />
+				<div className={classes.clickMonthUnderline} />
+			</button>
 
-				<div className={this.props.classes.currentMonth}>
-					<FullMonthName Month={this.props.CurrentMonth} />
-				</div>
-
-				<button className={this.props.classes.clickableMonth} onClick={() => this.props.OnChangeMonth(this.props.CurrentMonth.clone().add(1, "month"))}>
-					<FullMonthName Month={this.props.CurrentMonth.clone().add(1, "month")} />
-					<div className={this.props.classes.clickMonthUnderline} />
-				</button>
+			<div className={classes.currentMonth}>
+				<FullMonthName Month={props.CurrentMonth} />
 			</div>
-		);
-	}
-}
 
-const styles = (theme: Theme) => createStyles({
+			<button className={classes.clickableMonth} onClick={() => props.OnChangeMonth(props.CurrentMonth.clone().add(1, "month"))}>
+				<FullMonthName Month={props.CurrentMonth.clone().add(1, "month")} />
+				<div className={classes.clickMonthUnderline} />
+			</button>
+		</div>
+	)
+};
+
+const useMonthNavigationStyles = makeStyles(theme => ({
 	monthNavigation: {
 		display: "flex",
 		flexDirection: "row",
@@ -69,6 +69,6 @@ const styles = (theme: Theme) => createStyles({
 			fontSize: "16px",
 		},
 	},
-});
+}));
 
-export default withStyles(styles)(MonthNavigation);
+export default MonthNavigation;

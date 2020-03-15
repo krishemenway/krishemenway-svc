@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as moment from "moment";
-import Text from "../Common/Text";
+import Text from "Common/Text";
 import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
 
 interface MonthParams extends WithStyles<typeof styles> {
