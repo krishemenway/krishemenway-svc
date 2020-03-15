@@ -1,5 +1,6 @@
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const path = require("path");
 
 module.exports = {
 	entry: {
@@ -15,6 +16,10 @@ module.exports = {
 
 	resolve: {
 		extensions: [".ts", ".tsx", ".js", ".json"],
+		modules: [
+			path.resolve(__dirname, "src"),
+			"node_modules"
+		]
 	},
 
 	module: {
