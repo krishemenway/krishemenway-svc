@@ -2,7 +2,7 @@ import * as React from "react";
 import * as reactDom from "react-dom";
 import ProjectLink from "./ProjectLink";
 import Text from "../Common/Text";
-import * as AppBackground from "../Common/AppBackground.png";
+import {default as AppBackground} from "Common/AppBackground.png";
 import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
 
 interface AppProps extends WithStyles<typeof styles> { }
