@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as moment from "moment";
 import Text from "Common/Text";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 
 interface DayRenderer {
 	type: string;
@@ -22,7 +22,7 @@ function CreateDatesInMonth(date: moment.Moment) {
 
 	for(let dayOfMonth = 1; dayOfMonth <= lastDay.date(); dayOfMonth++)
 	{
-		days.push(moment(yearAndMonthPart + dayOfMonth));
+		days.push(moment(yearAndMonthPart + dayOfMonth, "YYYY-MM-D"));
 	}
 
 	return days;
@@ -40,6 +40,7 @@ interface CalendarDayProps {
 
 const CalendarDay: React.FC<CalendarDayProps> = (props) => {
 	const classes = useCalendarDayStyles();
+	const renderedData = props.DayRenderers.map((renderer) => <div key={renderer.type}>{renderer.render(props.Date)}</div>);
 
 	return (
 		<div className={classes.dayItems} key={props.Date.toString()}>
@@ -48,8 +49,8 @@ const CalendarDay: React.FC<CalendarDayProps> = (props) => {
 				<Text className={classes.month} Text={props.Date.format("MMM")} />
 			</div>
 
-			<div>
-				{props.DayRenderers.map((renderer) => <div key={renderer.type}>{renderer.render(props.Date)}</div>)}
+			<div className={renderedData.length > 0 ? classes.hasRenderedData : ""}>
+				{renderedData}
 			</div>
 
 			<Text className={classes.dayOfWeek} Text={props.Date.format("dddd")} />
@@ -57,7 +58,7 @@ const CalendarDay: React.FC<CalendarDayProps> = (props) => {
 	);
 }
 
-const useCalendarDayStyles = makeStyles({
+const useCalendarDayStyles = makeStyles((t: Theme) => ({
 	dayOfWeek: {
 		fontSize: "24px",
 		fontWeight: "bold",
@@ -90,11 +91,22 @@ const useCalendarDayStyles = makeStyles({
 	dayOfMonth: {
 		fontSize: "26px",
 		color: "#E8E8E8",
+		[t.breakpoints.down(600)]: {
+			display: "block",
+		},
 	},
 	month: {
 		fontSize: "20px",
 		color: "#696969",
+		[t.breakpoints.down(600)]: {
+			display: "block",
+		},
 	},
-});
+	hasRenderedData: {
+		[t.breakpoints.down(600)]: {
+			paddingBottom: "28px",
+		},
+	},
+}));
 
 export default CalendarMonth;
