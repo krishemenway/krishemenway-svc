@@ -3,7 +3,7 @@ import { CircularProgress } from "@material-ui/core";
 
 interface LoadingProps {
 	IsLoading: boolean;
-	RenderChildren: () => JSX.Element|JSX.Element[];
+	Render: () => JSX.Element|JSX.Element[];
 }
 
 const Loading : React.FC<LoadingProps> = (props) => {
@@ -11,7 +11,7 @@ const Loading : React.FC<LoadingProps> = (props) => {
 		return <CircularProgress style={{margin: "24px 0"}} />;
 	}
 
-	return <>{props.RenderChildren()}</>;
+	return <>{props.Render()}</>;
 };
 
 export default Loading;

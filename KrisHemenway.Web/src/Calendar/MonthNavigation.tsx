@@ -1,37 +1,54 @@
 import * as React from "react";
-import FullMonthName from "./FullMonthName";
+import * as moment from "moment";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import moment = require("moment");
+import { CalendarService } from "Calendar/CalendarService";
+import { useObservable } from "Common/UseObservable";
+import { ObservableCalendarMonth } from "Calendar/ObservableCalendarMonth";
+import Text from "Common/Text";
 
-interface MonthNavigationProps {
-	CurrentMonth: moment.Moment;
-	OnChangeMonth: (month: moment.Moment) => void;
-}
-
-const MonthNavigation: React.FC<MonthNavigationProps> = (props) => {
-	const classes = useMonthNavigationStyles();
+const MonthNavigation: React.FC = () => {
+	const classes = useStyles();
+	const viewingMonth = useObservable(CalendarService.Instance.ViewingMonth);
+	const previousMonth = CalendarService.Instance.FindObservableCalendarMonth(viewingMonth.Date.clone().subtract(1, 'month'));
+	const nextMonth = CalendarService.Instance.FindObservableCalendarMonth(viewingMonth.Date.clone().add(1, 'month'));
 	
 	return (
-		<div className={classes.monthNavigation}>
-			<button className={classes.clickableMonth} onClick={() => props.OnChangeMonth(props.CurrentMonth.clone().subtract(1, "month"))}>
-				<FullMonthName Month={props.CurrentMonth.clone().subtract(1, "month")} />
-				<div className={classes.clickMonthUnderline} />
-			</button>
+		<div className={classes.monthNavigationContainer}>
+			<SwitchMonthButton Month={previousMonth} />
 
 			<div className={classes.currentMonth}>
-				<FullMonthName Month={props.CurrentMonth} />
+				<FullMonthName Month={viewingMonth.Date} />
 			</div>
 
-			<button className={classes.clickableMonth} onClick={() => props.OnChangeMonth(props.CurrentMonth.clone().add(1, "month"))}>
-				<FullMonthName Month={props.CurrentMonth.clone().add(1, "month")} />
-				<div className={classes.clickMonthUnderline} />
-			</button>
+			<SwitchMonthButton Month={nextMonth} />
 		</div>
 	)
 };
 
-const useMonthNavigationStyles = makeStyles(theme => ({
-	monthNavigation: {
+const SwitchMonthButton: React.FC<{Month: ObservableCalendarMonth}> = (props) => {
+	const classes = useStyles();
+
+	return (
+		<button className={classes.clickableMonth} onClick={() => CalendarService.Instance.ChangeMonth(props.Month.Date)}>
+			<FullMonthName Month={props.Month.Date} />
+			<div className={classes.clickMonthUnderline} />
+		</button>
+	);
+}
+
+const FullMonthName: React.FC<{Month: moment.Moment}> = (props) => {
+	const classes = useStyles();
+
+	return (
+		<div>
+			<Text className={classes.monthText} Text={props.Month.format("MMMM")} />
+			<Text className={classes.monthText} Text={props.Month.format("YYYY")} />
+		</div>
+	);
+};
+
+const useStyles = makeStyles(theme => ({
+	monthNavigationContainer: {
 		display: "flex",
 		flexDirection: "row",
 		flexWrap: "nowrap",
@@ -68,6 +85,12 @@ const useMonthNavigationStyles = makeStyles(theme => ({
 		[theme.breakpoints.down(768)]: {
 			fontSize: "16px",
 		},
+	},
+	monthText: {
+		textAlign: "center",
+		fontWeight: "bold",
+		color: "#F0F0F0",
+		display: "block",
 	},
 }));
 

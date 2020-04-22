@@ -18,22 +18,19 @@ const EpisodeList = ListOf<Episode>();
 export const Calendar: React.FC = () => {
 	const classes = useCalendarStyles();
 	const currentMonth = useObservable(CalendarService.Instance.ViewingMonth);
-	const episodesByDayKey = useObservable(CalendarService.Instance.FindOrCreateEpisodesForMonth(currentMonth));
-	const isLoading = useObservable(CalendarService.Instance.FindOrCreateCurrentMonthsIsLoading(currentMonth));
+	const episodesByDayKey = useObservable(currentMonth.EpisodesInMonth);
+	const isLoading = useObservable(currentMonth.IsLoading);
 
 	return (
 		<div className={classes.calendarApp}>
 			<div className={classes.widthWrapper}>
-				<MonthNavigation
-					CurrentMonth={currentMonth}
-					OnChangeMonth={(month) => CalendarService.Instance.ViewingMonth.Value = month}
-				/>
+				<MonthNavigation />
 
 				<Loading
 					IsLoading={isLoading}
-					RenderChildren={() =>
+					Render={() =>
 						<CalendarMonth
-							Month={currentMonth}
+							Month={currentMonth.Date}
 							DayRenderers={[
 								{ type: "episodes", render: (day) => <CalendarEpisodeList Date={day} EpisodesByDayKey={episodesByDayKey} /> },
 							]}
