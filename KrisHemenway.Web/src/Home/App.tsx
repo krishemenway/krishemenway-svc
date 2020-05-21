@@ -43,6 +43,12 @@ class App extends React.Component<AppProps, {}> {
 						Description="Completion for TV Shows"
 						Location="/MissingEpisodes.html"
 					/>
+
+					<ProjectLink
+						Title="Game Profile"
+						Description="project for tracking which games you are playing with interesting statistics"
+						Location="https://profile.krishemenway.com"
+					/>
 				</div>
 			</div>
 		)
