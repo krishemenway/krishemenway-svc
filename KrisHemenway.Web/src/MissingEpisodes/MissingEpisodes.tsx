@@ -1,10 +1,10 @@
 import * as jQuery from "jquery";
 import * as React from "react";
 import * as reactDom from "react-dom";
-import * as AppBackground from "../Common/AppBackground.png";
+import {default as AppBackground} from "Common/AppBackground.png";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Episode } from "../Episodes/Episode";
-import Text from "../Common/Text";
+import { Episode } from "Episodes/Episode";
+import Text from "Common/Text";
 import DoneIcon from "@material-ui/icons/Done";
 import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
 

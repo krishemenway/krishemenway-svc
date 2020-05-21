@@ -1,37 +1,54 @@
 import * as React from "react";
-import FullMonthName from "./FullMonthName";
-import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
-import moment = require("moment");
+import * as moment from "moment";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { CalendarService } from "Calendar/CalendarService";
+import { useObservable } from "Common/UseObservable";
+import { ObservableCalendarMonth } from "Calendar/ObservableCalendarMonth";
+import Text from "Common/Text";
 
-interface MonthNavigationParams extends WithStyles<typeof styles> {
-	CurrentMonth: moment.Moment;
-	OnChangeMonth: (month: moment.Moment) => void;
-}
+const MonthNavigation: React.FC = () => {
+	const classes = useStyles();
+	const viewingMonth = useObservable(CalendarService.Instance.ViewingMonth);
+	const previousMonth = CalendarService.Instance.FindObservableCalendarMonth(viewingMonth.Date.clone().subtract(1, 'month'));
+	const nextMonth = CalendarService.Instance.FindObservableCalendarMonth(viewingMonth.Date.clone().add(1, 'month'));
+	
+	return (
+		<div className={classes.monthNavigationContainer}>
+			<SwitchMonthButton Month={previousMonth} />
 
-export class MonthNavigation extends React.Component<MonthNavigationParams, {}> {
-	public render() {
-		return (
-			<div className={this.props.classes.monthNavigation}>
-				<button className={this.props.classes.clickableMonth} onClick={() => this.props.OnChangeMonth(this.props.CurrentMonth.clone().subtract(1, "month"))}>
-					<FullMonthName Month={this.props.CurrentMonth.clone().subtract(1, "month")} />
-					<div className={this.props.classes.clickMonthUnderline} />
-				</button>
-
-				<div className={this.props.classes.currentMonth}>
-					<FullMonthName Month={this.props.CurrentMonth} />
-				</div>
-
-				<button className={this.props.classes.clickableMonth} onClick={() => this.props.OnChangeMonth(this.props.CurrentMonth.clone().add(1, "month"))}>
-					<FullMonthName Month={this.props.CurrentMonth.clone().add(1, "month")} />
-					<div className={this.props.classes.clickMonthUnderline} />
-				</button>
+			<div className={classes.currentMonth}>
+				<FullMonthName Month={viewingMonth.Date} />
 			</div>
-		);
-	}
+
+			<SwitchMonthButton Month={nextMonth} />
+		</div>
+	)
+};
+
+const SwitchMonthButton: React.FC<{Month: ObservableCalendarMonth}> = (props) => {
+	const classes = useStyles();
+
+	return (
+		<button className={classes.clickableMonth} onClick={() => CalendarService.Instance.ChangeMonth(props.Month.Date)}>
+			<FullMonthName Month={props.Month.Date} />
+			<div className={classes.clickMonthUnderline} />
+		</button>
+	);
 }
 
-const styles = (theme: Theme) => createStyles({
-	monthNavigation: {
+const FullMonthName: React.FC<{Month: moment.Moment}> = (props) => {
+	const classes = useStyles();
+
+	return (
+		<div>
+			<Text className={classes.monthText} Text={props.Month.format("MMMM")} />
+			<Text className={classes.monthText} Text={props.Month.format("YYYY")} />
+		</div>
+	);
+};
+
+const useStyles = makeStyles(theme => ({
+	monthNavigationContainer: {
 		display: "flex",
 		flexDirection: "row",
 		flexWrap: "nowrap",
@@ -69,6 +86,12 @@ const styles = (theme: Theme) => createStyles({
 			fontSize: "16px",
 		},
 	},
-});
+	monthText: {
+		textAlign: "center",
+		fontWeight: "bold",
+		color: "#F0F0F0",
+		display: "block",
+	},
+}));
 
-export default withStyles(styles)(MonthNavigation);
+export default MonthNavigation;
