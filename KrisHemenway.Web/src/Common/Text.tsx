@@ -1,19 +1,22 @@
 import * as React from "react";
-import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
+import { createUseStyles } from "react-jss";
 
-interface TextProps extends WithStyles<typeof styles> {
+interface TextProps {
 	Text: string;
 	style?: React.CSSProperties;
 	className?: string;
 }
 
-class Text extends React.Component<TextProps, {}> {
-	public render() {
-		return <span className={`${this.props.classes.container} ${this.props.className}`} style={this.props.style}>{this.props.Text}</span>;
-	}
+const Text: React.FC<TextProps> = (props) => {
+	const classes = useStyles();
+	return (
+		<span className={`${classes.container} ${props.className}`} style={props.style}>
+			{props.Text}
+		</span>
+	);
 }
 
-const styles = (_: Theme) => createStyles({
+const useStyles = createUseStyles({
 	container: {
 		fontFamily: "'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif",
 		display: "inline-block",
@@ -24,4 +27,4 @@ const styles = (_: Theme) => createStyles({
 	},
 });
 
-export default withStyles(styles)(Text);
+export default Text;

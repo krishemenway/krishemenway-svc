@@ -1,25 +1,25 @@
 import * as React from "react";
-import Text from "../Common/Text";
-import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
+import { createUseStyles } from "react-jss";
+import Text from "Common/Text";
+import { belowWidth } from "Common/AppStyles";
 
-interface ProjectLinkProps extends WithStyles<typeof styles> {
+interface ProjectLinkProps {
 	Title: string;
 	Location: string;
 	Description: string;
 }
 
-class ProjectLink extends React.Component<ProjectLinkProps, {}> {
-	public render() {
-		return (
-			<a className={this.props.classes.projectItem} href={this.props.Location} title={this.props.Title}>
-				<Text Text={this.props.Title} className={this.props.classes.projectTitle} />
-				<Text Text={this.props.Description} className={this.props.classes.projectDescription} />
-			</a>
-		)
-	}
+const ProjectLink: React.FC<ProjectLinkProps> = (props) => {
+	const classes = useStyles();
+	return (
+		<a className={classes.projectItem} href={props.Location} title={props.Title}>
+			<Text Text={props.Title} className={classes.projectTitle} />
+			<Text Text={props.Description} className={classes.projectDescription} />
+		</a>
+	);
 }
 
-const styles = (theme: Theme) => createStyles({
+const useStyles = createUseStyles({
 	projectItem: {
 		padding: "10px",
 		width: "400px",
@@ -46,7 +46,7 @@ const styles = (theme: Theme) => createStyles({
 			borderBottomRightRadius: "6px",
 		},
 
-		[theme.breakpoints.down(768)]: {
+		[belowWidth(768)]: {
 			width: "auto",
 			margin: "0 20px",
 		}
@@ -68,4 +68,4 @@ const styles = (theme: Theme) => createStyles({
 	},
 });
 
-export default withStyles(styles)(ProjectLink);
+export default ProjectLink;

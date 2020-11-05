@@ -1,19 +1,16 @@
 import * as React from "react";
 import * as reactDom from "react-dom";
 import * as moment from "moment";
-import {  } from "@residualeffect/reactor";
+import { createUseStyles } from "react-jss";
 import { Episode } from "Episodes/Episode";
-import CalendarMonth from "./CalendarMonth";
-import MonthNavigation from "./MonthNavigation";
-import DownloadLogin from "./DownloadLogin";
+import CalendarMonth from "Calendar/CalendarMonth";
+import MonthNavigation from "Calendar/MonthNavigation";
 import ListOf from "Common/ListOf";
 import EpisodeName from "Episodes/EpisodeName";
 import {default as AppBackground} from "Common/AppBackground.png";
-import { makeStyles } from "@material-ui/core/styles";
 import Loading from "Common/Loading";
 import { CalendarService } from "Calendar/CalendarService";
 import { useObservable } from "Common/UseObservable";
-const EpisodeList = ListOf<Episode>();
 
 export const Calendar: React.FC = () => {
 	const classes = useCalendarStyles();
@@ -37,17 +34,12 @@ export const Calendar: React.FC = () => {
 						/>
 					}
 				/>
-
-				<DownloadLogin
-					OnAuthenticated={() => { }}
-					IsAuthenticated={false}
-				/>
 			</div>
 		</div>
 	);
 }
 
-const useCalendarStyles = makeStyles({
+const useCalendarStyles = createUseStyles({
 	calendarApp: { },
 	widthWrapper: {
 		margin: "0 auto",
@@ -67,7 +59,7 @@ const CalendarEpisodeList: React.FC<CalendarEpisodeListProps> = (props) => {
 	const classes = useCalendarEpisodeListStyles();
 
 	return (
-		<EpisodeList
+		<ListOf
 			className={classes.episodes}
 			key={`episodes-${props.Date.format("YYYY-MM-DD")}`}
 			items={props.EpisodesByDayKey[props.Date.format("YYYY-MM-DD")]}
@@ -76,7 +68,7 @@ const CalendarEpisodeList: React.FC<CalendarEpisodeListProps> = (props) => {
 	);
 };
 
-const useCalendarEpisodeListStyles = makeStyles({
+const useCalendarEpisodeListStyles = createUseStyles({
 	episodes: {
 		flexBasis: "auto",
 		zIndex: 1,

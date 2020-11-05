@@ -31,11 +31,13 @@ module.exports = {
 
 	plugins: [
 		new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
-		new CopyPlugin([
-			{ from: "./src/favicon.ico", to: ".", flatten: false },
-			{ from: "./src/**/*.html", to: ".", flatten: true },
-			{ from: "./misc_projects", to: ".", flatten: false },
-		]),
+		new CopyPlugin({
+			patterns: [
+				{ from: "./src/favicon.ico", to: ".", flatten: false },
+				{ from: "./src/**/*.html", to: ".", flatten: true },
+				{ from: "./misc_projects", to: ".", flatten: false },
+			]
+		}),
 	],
 
 	externals: {

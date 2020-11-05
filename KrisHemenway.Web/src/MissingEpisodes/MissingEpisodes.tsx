@@ -1,150 +1,93 @@
-import * as jQuery from "jquery";
 import * as React from "react";
 import * as reactDom from "react-dom";
+import { createUseStyles } from "react-jss";
 import {default as AppBackground} from "Common/AppBackground.png";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Episode } from "Episodes/Episode";
 import Text from "Common/Text";
-import DoneIcon from "@material-ui/icons/Done";
-import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
+// import DoneIcon from "@material-ui/icons/Done";
+// import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
+import { useObservable } from "Common/UseObservable";
+import { MissingEpisodesService, MissingEpisodesForShow, SortFuncType } from "MissingEpisodes/MissingEpisodesService";
+import { belowWidth } from "Common/AppStyles";
 
-enum SortFuncType {
-	Alphabetical,
-	Percentage,
-}
+const MissingEpisodesList : React.FC<{}> = () => {
+	const classes = useMissingEpisodeStyles();
+	const shows = useObservable(MissingEpisodesService.Instance.FilteredAndSortedShows);
+	const hideCompletedShows = useObservable(MissingEpisodesService.Instance.HideCompletedShows);
+	const sortFunc = useObservable(MissingEpisodesService.Instance.SortFunc);
 
-interface Percentage {
-	Value: number;
-	Count: number;
-	Total: number;
-}
+	React.useEffect(() => { MissingEpisodesService.Instance.LoadShows() }, []);
 
-interface MissingEpisodesForShow {
-	Name: string;
-	MissingEpisodes: Episode[];
-	MissingEpisodesPercentage: Percentage;
-}
+	return (
+		<div className={classes.app}>
+			<Text className={classes.title} Text="Completion Status" />
 
-interface MissingEpisodesForShowResponse {
-	AllShows: MissingEpisodesForShow[];
-}
+			<div className={classes.listControls}>
+				<Text className={classes.sortByText} Text="Show: " />
 
-export interface MissingEpisodesState {
-	SortFunc: SortFuncType;
-	ShowComplete: boolean;
-	Shows: MissingEpisodesForShow[];
-	ExpandedShow: MissingEpisodesForShow|null;
-}
-
-interface MissingEpisodesProps extends WithStyles<typeof styles> { }
-
-export class MissingEpisodes extends React.Component<MissingEpisodesProps, MissingEpisodesState> {
-	constructor(props: MissingEpisodesProps) {
-		super(props);
-
-		this.state = {
-			Shows: [],
-			ShowComplete: true,
-			SortFunc: SortFuncType.Percentage,
-			ExpandedShow: null,
-		};
-	}
-
-	public componentDidMount() {
-		jQuery.getJSON("/api/tvshows/episodes/missing", (response: MissingEpisodesForShowResponse) => this.HandleMissingEpisodesForShowsResponse(response));
-	}
-
-	public render() {
-		return (
-			<div className={this.props.classes.app}>
-				<Text className={this.props.classes.title} Text="Completion Status" />
-
-				<div className={this.props.classes.listControls}>
-					<Text className={this.props.classes.sortByText} Text="Show: " />
-
-					<button
-						className={`${this.props.classes.showCompleteButton} ${this.state.ShowComplete && this.props.classes.showCompleteButtonToggled}`}
-						onClick={() => this.setState({ShowComplete: !this.state.ShowComplete})}>
-
-						{this.state.ShowComplete ? "+" : "-"} Complete
-					</button>
-
-					<Text className={this.props.classes.sortByText} Text="Sort By: " />
-
-					<button className={`${this.props.classes.sortByButton} ${this.state.SortFunc === SortFuncType.Alphabetical ? this.props.classes.isSortingByToggle : ""}`} onClick={() => this.setState({SortFunc: SortFuncType.Alphabetical})}>
-						<Text Text="Alpha" className={this.props.classes.sortButtonText} />
-						<SortByAlphaIcon className={this.props.classes.sortButtonIcon} />
-					</button>
-
-					<button className={`${this.props.classes.sortByButton} ${this.state.SortFunc === SortFuncType.Percentage ? this.props.classes.isSortingByToggle : ""}`} onClick={() => this.setState({SortFunc: SortFuncType.Percentage})}>
-						<Text Text="Percentage" className={this.props.classes.sortButtonText} />
-						<Text Text="%" className={this.props.classes.sortButtonIcon} />
-					</button>
-				</div>
-
-				<div>
-					{this.state.Shows.filter(this.FindFilterFunc()).sort(this.FindSortFunc()).map((show) => this.RenderShow(show))}
-				</div>
-			</div>
-		);
-	}
-
-	private RenderShow(show: MissingEpisodesForShow) {
-		const completionPercentage = 100 - show.MissingEpisodesPercentage.Value;
-
-		return (
-			<div style={{marginBottom: "8px"}}>
 				<button
-					disabled={show.MissingEpisodesPercentage.Value === 0}
-					className={this.props.classes.showSectionHeader}
-					onClick={() => this.setState({ExpandedShow: this.state.ExpandedShow !== show ? show : null})}>
+					className={`${classes.showCompleteButton} ${!hideCompletedShows && classes.showCompleteButtonToggled}`}
+					onClick={() => { MissingEpisodesService.Instance.HideCompletedShows.Value = !hideCompletedShows; }}>
 
-					<div className={this.props.classes.showName}>
-						<Text Text={show.Name} style={{marginRight: "8px"}} />
-						{show.MissingEpisodesPercentage.Value === 0 ? <DoneIcon className={this.props.classes.doneIcon} /> : ""}
-					</div>
-
-					<Text className={this.props.classes.showPercentageText} Text={completionPercentage.toFixed(2) + "%"} />
-					<span className={this.props.classes.showPercentageBar} style={{width: completionPercentage.toFixed(0) + "%", background: "#101010"}}> </span>
+					{hideCompletedShows ? "-" : "+"} Complete
 				</button>
 
-				{this.state.ExpandedShow === show && this.state.ExpandedShow.MissingEpisodesPercentage.Value > 0 && (
-					<div className={this.props.classes.missingEpisodesContainer}>
-						{show.MissingEpisodes.map((episode) => (
-							<Text className={this.props.classes.missingEpisode} Text={`${episode.Season}e${episode.EpisodeInSeason} ${episode.Title}`} />
-						))}
-					</div>
-				)}
+				<Text className={classes.sortByText} Text="Sort By: " />
+
+				<button className={`${classes.sortByButton} ${sortFunc === SortFuncType.Alphabetical ? classes.isSortingByToggle : ""}`} onClick={() => { MissingEpisodesService.Instance.SortFunc.Value = SortFuncType.Alphabetical; }}>
+					<Text Text="Alpha" className={classes.sortButtonText} />
+					{/* <SortByAlphaIcon className={classes.sortButtonIcon} /> */}
+				</button>
+
+				<button className={`${classes.sortByButton} ${sortFunc === SortFuncType.Percentage ? classes.isSortingByToggle : ""}`} onClick={() => { MissingEpisodesService.Instance.SortFunc.Value = SortFuncType.Percentage; }}>
+					<Text Text="Percentage" className={classes.sortButtonText} />
+					<Text Text="%" className={classes.sortButtonIcon} />
+				</button>
 			</div>
-		);
-	}
 
-	private FindFilterFunc() : ((show: MissingEpisodesForShow) => boolean) {
-		if (!this.state.ShowComplete) {
-			return (show) => show.MissingEpisodesPercentage.Value > 0;
-		}
+			<div>
+				{shows.map((show) => <MissingEpisodesForShow show={show} />)}
+			</div>
+		</div>
+	);
+};
 
-		return () => true;
-	}
+const MissingEpisodesForShow : React.FC<{show: MissingEpisodesForShow}> = (props) => {
+	const completionPercentage = 100 - props.show.MissingEpisodesPercentage.Value;
+	const classes = useMissingEpisodeStyles();
+	const expandedShow = useObservable(MissingEpisodesService.Instance.ExpandedShow);
 
-	private FindSortFunc() : ((a: MissingEpisodesForShow, b: MissingEpisodesForShow) => number) {
-		if (this.state.SortFunc === SortFuncType.Alphabetical) {
-			return (a, b) => a.Name.localeCompare(b.Name);
-		} else {
-			return (a, b) => a.MissingEpisodesPercentage.Value - b.MissingEpisodesPercentage.Value;
-		}
-	}
+	return (
+		<div style={{marginBottom: "8px"}}>
+			<button
+				disabled={props.show.MissingEpisodesPercentage.Value === 0}
+				className={classes.showSectionHeader}
+				onClick={() => MissingEpisodesService.Instance.ExpandedShow.Value = expandedShow !== props.show ? props.show : null}>
 
-	private HandleMissingEpisodesForShowsResponse(response: MissingEpisodesForShowResponse) {
-		this.setState({ Shows: response.AllShows });
-	}
-}
+				<div className={classes.showName}>
+					<Text Text={props.show.Name} style={{marginRight: "8px"}} />
+					{/* {props.show.MissingEpisodesPercentage.Value === 0 ? <DoneIcon className={classes.doneIcon} /> : ""} */}
+				</div>
 
-const styles = (theme: Theme) => createStyles({
+				<Text className={classes.showPercentageText} Text={completionPercentage.toFixed(2) + "%"} />
+				<span className={classes.showPercentageBar} style={{width: completionPercentage.toFixed(0) + "%", background: "#101010"}}> </span>
+			</button>
+
+			{expandedShow === props.show && expandedShow.MissingEpisodesPercentage.Value > 0 && (
+				<div className={classes.missingEpisodesContainer}>
+					{props.show.MissingEpisodes.map((episode) => (
+						<Text className={classes.missingEpisode} Text={`${episode.Season}e${episode.EpisodeInSeason} ${episode.Title}`} />
+					))}
+				</div>
+			)}
+		</div>
+	);
+};
+
+const useMissingEpisodeStyles = createUseStyles({
 	app: {
 		padding: "8px",
 
-		[theme.breakpoints.down(720)]: {
+		[belowWidth(720)]: {
 			padding: "8px 0",
 		},
 	},
@@ -154,7 +97,7 @@ const styles = (theme: Theme) => createStyles({
 		padding: "0 16px",
 		marginBottom: "40px",
 
-		[theme.breakpoints.down(720)]: {
+		[belowWidth(720)]: {
 			fontSize: "24px",
 			lineHeight: "28px",
 		},
@@ -167,7 +110,7 @@ const styles = (theme: Theme) => createStyles({
 		fontSize: "18px",
 		margin: "0 16px",
 
-		[theme.breakpoints.down(720)]: {
+		[belowWidth(720)]: {
 			fontSize: "16px",
 		},
 	},
@@ -184,7 +127,7 @@ const styles = (theme: Theme) => createStyles({
 			background: "rgba(255,255,255,.1)",
 		},
 
-		[theme.breakpoints.down(720)]: {
+		[belowWidth(720)]: {
 			fontSize: "16px",
 		},
 	},
@@ -205,7 +148,7 @@ const styles = (theme: Theme) => createStyles({
 			background: "rgba(255,255,255,.1)",
 		},
 
-		[theme.breakpoints.down(720)]: {
+		[belowWidth(720)]: {
 			fontSize: "16px",
 		},
 	},
@@ -220,7 +163,7 @@ const styles = (theme: Theme) => createStyles({
 		zIndex: 2,
 		background: "transparent",
 
-		[theme.breakpoints.down(720)]: {
+		[belowWidth(720)]: {
 			fontSize: "18px",
 		},
 	},
@@ -233,7 +176,7 @@ const styles = (theme: Theme) => createStyles({
 		background: "transparent",
 		marginTop: "4px",
 
-		[theme.breakpoints.down(720)]: {
+		[belowWidth(720)]: {
 			fontSize: "16px",
 		},
 	},
@@ -277,7 +220,7 @@ const styles = (theme: Theme) => createStyles({
 	sortButtonText: {
 		marginRight: "8px",
 
-		[theme.breakpoints.down(720)]: {
+		[belowWidth(720)]: {
 			display: "none",
 		}
 	},
@@ -292,9 +235,7 @@ const styles = (theme: Theme) => createStyles({
 	},
 });
 
-const MissingEpisodesWithStyle = withStyles(styles)(MissingEpisodes);
-
 (window as any).initialize = (element: HTMLElement) => {
-	reactDom.render(<MissingEpisodesWithStyle />, element);
+	reactDom.render(<MissingEpisodesList />, element);
 	document.getElementsByTagName("body")[0].style.background = `url('${AppBackground}') #010101`;
 }

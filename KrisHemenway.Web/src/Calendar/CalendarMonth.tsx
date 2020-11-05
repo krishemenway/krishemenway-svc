@@ -1,7 +1,8 @@
 import * as React from "react";
 import * as moment from "moment";
 import Text from "Common/Text";
-import { makeStyles, Theme } from "@material-ui/core/styles";
+import { createUseStyles } from "react-jss";
+import { belowWidth } from "Common/AppStyles";
 
 interface DayRenderer {
 	type: string;
@@ -58,7 +59,7 @@ const CalendarDay: React.FC<CalendarDayProps> = (props) => {
 	);
 }
 
-const useCalendarDayStyles = makeStyles((t: Theme) => ({
+const useCalendarDayStyles = createUseStyles({
 	dayOfWeek: {
 		fontSize: "24px",
 		fontWeight: "bold",
@@ -91,22 +92,22 @@ const useCalendarDayStyles = makeStyles((t: Theme) => ({
 	dayOfMonth: {
 		fontSize: "26px",
 		color: "#E8E8E8",
-		[t.breakpoints.down(600)]: {
+		[belowWidth(600)]: {
 			display: "block",
 		},
 	},
 	month: {
 		fontSize: "20px",
 		color: "#696969",
-		[t.breakpoints.down(600)]: {
+		[belowWidth(600)]: {
 			display: "block",
 		},
 	},
 	hasRenderedData: {
-		[t.breakpoints.down(600)]: {
+		[belowWidth(600)]: {
 			paddingBottom: "28px",
 		},
 	},
-}));
+});
 
 export default CalendarMonth;

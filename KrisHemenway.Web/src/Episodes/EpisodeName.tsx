@@ -1,46 +1,27 @@
 import * as React from "react";
-import { Episode } from "./Episode";
-import CloudDownload from "@material-ui/icons/CloudDownload";
-import Text from "../Common/Text";
-import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
+import { createUseStyles } from "react-jss";
+import { Episode } from "Episodes/Episode";
+import Text from "Common/Text";
 
-interface EpisodeParams extends WithStyles<typeof styles> {
+interface EpisodeParams {
 	Episode: Episode;
 	ShowDownload: boolean;
 	className?: string;
 	style?: React.CSSProperties;
 }
 
-export class EpisodeName extends React.Component<EpisodeParams, {}> {
-	public render() {
-		return (
-			<div className={this.props.className}>
-				<Text className={this.props.classes.showName} Text={this.props.Episode.ShowName} />
-				<Text className={this.props.classes.episodeIdentity} Text={`${this.props.Episode.Season}x${this.props.Episode.EpisodeInSeason}`} />
-				<Text className={this.props.classes.episodeTitle} Text={this.props.Episode.Title} />
-				{this.maybeRenderDownload()}
-			</div>
-		);
-	}
-
-	private maybeRenderDownload() {
-		if (!this.props.ShowDownload || !this.props.Episode.HasEpisode) {
-			return "";
-		}
-
-		return (
-			<a className={this.props.classes.downloadIcon} href={this.episodeDownloadUrl()}>
-				<CloudDownload style={{ width: "16px", height: "16px", position: "relative", top: "3px" }}  />
-			</a>
-		);
-	}
-
-	private episodeDownloadUrl() {
-		return `/api/tvshows/episodes/download?EpisodeId=${this.props.Episode.EpisodeId}`;
-	}
+const EpisodeName: React.FC<EpisodeParams> = (props) => {
+	const classes = useStyles();
+	return (
+		<div className={props.className}>
+			<Text className={classes.showName} Text={props.Episode.ShowName} />
+			<Text className={classes.episodeIdentity} Text={`${props.Episode.Season}x${props.Episode.EpisodeInSeason}`} />
+			<Text className={classes.episodeTitle} Text={props.Episode.Title} />
+		</div>
+	);
 }
 
-const styles = (theme: Theme) => createStyles({
+const useStyles = createUseStyles({
 	showName: {
 		color: "#696969",
 		marginRight: "8px",
@@ -60,4 +41,4 @@ const styles = (theme: Theme) => createStyles({
 	},
 });
 
-export default withStyles(styles)(EpisodeName);
+export default EpisodeName;

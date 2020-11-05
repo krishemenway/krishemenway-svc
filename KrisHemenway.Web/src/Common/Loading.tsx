@@ -1,5 +1,4 @@
 import * as React from "react";
-import { CircularProgress } from "@material-ui/core";
 
 interface LoadingProps {
 	IsLoading: boolean;
@@ -8,7 +7,7 @@ interface LoadingProps {
 
 const Loading : React.FC<LoadingProps> = (props) => {
 	if (props.IsLoading) {
-		return <CircularProgress style={{margin: "24px 0"}} />;
+		return <>Loading...</>;
 	}
 
 	return <>{props.Render()}</>;

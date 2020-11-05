@@ -1,61 +1,58 @@
 import * as React from "react";
 import * as reactDom from "react-dom";
-import ProjectLink from "./ProjectLink";
-import Text from "../Common/Text";
+import { createUseStyles } from "react-jss";
+import ProjectLink from "Home/ProjectLink";
+import Text from "Common/Text";
 import {default as AppBackground} from "Common/AppBackground.png";
-import { withStyles, createStyles, Theme, WithStyles } from "@material-ui/core/styles";
 
-interface AppProps extends WithStyles<typeof styles> { }
+const App : React.FC<{}> = () => {
+	const classes = useStyles();
+	return (
+		<div className={classes.homeApp}>
+			<div className={classes.projects}>
+				<Text Text="Projects" className={classes.projectsTitle} />
 
-class App extends React.Component<AppProps, {}> {
-	public render() {
-		return (
-			<div className={this.props.classes.homeApp}>
-				<div className={this.props.classes.projects}>
-					<Text Text="Projects" className={this.props.classes.projectsTitle} />
+				<ProjectLink
+					Title="TV Show Release Calendar"
+					Description="complete calendar listing of all the TV Shows being tracked"
+					Location="/Calendar.html"
+				/>
 
-					<ProjectLink
-						Title="TV Show Release Calendar"
-						Description="complete calendar listing of all the TV Shows being tracked"
-						Location="/Calendar.html"
-					/>
+				<ProjectLink
+					Title="Sloshy Dosh Man Killing Floor 2 Stats"
+					Description="tracking the stats of local killing floor 2 server"
+					Location="https://www.sloshydoshman.com"
+				/>
 
-					<ProjectLink
-						Title="Sloshy Dosh Man Killing Floor 2 Stats"
-						Description="tracking the stats of local killing floor 2 server"
-						Location="https://www.sloshydoshman.com"
-					/>
+				<ProjectLink
+					Title="Automated Typing Center for America"
+					Description="what is happening right now."
+					Location="/im-busy"
+				/>
 
-					<ProjectLink
-						Title="Automated Typing Center for America"
-						Description="what is happening right now."
-						Location="/im-busy"
-					/>
+				<ProjectLink
+					Title="Supermarket Ninja (mobile)"
+					Description="swipin food away at the cash register!"
+					Location="/supermarketninja"
+				/>
 
-					<ProjectLink
-						Title="Supermarket Ninja (mobile)"
-						Description="swipin food away at the cash register!"
-						Location="/supermarketninja"
-					/>
+				<ProjectLink
+					Title="TV Show Completion"
+					Description="Completion for TV Shows"
+					Location="/MissingEpisodes.html"
+				/>
 
-					<ProjectLink
-						Title="TV Show Completion"
-						Description="Completion for TV Shows"
-						Location="/MissingEpisodes.html"
-					/>
-
-					<ProjectLink
-						Title="Game Profile"
-						Description="project for tracking which games you are playing with interesting statistics"
-						Location="https://profile.krishemenway.com"
-					/>
-				</div>
+				<ProjectLink
+					Title="Game Profile"
+					Description="project for tracking which games you are playing with interesting statistics"
+					Location="https://profile.krishemenway.com"
+				/>
 			</div>
-		)
-	}
+		</div>
+	);
 }
 
-const styles = (theme: Theme) => createStyles({
+const useStyles = createUseStyles({
 	homeApp: {
 		position: "absolute",
 		top: 0,
@@ -84,9 +81,7 @@ const styles = (theme: Theme) => createStyles({
 	},
 });
 
-const AppWithStyles = withStyles(styles)(App);
-
 (window as any).initialize = () => {
-	reactDom.render(<AppWithStyles />, document.getElementById('app'));
+	reactDom.render(<App />, document.getElementById('app'));
 	document.getElementsByTagName("body")[0].style.background = `url('${AppBackground}') #010101`;
 }

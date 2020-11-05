@@ -1,10 +1,11 @@
 import * as React from "react";
 import * as moment from "moment";
-import { makeStyles, Theme } from "@material-ui/core/styles";
 import { CalendarService } from "Calendar/CalendarService";
 import { useObservable } from "Common/UseObservable";
 import { ObservableCalendarMonth } from "Calendar/ObservableCalendarMonth";
 import Text from "Common/Text";
+import { createUseStyles } from "react-jss";
+import { belowWidth } from "Common/AppStyles";
 
 const MonthNavigation: React.FC = () => {
 	const classes = useStyles();
@@ -47,7 +48,7 @@ const FullMonthName: React.FC<{Month: moment.Moment}> = (props) => {
 	);
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = createUseStyles({
 	monthNavigationContainer: {
 		display: "flex",
 		flexDirection: "row",
@@ -73,7 +74,7 @@ const useStyles = makeStyles(theme => ({
 		padding: "10px 0 20px 0",
 		flexGrow: 1,
 		flexBasis: 0,
-		[theme.breakpoints.down(768)]: {
+		[belowWidth(768)]: {
 			fontSize: "24px",
 		},
 	},
@@ -82,7 +83,7 @@ const useStyles = makeStyles(theme => ({
 		padding: "10px 0",
 		flexGrow: 1,
 		flexBasis: 0,
-		[theme.breakpoints.down(768)]: {
+		[belowWidth(768)]: {
 			fontSize: "16px",
 		},
 	},
@@ -92,6 +93,6 @@ const useStyles = makeStyles(theme => ({
 		color: "#F0F0F0",
 		display: "block",
 	},
-}));
+});
 
 export default MonthNavigation;
