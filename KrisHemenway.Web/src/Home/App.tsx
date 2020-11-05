@@ -19,6 +19,12 @@ const App : React.FC<{}> = () => {
 				/>
 
 				<ProjectLink
+					Title="Artwork"
+					Description="some art I have made"
+					Location="/Arts.html"
+				/>
+
+				<ProjectLink
 					Title="Sloshy Dosh Man Killing Floor 2 Stats"
 					Description="tracking the stats of local killing floor 2 server"
 					Location="https://www.sloshydoshman.com"

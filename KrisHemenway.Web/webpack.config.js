@@ -5,6 +5,7 @@ const path = require("path");
 module.exports = {
 	entry: {
 		app: "./src/Home/App.tsx",
+		arts: "./src/Arts/App.tsx",
 		missingepisodes: "./src/MissingEpisodes/MissingEpisodes.tsx",
 		calendar: "./src/Calendar/Calendar.tsx"
 	},
