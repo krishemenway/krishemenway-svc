@@ -35,7 +35,6 @@ jobs:
         name: notifications-service
         path: ./notifications
 
-jobs:
   build-web:
     runs-on: ubuntu-latest
     steps:
