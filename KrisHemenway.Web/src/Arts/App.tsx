@@ -4,12 +4,19 @@ import { createUseStyles } from "react-jss";
 import Text from "Common/Text";
 import {default as AppBackground} from "Common/AppBackground.png";
 import { ArtGroup } from "Arts/ArtGroup";
-import { useLayout, useMargin, useText, useTextColor } from "Common/AppStyles";
+import { useBackground, useEvents, useLayout, useMargin, usePadding, useText, useTextColor } from "Common/AppStyles";
 import { ArtService } from "Arts/ArtService";
+import Modal from "Common/Modal";
+import { useObservable } from "Common/UseObservable";
+import CloseIcon from "Common/CloseIcon";
+import DownloadIcon from "Common/DownloadIcon";
+import { FileDownloader } from "Common/FileDownloader";
 
 const App : React.FC<{}> = () => {
-	const [classes, layout, margin, text, textColors] = [useStyles(), useLayout(), useMargin(), useText(), useTextColor()];
+	const [classes, layout, margin, text, textColors, background, events, padding] = [useStyles(), useLayout(), useMargin(), useText(), useTextColor(), useBackground(), useEvents(), usePadding()];
 	const allArtByCategory = ArtService.Instance.AllArtByCategory;
+	const selectedArtMetadata = useObservable(ArtService.Instance.SelectedArtMetadata);
+	const onClosed = () => { ArtService.Instance.SelectedArtMetadata.Value = null; };
 
 	return (
 		<div className={classes.app}>
@@ -17,6 +24,19 @@ const App : React.FC<{}> = () => {
 				<Text Text="Art" className={`${text.font28} ${text.toUpper} ${text.bold} ${margin.top} ${margin.bottomDouble} ${text.center} ${layout.block} ${textColors.grayc8}`} />
 
 				{Object.keys(allArtByCategory).map((category) => <ArtGroup title={category} arts={allArtByCategory[category]} />)}
+
+				<Modal Open={selectedArtMetadata !== null} className={classes.fullscreenArtModal} onClosed={onClosed}>
+					<div className={`${text.right} ${margin.vertical}`}>
+						<button className={`${events.clickable} ${padding.all} ${margin.right}`} onClick={() => FileDownloader.DownloadFile(selectedArtMetadata?.FullPath ?? "", `${selectedArtMetadata?.Title}${selectedArtMetadata?.FullPath.slice(selectedArtMetadata?.FullPath.lastIndexOf("."))}`)} aria-label="download art">
+							<DownloadIcon color="#F8F8F8" />
+						</button>
+
+						<button className={`${events.clickable} ${padding.all} ${margin.right}`} onClick={onClosed} aria-label="close modal">
+							<CloseIcon color="#F8F8F8" />
+						</button>
+					</div>
+					<div className={classes.fullscreenArt} style={{ backgroundImage: `url('${selectedArtMetadata?.FullPath}')` }}></div>
+				</Modal>
 			</div>
 		</div>
 	);
@@ -37,6 +57,19 @@ const useStyles = createUseStyles({
 	pageWrapper: {
 		maxWidth: "1024px",
 		position: "relative",
+	},
+	fullscreenArtModal: {
+		width: "calc(100% - 100px)",
+		height: "calc(100% - 100px)",
+		backgroundColor: "#202020",
+	},
+	fullscreenArt: {
+		width: "90%",
+		height: "90%",
+		backgroundSize: "contain",
+		backgroundRepeat: "no-repeat",
+		backgroundPosition: "center center",
+		margin: "0 auto",
 	},
 });
 
