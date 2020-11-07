@@ -4,7 +4,7 @@ import { createUseStyles } from "react-jss";
 import Text from "Common/Text";
 import {default as AppBackground} from "Common/AppBackground.png";
 import { ArtGroup } from "Arts/ArtGroup";
-import { useBackground, useEvents, useLayout, useMargin, usePadding, useText, useTextColor } from "Common/AppStyles";
+import { belowWidth, useBackground, useEvents, useLayout, useMargin, usePadding, useText, useTextColor } from "Common/AppStyles";
 import { ArtService } from "Arts/ArtService";
 import Modal from "Common/Modal";
 import { useObservable } from "Common/UseObservable";
@@ -62,6 +62,10 @@ const useStyles = createUseStyles({
 		width: "calc(100% - 100px)",
 		height: "calc(100% - 100px)",
 		backgroundColor: "#202020",
+		[belowWidth(800)]: {
+			width: "calc(100% - 20px)",
+			height: "calc(100% - 60px)",
+		},
 	},
 	fullscreenArt: {
 		width: "90%",
@@ -70,6 +74,9 @@ const useStyles = createUseStyles({
 		backgroundRepeat: "no-repeat",
 		backgroundPosition: "center center",
 		margin: "0 auto",
+		[belowWidth(800)]: {
+			backgroundPosition: "top center",
+		}
 	},
 });
 
