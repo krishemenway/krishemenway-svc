@@ -27,12 +27,12 @@ const App : React.FC<{}> = () => {
 
 				<Modal Open={selectedArtMetadata !== null} className={classes.fullscreenArtModal} onClosed={onClosed}>
 					<div className={`${text.right} ${margin.vertical}`}>
-						<button className={`${events.clickable} ${padding.all} ${margin.right}`} onClick={() => FileDownloader.DownloadFile(selectedArtMetadata?.FullPath ?? "", `${selectedArtMetadata?.Title}${selectedArtMetadata?.FullPath.slice(selectedArtMetadata?.FullPath.lastIndexOf("."))}`)} aria-label="download art">
-							<DownloadIcon color="#F8F8F8" />
+						<button className={`${events.clickable} ${padding.all} ${margin.right} ${textColors.white} ${text.font24}`} onClick={() => FileDownloader.DownloadFile(selectedArtMetadata?.FullPath ?? "", `${selectedArtMetadata?.Title}${selectedArtMetadata?.FullPath.slice(selectedArtMetadata?.FullPath.lastIndexOf("."))}`)} aria-label="download art">
+							<DownloadIcon />
 						</button>
 
-						<button className={`${events.clickable} ${padding.all} ${margin.right}`} onClick={onClosed} aria-label="close modal">
-							<CloseIcon color="#F8F8F8" />
+						<button className={`${events.clickable} ${padding.all} ${margin.right} ${textColors.white} ${text.font24}`} onClick={onClosed} aria-label="close modal">
+							<CloseIcon />
 						</button>
 					</div>
 					<div className={classes.fullscreenArt} style={{ backgroundImage: `url('${selectedArtMetadata?.FullPath}')` }}></div>

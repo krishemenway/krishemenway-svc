@@ -3,8 +3,8 @@ import * as reactDom from "react-dom";
 import { createUseStyles } from "react-jss";
 import {default as AppBackground} from "Common/AppBackground.png";
 import Text from "Common/Text";
-// import DoneIcon from "@material-ui/icons/Done";
-// import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
+import DoneIcon from "Common/DoneIcon";
+import SortByAlphaIcon from "Common/SortByAlphaIcon";
 import { useObservable } from "Common/UseObservable";
 import { MissingEpisodesService, MissingEpisodesForShow, SortFuncType } from "MissingEpisodes/MissingEpisodesService";
 import { belowWidth } from "Common/AppStyles";
@@ -35,7 +35,7 @@ const MissingEpisodesList : React.FC<{}> = () => {
 
 				<button className={`${classes.sortByButton} ${sortFunc === SortFuncType.Alphabetical ? classes.isSortingByToggle : ""}`} onClick={() => { MissingEpisodesService.Instance.SortFunc.Value = SortFuncType.Alphabetical; }}>
 					<Text Text="Alpha" className={classes.sortButtonText} />
-					{/* <SortByAlphaIcon className={classes.sortButtonIcon} /> */}
+					<SortByAlphaIcon className={classes.sortButtonIcon} />
 				</button>
 
 				<button className={`${classes.sortByButton} ${sortFunc === SortFuncType.Percentage ? classes.isSortingByToggle : ""}`} onClick={() => { MissingEpisodesService.Instance.SortFunc.Value = SortFuncType.Percentage; }}>
@@ -65,7 +65,7 @@ const MissingEpisodesForShow : React.FC<{show: MissingEpisodesForShow}> = (props
 
 				<div className={classes.showName}>
 					<Text Text={props.show.Name} style={{marginRight: "8px"}} />
-					{/* {props.show.MissingEpisodesPercentage.Value === 0 ? <DoneIcon className={classes.doneIcon} /> : ""} */}
+					{props.show.MissingEpisodesPercentage.Value === 0 ? <DoneIcon className={classes.doneIcon} /> : ""}
 				</div>
 
 				<Text className={classes.showPercentageText} Text={completionPercentage.toFixed(2) + "%"} />

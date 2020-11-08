@@ -44,7 +44,15 @@ export class MissingEpisodesService {
 	public ExpandedShow: Observable<MissingEpisodesForShow|null>;
 	public FilteredAndSortedShows: Computed<MissingEpisodesForShow[]>;
 
-	public static Instance: MissingEpisodesService = new MissingEpisodesService();
+	public static get Instance(): MissingEpisodesService {
+		if (MissingEpisodesService._instance === undefined) {
+			MissingEpisodesService._instance = new MissingEpisodesService();
+		}
+
+		return MissingEpisodesService._instance;
+	}
+
+	private static _instance: MissingEpisodesService;
 }
 
 export enum SortFuncType {
