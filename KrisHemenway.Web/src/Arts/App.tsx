@@ -35,7 +35,7 @@ const App : React.FC<{}> = () => {
 							<CloseIcon />
 						</button>
 					</div>
-					<div className={classes.fullscreenArt} style={{ backgroundImage: `url('${selectedArtMetadata?.FullPath}')` }}></div>
+					<div className={classes.fullscreenArt} style={{ backgroundImage: `url('${selectedArtMetadata?.FullPath ?? ""}')` }}></div>
 				</Modal>
 			</div>
 		</div>
