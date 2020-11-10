@@ -9,7 +9,6 @@ import { useMediaQueries } from "Common/UseMediaQuery";
 export const ArtGroup: React.FC<{ title: string; arts: ArtMetadata[] }> = (props) => {
 	const [textColor, margin, layout, text, padding] = [useTextColor(), useMargin(), useLayout(), useText(), usePadding()];
 	const columnCount = useMediaQueries<number>(['(max-width: 800px)'], [2], 4);
-	console.log(columnCount);
 
 	return (
 		<div className={`${margin.bottom}`}>
