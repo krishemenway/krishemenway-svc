@@ -3,18 +3,20 @@ using KrisHemenway.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace KrisHemenway.Notifications
 {
 	public interface INotificationStore
 	{
-		IReadOnlyList<Notification> FindAll(DateTime? afterTime = null);
+		Task<IReadOnlyList<Notification>> FindAll(DateTime? afterTime = null);
 		Notification CreateNotification(PushNotificationDetails details);
 	}
 
 	public class NotificationStore : INotificationStore
 	{
-		public IReadOnlyList<Notification> FindAll(DateTime? afterTime = null)
+		public async Task<IReadOnlyList<Notification>> FindAll(DateTime? afterTime = null)
 		{
 			const string sql = @"
 				SELECT
@@ -29,10 +31,9 @@ namespace KrisHemenway.Notifications
 
 			using (var connection = Database.CreateConnection())
 			{
-				return connection
-					.Query<Notification>(sql, new { AfterTime = afterTime ?? DateTime.MinValue })
-					.Select(BuildSentNotification)
-					.ToList();
+				return await connection
+					.QueryAsync<Notification>(sql, new { AfterTime = afterTime ?? DateTime.MinValue })
+					.ContinueWith((result) => (IReadOnlyList<Notification>)result.Result.Select(BuildSentNotification).ToList());
 			}
 		}
 

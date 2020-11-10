@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace KrisHemenway.Notifications
 {
@@ -8,17 +10,22 @@ namespace KrisHemenway.Notifications
 	public class RecentNotificationsController : ControllerBase
 	{
 		[HttpGet("recent")]
-		public ActionResult<RecentNotificationsResponse> FindRecentNotifications([FromQuery] DateTime fromTime)
+		public async Task<ActionResult<RecentNotificationsResponse>> FindRecentNotifications([FromQuery] DateTime? fromTime)
 		{
+			var truncatedSinceTime = new[] { fromTime ?? DefaultSinceTime, DateTime.Now.Subtract(MaximumTimePeriodToRecall) }.Max();
+
 			return new RecentNotificationsResponse
 			{
-				Notifications = new NotificationStore().FindAll(fromTime)
+				Notifications = await new NotificationStore().FindAll(truncatedSinceTime),
 			};
 		}
 
-		public class RecentNotificationsResponse
-		{
-			public IReadOnlyList<Notification> Notifications { get; set; }
-		}
+		public static DateTime DefaultSinceTime => DateTime.Now.AddDays(30);
+		public static TimeSpan MaximumTimePeriodToRecall { get; } = TimeSpan.FromDays(60);
+	}
+
+	public class RecentNotificationsResponse
+	{
+		public IReadOnlyList<Notification> Notifications { get; set; }
 	}
 }
