@@ -15,14 +15,25 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = (props) => {
 	const classes = useStyles();
 	const [element, setElement] = React.useState(document.createElement("div"));
+
+	const outsideModalClickHandler = (evt: MouseEvent) => { if (evt.target == modalRoot) { props.onClosed(); } };
+	const escapeModalKeyHandler = (evt: KeyboardEvent) => { if (evt.key == "Escape") { props.onClosed(); } };
+
 	React.useEffect(() => {
 		if (props.Open) {
 			modalRoot.appendChild(element);
-		} else if (modalRoot.contains(element)) {
-			modalRoot.removeChild(element);
+			modalRoot.addEventListener("click", outsideModalClickHandler);
+			body.addEventListener("keyup", escapeModalKeyHandler);
+		} else {
+			if (modalRoot.contains(element))
+			{
+				modalRoot.removeChild(element);
+			}
+
+			modalRoot.removeEventListener("click", outsideModalClickHandler);
+			body.removeEventListener("keyup", escapeModalKeyHandler);
 		}
 		modalRoot.className = classes.modalOverlay;
-		modalRoot.onclick = (evt) => { if (evt.target == modalRoot) { props.onClosed(); } };
 		element.className = `${classes.modal} ${props.className ?? ""}`;
 		body.className = modalRoot.hasChildNodes() ? classes.isOpen : "";
 	}, [ props.Open ]);
