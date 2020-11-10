@@ -9,7 +9,9 @@ import {default as PunchOutSodaPopinski} from "Arts/Images/PunchOut-SodaPopinski
 import {default as PunchOutVonKaiser} from "Arts/Images/PunchOut-VonKaiser.png";
 import {default as PunchOutSuperMachoMan} from "Arts/Images/PunchOut-SuperMachoMan.png";
 import {default as PunchOutMrSandman} from "Arts/Images/PunchOut-MrSandman.png";
+import {default as PunchOutMikeTyson} from "Arts/Images/PunchOut-MikeTyson.png";
 import {default as PunchOutPortraits} from "Arts/Images/PunchOut-Portraits.png";
+import {default as PunchOutVictoryLap} from "Arts/Images/PunchOut-VictoryLap.png";
 import {default as TMNT} from "Arts/Images/TMNT.png";
 import {default as Airbender} from "Arts/Images/Airbender.png";
 
@@ -36,9 +38,11 @@ export class ArtService {
 			{ Title: "Great Tiger", FullPath: PunchOutGreatTiger, ThumbnailPath: PunchOutGreatTiger },
 			{ Title: "Bald Bull", FullPath: PunchOutBaldBull, ThumbnailPath: PunchOutBaldBull },
 			{ Title: "Soda Popinski", FullPath: PunchOutSodaPopinski, ThumbnailPath: PunchOutSodaPopinski },
-			{ Title: "Super Macho Man", FullPath: PunchOutSuperMachoMan, ThumbnailPath: PunchOutSuperMachoMan },
 			{ Title: "Mr. Sandman", FullPath: PunchOutMrSandman, ThumbnailPath: PunchOutMrSandman },
+			{ Title: "Super Macho Man", FullPath: PunchOutSuperMachoMan, ThumbnailPath: PunchOutSuperMachoMan },
+			{ Title: "Mike Tyson", FullPath: PunchOutMikeTyson, ThumbnailPath: PunchOutMikeTyson },
 			{ Title: "Portraits", FullPath: PunchOutPortraits, ThumbnailPath: PunchOutPortraits },
+			{ Title: "Victory Lap", FullPath: PunchOutVictoryLap, ThumbnailPath: PunchOutVictoryLap },
 		],
 		"TMNT": [
 			{ Title: "Moods", FullPath: TMNT, ThumbnailPath: TMNT },
