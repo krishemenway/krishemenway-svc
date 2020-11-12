@@ -11,7 +11,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0
+        dotnet-version: 5.0.x
     - name: Build with dotnet
       run: dotnet publish KrisHemenway.TVShows --configuration Release --output ./tvshows
     - uses: actions/upload-artifact@v1
@@ -27,7 +27,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0
+        dotnet-version: 5.0.x
     - name: Build with dotnet
       run: dotnet publish KrisHemenway.Notifications --configuration Release --output ./notifications
     - uses: actions/upload-artifact@v1
