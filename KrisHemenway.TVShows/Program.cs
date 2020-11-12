@@ -45,7 +45,7 @@ namespace KrisHemenway.TVShows
 				.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 				.Enrich.FromLogContext()
 				.WriteTo.Console()
-				.WriteTo.RollingFile(Settings.LogFile)
+				.WriteTo.File(Settings.LogFile, retainedFileCountLimit: 10)
 				.CreateLogger();
 		}
 
