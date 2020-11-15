@@ -12,7 +12,8 @@ import {default as PunchOutMrSandman} from "Arts/Images/PunchOut-MrSandman.png";
 import {default as PunchOutMikeTyson} from "Arts/Images/PunchOut-MikeTyson.png";
 import {default as PunchOutPortraits} from "Arts/Images/PunchOut-Portraits.png";
 import {default as PunchOutVictoryLap} from "Arts/Images/PunchOut-VictoryLap.png";
-import {default as TMNT} from "Arts/Images/TMNT.png";
+import {default as SunsetRidersWantedCharacters} from "Arts/Images/SunsetRiders-WantedCharacters.png";
+import {default as TMNTMoods} from "Arts/Images/TMNT-Moods.png";
 import {default as Airbender} from "Arts/Images/Airbender.png";
 
 export interface ArtMetadata {
@@ -29,7 +30,10 @@ export class ArtService {
 	public SelectedArtMetadata: Observable<ArtMetadata|null>;
 
 	public AllArtByCategory : Dictionary<ArtMetadata[]> = {
-		"Punch Out": [
+		"Everything": [
+			{ Title: "Moods", FullPath: TMNTMoods, ThumbnailPath: TMNTMoods },
+			{ Title: "Airbender", FullPath: Airbender, ThumbnailPath: Airbender },
+			{ Title: "Wanted", FullPath: SunsetRidersWantedCharacters, ThumbnailPath: SunsetRidersWantedCharacters },
 			{ Title: "Glass Joe", FullPath: PunchOutGlassJoe, ThumbnailPath: PunchOutGlassJoe },
 			{ Title: "Von Kaiser", FullPath: PunchOutVonKaiser, ThumbnailPath: PunchOutVonKaiser },
 			{ Title: "Piston Honda", FullPath: PunchOutPistonHonda, ThumbnailPath: PunchOutPistonHonda },
@@ -43,12 +47,6 @@ export class ArtService {
 			{ Title: "Mike Tyson", FullPath: PunchOutMikeTyson, ThumbnailPath: PunchOutMikeTyson },
 			{ Title: "Portraits", FullPath: PunchOutPortraits, ThumbnailPath: PunchOutPortraits },
 			{ Title: "Victory Lap", FullPath: PunchOutVictoryLap, ThumbnailPath: PunchOutVictoryLap },
-		],
-		"TMNT": [
-			{ Title: "Moods", FullPath: TMNT, ThumbnailPath: TMNT },
-		],
-		"Futurama": [
-			{ Title: "Airbender", FullPath: Airbender, ThumbnailPath: Airbender },
 		],
 	};
 
