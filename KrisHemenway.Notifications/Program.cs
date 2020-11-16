@@ -46,7 +46,7 @@ namespace KrisHemenway.Notifications
 				.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 				.Enrich.FromLogContext()
 				.WriteTo.Console()
-				.WriteTo.File("notifications.log", retainedFileCountLimit: 10)
+				.WriteTo.File("notifications.log", rollingInterval: RollingInterval.Day, retainedFileCountLimit: 10)
 				.CreateLogger();
 		}
 
