@@ -13,6 +13,7 @@ import {default as PunchOutMikeTyson} from "Arts/Images/PunchOut-MikeTyson.png";
 import {default as PunchOutPortraits} from "Arts/Images/PunchOut-Portraits.png";
 import {default as PunchOutVictoryLap} from "Arts/Images/PunchOut-VictoryLap.png";
 import {default as SunsetRidersWantedCharacters} from "Arts/Images/SunsetRiders-WantedCharacters.png";
+import {default as SuperMarioWorldWorldMap} from "Arts/Images/SuperMarioWorld-WorldMap.png";
 import {default as TMNTMoods} from "Arts/Images/TMNT-Moods.png";
 import {default as Airbender} from "Arts/Images/Airbender.png";
 
@@ -34,6 +35,7 @@ export class ArtService {
 			{ Title: "Moods", FullPath: TMNTMoods, ThumbnailPath: TMNTMoods },
 			{ Title: "Airbender", FullPath: Airbender, ThumbnailPath: Airbender },
 			{ Title: "Wanted", FullPath: SunsetRidersWantedCharacters, ThumbnailPath: SunsetRidersWantedCharacters },
+			{ Title: "World Map", FullPath: SuperMarioWorldWorldMap, ThumbnailPath: SuperMarioWorldWorldMap },
 			{ Title: "Glass Joe", FullPath: PunchOutGlassJoe, ThumbnailPath: PunchOutGlassJoe },
 			{ Title: "Von Kaiser", FullPath: PunchOutVonKaiser, ThumbnailPath: PunchOutVonKaiser },
 			{ Title: "Piston Honda", FullPath: PunchOutPistonHonda, ThumbnailPath: PunchOutPistonHonda },
