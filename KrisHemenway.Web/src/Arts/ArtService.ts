@@ -16,6 +16,7 @@ import {default as SunsetRidersWantedCharacters} from "Arts/Images/SunsetRiders-
 import {default as SuperMarioWorldWorldMap} from "Arts/Images/SuperMarioWorld-WorldMap.png";
 import {default as TMNTMoods} from "Arts/Images/TMNT-Moods.png";
 import {default as Airbender} from "Arts/Images/Airbender.png";
+import {default as MegaManXHerosJourney} from "Arts/Images/MegaManX-HerosJourney.png";
 
 export interface ArtMetadata {
 	Title: string;
@@ -36,6 +37,7 @@ export class ArtService {
 			{ Title: "Airbender", FullPath: Airbender, ThumbnailPath: Airbender },
 			{ Title: "Wanted", FullPath: SunsetRidersWantedCharacters, ThumbnailPath: SunsetRidersWantedCharacters },
 			{ Title: "World Map", FullPath: SuperMarioWorldWorldMap, ThumbnailPath: SuperMarioWorldWorldMap },
+			{ Title: "Hero's Journey", FullPath: MegaManXHerosJourney, ThumbnailPath: MegaManXHerosJourney },
 			{ Title: "Glass Joe", FullPath: PunchOutGlassJoe, ThumbnailPath: PunchOutGlassJoe },
 			{ Title: "Von Kaiser", FullPath: PunchOutVonKaiser, ThumbnailPath: PunchOutVonKaiser },
 			{ Title: "Piston Honda", FullPath: PunchOutPistonHonda, ThumbnailPath: PunchOutPistonHonda },
