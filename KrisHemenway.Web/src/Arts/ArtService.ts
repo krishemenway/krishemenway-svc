@@ -11,6 +11,7 @@ import {default as PunchOutSuperMachoMan} from "Arts/Images/PunchOut-SuperMachoM
 import {default as PunchOutMrSandman} from "Arts/Images/PunchOut-MrSandman.png";
 import {default as PunchOutMikeTyson} from "Arts/Images/PunchOut-MikeTyson.png";
 import {default as PunchOutPortraits} from "Arts/Images/PunchOut-Portraits.png";
+import {default as PunchOutFighters} from "Arts/Images/PunchOut-Fighters.png";
 import {default as PunchOutVictoryLap} from "Arts/Images/PunchOut-VictoryLap.png";
 import {default as SunsetRidersWantedCharacters} from "Arts/Images/SunsetRiders-WantedCharacters.png";
 import {default as SuperMarioWorldWorldMap} from "Arts/Images/SuperMarioWorld-WorldMap.png";
@@ -50,6 +51,7 @@ export class ArtService {
 			{ Title: "Super Macho Man", FullPath: PunchOutSuperMachoMan, ThumbnailPath: PunchOutSuperMachoMan },
 			{ Title: "Mike Tyson", FullPath: PunchOutMikeTyson, ThumbnailPath: PunchOutMikeTyson },
 			{ Title: "Portraits", FullPath: PunchOutPortraits, ThumbnailPath: PunchOutPortraits },
+			{ Title: "Lineup", FullPath: PunchOutFighters, ThumbnailPath: PunchOutFighters },
 			{ Title: "Victory Lap", FullPath: PunchOutVictoryLap, ThumbnailPath: PunchOutVictoryLap },
 		],
 	};
