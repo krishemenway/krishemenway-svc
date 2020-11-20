@@ -19,6 +19,7 @@ import {default as TMNTMoods} from "Arts/Images/TMNT-Moods.png";
 import {default as Airbender} from "Arts/Images/Airbender.png";
 import {default as MegaManXHerosJourney} from "Arts/Images/MegaManX-HerosJourney.png";
 import {default as MegaManXApprentice} from "Arts/Images/MegaManX-Apprentice.png";
+import {default as ManiacMansionTwentyYearsAgo} from "Arts/Images/ManiacMansion-TwentyYearsAgo.png";
 
 export interface ArtMetadata {
 	Title: string;
@@ -35,6 +36,7 @@ export class ArtService {
 
 	public AllArtByCategory : Dictionary<ArtMetadata[]> = {
 		"Everything": [
+			{ Title: "20 Years Ago", FullPath: ManiacMansionTwentyYearsAgo, ThumbnailPath: ManiacMansionTwentyYearsAgo },
 			{ Title: "Moods", FullPath: TMNTMoods, ThumbnailPath: TMNTMoods },
 			{ Title: "Airbender", FullPath: Airbender, ThumbnailPath: Airbender },
 			{ Title: "Wanted", FullPath: SunsetRidersWantedCharacters, ThumbnailPath: SunsetRidersWantedCharacters },
