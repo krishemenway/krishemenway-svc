@@ -20,6 +20,7 @@ import {default as Airbender} from "Arts/Images/Airbender.png";
 import {default as MegaManXHerosJourney} from "Arts/Images/MegaManX-HerosJourney.png";
 import {default as MegaManXApprentice} from "Arts/Images/MegaManX-Apprentice.png";
 import {default as ManiacMansionTwentyYearsAgo} from "Arts/Images/ManiacMansion-TwentyYearsAgo.png";
+import {default as KirbysAdventureManySidesOfKirby} from "Arts/Images/KirbysAdventure-ManySidesOfKirby.png";
 
 export interface ArtMetadata {
 	Title: string;
@@ -37,6 +38,7 @@ export class ArtService {
 	public AllArtByCategory : Dictionary<ArtMetadata[]> = {
 		"Everything": [
 			{ Title: "20 Years Ago", FullPath: ManiacMansionTwentyYearsAgo, ThumbnailPath: ManiacMansionTwentyYearsAgo },
+			{ Title: "Many Sides of Kirby", FullPath: KirbysAdventureManySidesOfKirby, ThumbnailPath: KirbysAdventureManySidesOfKirby },
 			{ Title: "Moods", FullPath: TMNTMoods, ThumbnailPath: TMNTMoods },
 			{ Title: "Airbender", FullPath: Airbender, ThumbnailPath: Airbender },
 			{ Title: "Wanted", FullPath: SunsetRidersWantedCharacters, ThumbnailPath: SunsetRidersWantedCharacters },
