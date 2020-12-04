@@ -22,6 +22,8 @@ import {default as MegaManXApprentice} from "Arts/Images/MegaManX-Apprentice.png
 import {default as ManiacMansionTwentyYearsAgo} from "Arts/Images/ManiacMansion-TwentyYearsAgo.png";
 import {default as KirbysAdventureManySidesOfKirby} from "Arts/Images/KirbysAdventure-ManySidesOfKirby.png";
 import {default as FestersQuestChillin} from "Arts/Images/FestersQuest-Chillin.png";
+import {default as SunsetRidersBuryMeWithMyMoney} from "Arts/Images/SunsetRiders-BuryMeWithMyMoney.png";
+import {default as DuckHunt} from "Arts/Images/DuckHunt.png";
 
 export interface ArtMetadata {
 	Title: string;
@@ -39,10 +41,12 @@ export class ArtService {
 	public AllArtByCategory : Dictionary<ArtMetadata[]> = {
 		"Everything": [
 			{ Title: "20 Years Ago", FullPath: ManiacMansionTwentyYearsAgo, ThumbnailPath: ManiacMansionTwentyYearsAgo },
+			{ Title: "On the Hunt", FullPath: DuckHunt, ThumbnailPath: DuckHunt },
 			{ Title: "Just Chillin", FullPath: FestersQuestChillin, ThumbnailPath: FestersQuestChillin },
 			{ Title: "Many Sides of Kirby", FullPath: KirbysAdventureManySidesOfKirby, ThumbnailPath: KirbysAdventureManySidesOfKirby },
 			{ Title: "Moods", FullPath: TMNTMoods, ThumbnailPath: TMNTMoods },
 			{ Title: "Airbender", FullPath: Airbender, ThumbnailPath: Airbender },
+			{ Title: "Bury Me With My Money", FullPath: SunsetRidersBuryMeWithMyMoney, ThumbnailPath: SunsetRidersBuryMeWithMyMoney },
 			{ Title: "Wanted", FullPath: SunsetRidersWantedCharacters, ThumbnailPath: SunsetRidersWantedCharacters },
 			{ Title: "World Map", FullPath: SuperMarioWorldWorldMap, ThumbnailPath: SuperMarioWorldWorldMap },
 			{ Title: "Hero's Journey", FullPath: MegaManXHerosJourney, ThumbnailPath: MegaManXHerosJourney },
