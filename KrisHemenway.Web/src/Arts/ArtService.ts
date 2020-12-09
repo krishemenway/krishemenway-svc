@@ -21,6 +21,7 @@ import {default as MegaManXHerosJourney} from "Arts/Images/MegaManX-HerosJourney
 import {default as MegaManXApprentice} from "Arts/Images/MegaManX-Apprentice.png";
 import {default as ManiacMansionTwentyYearsAgo} from "Arts/Images/ManiacMansion-TwentyYearsAgo.png";
 import {default as KirbysAdventureManySidesOfKirby} from "Arts/Images/KirbysAdventure-ManySidesOfKirby.png";
+import {default as KirbysAdventureRainbowResort} from "Arts/Images/KirbysAdventure-RainbowResort.png";
 import {default as FestersQuestChillin} from "Arts/Images/FestersQuest-Chillin.png";
 import {default as SunsetRidersBuryMeWithMyMoney} from "Arts/Images/SunsetRiders-BuryMeWithMyMoney.png";
 import {default as DuckHunt} from "Arts/Images/DuckHunt.png";
@@ -44,6 +45,7 @@ export class ArtService {
 			{ Title: "On the Hunt", FullPath: DuckHunt, ThumbnailPath: DuckHunt },
 			{ Title: "Just Chillin", FullPath: FestersQuestChillin, ThumbnailPath: FestersQuestChillin },
 			{ Title: "Many Sides of Kirby", FullPath: KirbysAdventureManySidesOfKirby, ThumbnailPath: KirbysAdventureManySidesOfKirby },
+			{ Title: "Rainbow Resort", FullPath: KirbysAdventureRainbowResort, ThumbnailPath: KirbysAdventureRainbowResort },
 			{ Title: "Moods", FullPath: TMNTMoods, ThumbnailPath: TMNTMoods },
 			{ Title: "Airbender", FullPath: Airbender, ThumbnailPath: Airbender },
 			{ Title: "Bury Me With My Money", FullPath: SunsetRidersBuryMeWithMyMoney, ThumbnailPath: SunsetRidersBuryMeWithMyMoney },
