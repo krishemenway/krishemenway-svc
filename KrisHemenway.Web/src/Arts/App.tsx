@@ -22,8 +22,7 @@ const App : React.FC<{}> = () => {
 		<div className={classes.app}>
 			<div className={`${classes.pageWrapper} ${layout.blockCenter}`}>
 				<Text Text="Art" className={`${text.font28} ${text.toUpper} ${text.bold} ${margin.top} ${margin.bottomDouble} ${text.center} ${layout.block} ${textColors.grayc8}`} />
-
-				{Object.keys(allArtByCategory).map((category) => <ArtGroup title={category} arts={allArtByCategory[category]} />)}
+				<ArtGroup title="Everything" arts={allArtByCategory} />
 
 				<Modal Open={selectedArtMetadata !== null} className={classes.fullscreenArtModal} onClosed={onClosed}>
 					<div className={`${text.right} ${margin.vertical}`}>
