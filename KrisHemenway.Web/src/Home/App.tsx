@@ -31,9 +31,9 @@ const App : React.FC<{}> = () => {
 				/>
 
 				<ProjectLink
-					Title="Automated Typing Center for America"
-					Description="what is happening right now."
-					Location="/im-busy"
+					Title="Typing Center for America"
+					Description="something that continuously types on screen for you"
+					Location="https://im-busy.krishemenway.com"
 				/>
 
 				<ProjectLink
