@@ -3,6 +3,8 @@ import {default as AirbenderFull} from "Arts/Images/Airbender-3600x5400.png";
 import {default as AirbenderThumb} from "Arts/Images/Airbender-100x150.png";
 import {default as DuckHuntFull} from "Arts/Images/DuckHunt-1728x2592.png";
 import {default as DuckHuntThumb} from "Arts/Images/DuckHunt-100x150.png";
+import {default as TheRightsOfEverymanFull} from "Arts/Images/JFK-TheRightsOfEveryman-3600x5400.png";
+import {default as TheRightsOfEverymanThumb} from "Arts/Images/JFK-TheRightsOfEveryman-100x150.png";
 import {default as FestersQuestChillinFull} from "Arts/Images/FestersQuest-Chillin-5184x3456.png";
 import {default as FestersQuestChillinThumb} from "Arts/Images/FestersQuest-Chillin-225x150.png";
 import {default as KirbysAdventureManySidesOfKirbyFull} from "Arts/Images/KirbysAdventure-ManySidesOfKirby-4320x5760.png";
@@ -72,6 +74,7 @@ export class ArtService {
 	public SelectedArtMetadata: Observable<ArtMetadata|null>;
 
 	public AllArtByCategory : ArtMetadata[] = [
+		{ Title: "The Rights Of Everyman", FullPath: TheRightsOfEverymanFull, ThumbnailPath: TheRightsOfEverymanThumb },
 		{ Title: "20 Years Ago", FullPath: ManiacMansionTwentyYearsAgoFull, ThumbnailPath: ManiacMansionTwentyYearsAgoThumb },
 		{ Title: "On the Hunt", FullPath: DuckHuntFull, ThumbnailPath: DuckHuntThumb },
 		{ Title: "Just Chillin", FullPath: FestersQuestChillinFull, ThumbnailPath: FestersQuestChillinThumb },
