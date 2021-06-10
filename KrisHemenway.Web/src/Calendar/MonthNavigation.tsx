@@ -2,7 +2,6 @@ import * as React from "react";
 import * as moment from "moment";
 import { CalendarService } from "Calendar/CalendarService";
 import { useObservable } from "Common/UseObservable";
-import { ObservableCalendarMonth } from "Calendar/ObservableCalendarMonth";
 import Text from "Common/Text";
 import { createUseStyles } from "react-jss";
 import { belowWidth } from "Common/AppStyles";
@@ -10,15 +9,15 @@ import { belowWidth } from "Common/AppStyles";
 const MonthNavigation: React.FC = () => {
 	const classes = useStyles();
 	const viewingMonth = useObservable(CalendarService.Instance.ViewingMonth);
-	const previousMonth = CalendarService.Instance.FindObservableCalendarMonth(viewingMonth.Date.clone().subtract(1, 'month'));
-	const nextMonth = CalendarService.Instance.FindObservableCalendarMonth(viewingMonth.Date.clone().add(1, 'month'));
+	const previousMonth = viewingMonth.clone().subtract(1, 'month');
+	const nextMonth = viewingMonth.clone().add(1, 'month');
 	
 	return (
 		<div className={classes.monthNavigationContainer}>
 			<SwitchMonthButton Month={previousMonth} />
 
 			<div className={classes.currentMonth}>
-				<FullMonthName Month={viewingMonth.Date} />
+				<FullMonthName Month={viewingMonth} />
 			</div>
 
 			<SwitchMonthButton Month={nextMonth} />
@@ -26,12 +25,12 @@ const MonthNavigation: React.FC = () => {
 	)
 };
 
-const SwitchMonthButton: React.FC<{Month: ObservableCalendarMonth}> = (props) => {
+const SwitchMonthButton: React.FC<{Month: moment.Moment}> = (props) => {
 	const classes = useStyles();
 
 	return (
-		<button className={classes.clickableMonth} onClick={() => CalendarService.Instance.ChangeMonth(props.Month.Date)}>
-			<FullMonthName Month={props.Month.Date} />
+		<button className={classes.clickableMonth} onClick={() => CalendarService.Instance.ChangeMonth(props.Month)}>
+			<FullMonthName Month={props.Month} />
 			<div className={classes.clickMonthUnderline} />
 		</button>
 	);

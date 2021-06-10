@@ -15,8 +15,6 @@ import { useObservable } from "Common/UseObservable";
 export const Calendar: React.FC = () => {
 	const classes = useCalendarStyles();
 	const currentMonth = useObservable(CalendarService.Instance.ViewingMonth);
-	const episodesByDayKey = useObservable(currentMonth.EpisodesInMonth);
-	const isLoading = useObservable(currentMonth.IsLoading);
 
 	return (
 		<div className={classes.calendarApp}>
@@ -24,20 +22,20 @@ export const Calendar: React.FC = () => {
 				<MonthNavigation />
 
 				<Loading
-					IsLoading={isLoading}
-					Render={() =>
+					loadables={[CalendarService.Instance.FindOrCreateMonthOfEpisodes(currentMonth)]}
+					renderSuccess={(episodesInMonth) => (
 						<CalendarMonth
-							Month={currentMonth.Date}
+							Month={episodesInMonth.Date}
 							DayRenderers={[
-								{ type: "episodes", render: (day) => <CalendarEpisodeList Date={day} EpisodesByDayKey={episodesByDayKey} /> },
+								{ type: "episodes", render: (day) => <CalendarEpisodeList Date={day} EpisodesByDayKey={episodesInMonth.EpisodesInMonth} /> },
 							]}
 						/>
-					}
+					)}
 				/>
 			</div>
 		</div>
 	);
-}
+};
 
 const useCalendarStyles = createUseStyles({
 	calendarApp: { },

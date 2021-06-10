@@ -6,19 +6,32 @@ import Text from "Common/Text";
 import DoneIcon from "Common/DoneIcon";
 import SortByAlphaIcon from "Common/SortByAlphaIcon";
 import { useObservable } from "Common/UseObservable";
-import { MissingEpisodesService, MissingEpisodesForShow, SortFuncType } from "MissingEpisodes/MissingEpisodesService";
+import { MissingEpisodesService, MissingEpisodesForShow, SortFuncType, MissingEpisodesViewModel } from "MissingEpisodes/MissingEpisodesService";
 import { belowWidth } from "Common/AppStyles";
+import Loading from "Common/Loading";
 
 const MissingEpisodesList : React.FC<{}> = () => {
 	const classes = useMissingEpisodeStyles();
-	const shows = useObservable(MissingEpisodesService.Instance.FilteredAndSortedShows);
-	const hideCompletedShows = useObservable(MissingEpisodesService.Instance.HideCompletedShows);
-	const sortFunc = useObservable(MissingEpisodesService.Instance.SortFunc);
-
 	React.useEffect(() => { MissingEpisodesService.Instance.LoadShows() }, []);
 
 	return (
 		<div className={classes.app}>
+			<Loading
+				loadables={[MissingEpisodesService.Instance.LoadableShows]}
+				renderSuccess={(shows) => <LoadedMissingEpisodesForShow missingEpisodes={shows} />}
+			/>
+		</div>
+	);
+};
+
+const LoadedMissingEpisodesForShow : React.FC<{ missingEpisodes: MissingEpisodesViewModel }> = (props) => {
+	const classes = useMissingEpisodeStyles();
+	const filteredAndSortedShows = useObservable(props.missingEpisodes.FilteredAndSortedShows);
+	const hideCompletedShows = useObservable(props.missingEpisodes.HideCompletedShows);
+	const sortFunc = useObservable(props.missingEpisodes.SortFunc);
+
+	return (
+		<>
 			<Text className={classes.title} Text="Completion Status" />
 
 			<div className={classes.listControls}>
@@ -26,42 +39,42 @@ const MissingEpisodesList : React.FC<{}> = () => {
 
 				<button
 					className={`${classes.showCompleteButton} ${!hideCompletedShows && classes.showCompleteButtonToggled}`}
-					onClick={() => { MissingEpisodesService.Instance.HideCompletedShows.Value = !hideCompletedShows; }}>
+					onClick={() => { props.missingEpisodes.HideCompletedShows.Value = !hideCompletedShows; }}>
 
 					{hideCompletedShows ? "-" : "+"} Complete
 				</button>
 
 				<Text className={classes.sortByText} Text="Sort By: " />
 
-				<button className={`${classes.sortByButton} ${sortFunc === SortFuncType.Alphabetical ? classes.isSortingByToggle : ""}`} onClick={() => { MissingEpisodesService.Instance.SortFunc.Value = SortFuncType.Alphabetical; }}>
+				<button className={`${classes.sortByButton} ${sortFunc === SortFuncType.Alphabetical ? classes.isSortingByToggle : ""}`} onClick={() => { props.missingEpisodes.SortFunc.Value = SortFuncType.Alphabetical; }}>
 					<Text Text="Alpha" className={classes.sortButtonText} />
 					<SortByAlphaIcon className={classes.sortButtonIcon} />
 				</button>
 
-				<button className={`${classes.sortByButton} ${sortFunc === SortFuncType.Percentage ? classes.isSortingByToggle : ""}`} onClick={() => { MissingEpisodesService.Instance.SortFunc.Value = SortFuncType.Percentage; }}>
+				<button className={`${classes.sortByButton} ${sortFunc === SortFuncType.Percentage ? classes.isSortingByToggle : ""}`} onClick={() => { props.missingEpisodes.SortFunc.Value = SortFuncType.Percentage; }}>
 					<Text Text="Percentage" className={classes.sortButtonText} />
 					<Text Text="%" className={classes.sortButtonIcon} />
 				</button>
 			</div>
 
 			<div>
-				{shows.map((show) => <MissingEpisodesForShow show={show} />)}
+				{filteredAndSortedShows.map((show) => <MissingEpisodesForShow missingEpisodes={props.missingEpisodes} show={show} />)}
 			</div>
-		</div>
+		</>
 	);
 };
 
-const MissingEpisodesForShow : React.FC<{show: MissingEpisodesForShow}> = (props) => {
-	const completionPercentage = 100 - props.show.MissingEpisodesPercentage.Value;
+const MissingEpisodesForShow : React.FC<{ missingEpisodes: MissingEpisodesViewModel, show: MissingEpisodesForShow }> = (props) => {
 	const classes = useMissingEpisodeStyles();
-	const expandedShow = useObservable(MissingEpisodesService.Instance.ExpandedShow);
+	const completionPercentage = 100 - props.show.MissingEpisodesPercentage.Value;
+	const expandedShow = useObservable(props.missingEpisodes.ExpandedShow);
 
 	return (
 		<div style={{marginBottom: "8px"}}>
 			<button
 				disabled={props.show.MissingEpisodesPercentage.Value === 0}
 				className={classes.showSectionHeader}
-				onClick={() => MissingEpisodesService.Instance.ExpandedShow.Value = expandedShow !== props.show ? props.show : null}>
+				onClick={() => props.missingEpisodes.ExpandedShow.Value = expandedShow !== props.show ? props.show : null}>
 
 				<div className={classes.showName}>
 					<Text Text={props.show.Name} style={{marginRight: "8px"}} />

@@ -34,17 +34,20 @@ module.exports = {
 		new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
 		new CopyPlugin({
 			patterns: [
-				{ from: "./src/favicon.ico", to: ".", flatten: false },
-				{ from: "./src/**/*.html", to: ".", flatten: true },
-				{ from: "./misc_projects", to: ".", flatten: false },
+				{ from: "./src/favicon.ico", to: "." },
+				{ from: "./src/**/*.html", to: "[name][ext]" },
+				{ from: "./misc_projects", to: "." },
 			]
 		}),
 	],
 
 	externals: {
-		"jquery": "$",
 		"react": "React",
 		"react-dom": "ReactDOM",
 		"moment": "moment",
 	},
+
+	watchOptions: {
+		poll: 5000,
+	}
 };
