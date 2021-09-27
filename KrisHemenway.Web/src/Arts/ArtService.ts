@@ -53,6 +53,10 @@ import {default as SuperMarioWorldWorldMapFull} from "Arts/Images/SuperMarioWorl
 import {default as SuperMarioWorldWorldMapThumb} from "Arts/Images/SuperMarioWorld-WorldMap-113x150.png";
 import {default as TMNTMoodsFull} from "Arts/Images/TMNT-Moods-3000x2400.png";
 import {default as TMNTMoodsThumb} from "Arts/Images/TMNT-Moods-188x150.png";
+import {default as ZombiesAteMyNeighborsOverwhelmedFull} from "Arts/Images/ZombiesAteMyNeighbors-Overwhelmed-5184x3456.png";
+import {default as ZombiesAteMyNeighborsOverwhelmedThumb} from "Arts/Images/ZombiesAteMyNeighbors-Overwhelmed-225x150.png";
+import {default as ChronoTriggerFireFull} from "Arts/Images/ChronoTrigger-Fire-5184x3456.png";
+import {default as ChronoTriggerFireThumb} from "Arts/Images/ChronoTrigger-Fire-225x150.png";
 import { BuildQueryString } from "Common/SimpleQueryStringParser";
 
 export interface ArtMetadata {
@@ -75,6 +79,8 @@ export class ArtService {
 
 	public AllArtByCategory : ArtMetadata[] = [
 		{ Title: "The Rights Of Everyman", FullPath: TheRightsOfEverymanFull, ThumbnailPath: TheRightsOfEverymanThumb },
+		{ Title: "Overwhelmed", FullPath: ZombiesAteMyNeighborsOverwhelmedFull, ThumbnailPath: ZombiesAteMyNeighborsOverwhelmedThumb },
+		{ Title: "Timeless Friends", FullPath: ChronoTriggerFireFull, ThumbnailPath: ChronoTriggerFireThumb },
 		{ Title: "20 Years Ago", FullPath: ManiacMansionTwentyYearsAgoFull, ThumbnailPath: ManiacMansionTwentyYearsAgoThumb },
 		{ Title: "On the Hunt", FullPath: DuckHuntFull, ThumbnailPath: DuckHuntThumb },
 		{ Title: "Just Chillin", FullPath: FestersQuestChillinFull, ThumbnailPath: FestersQuestChillinThumb },
