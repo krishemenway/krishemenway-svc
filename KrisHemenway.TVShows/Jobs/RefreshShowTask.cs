@@ -5,12 +5,13 @@ using KrisHemenway.TVShows.Shows;
 using Serilog;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace KrisHemenway.TVShows.Jobs
 {
 	public interface IRefreshShowTask
 	{
-		Result Refresh(IShow show);
+		Task<Result> Refresh(IShow show);
 	}
 
 	public class RefreshShowTask : IRefreshShowTask
@@ -23,14 +24,14 @@ namespace KrisHemenway.TVShows.Jobs
 			_mazeShowEpisodeClient = mazeShowEpisodeClient ?? new MazeShowEpisodeClient();
 		}
 
-		public Result Refresh(IShow show)
+		public async Task<Result> Refresh(IShow show)
 		{
 			if (!show.MazeId.HasValue)
 			{
 				return Result.Failure($"Could not refresh show {show.Name} because it was missing a maze id");
 			}
 
-			var episodesResult = _mazeShowEpisodeClient.FindEpisodes(show);
+			var episodesResult = await _mazeShowEpisodeClient.FindEpisodes(show);
 
 			if (!episodesResult.Success)
 			{

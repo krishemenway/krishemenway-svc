@@ -1,6 +1,7 @@
 ﻿using KrisHemenway.Common;
 using KrisHemenway.TVShows.Jobs;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace KrisHemenway.TVShows.Shows
 {
@@ -17,14 +18,14 @@ namespace KrisHemenway.TVShows.Shows
 
 		[HttpPost(nameof(RefreshShow))]
 		[ProducesResponseType(200, Type = typeof(Result))]
-		public Result RefreshShow([FromBody] RefreshShowRequest request)
+		public async Task<Result> RefreshShow([FromBody] RefreshShowRequest request)
 		{
 			if (!_showStore.TryFindByName(request.Name, out var show))
 			{
 				return Result.Failure($"Unable to find show: {request.Name}");
 			}
 
-			return _refreshShowTask.Refresh(show);
+			return await _refreshShowTask.Refresh(show);
 		}
 
 		private readonly IShowStore _showStore;

@@ -23,8 +23,10 @@ namespace KrisHemenway.TVShows.Jobs
 				{
 					foreach (var show in _showStore.FindAll())
 					{
-						_refreshShowTask.Refresh(show);
-						Thread.Sleep(1000);
+						_refreshShowTask
+							.Refresh(show)
+							.ContinueWith((result) => Thread.Sleep(1000))
+							.Wait(TimeSpan.FromSeconds(30));
 					}
 				}
 				catch (Exception e)

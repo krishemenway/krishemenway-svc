@@ -1,6 +1,7 @@
 ﻿using KrisHemenway.Common;
 using KrisHemenway.TVShows.Jobs;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace KrisHemenway.TVShows.Shows
 {
@@ -17,10 +18,10 @@ namespace KrisHemenway.TVShows.Shows
 
 		[HttpPost(nameof(Create))]
 		[ProducesResponseType(200, Type = typeof(Result))]
-		public ActionResult<Result> Create([FromBody] CreateShowRequest createShowRequest)
+		public async Task<ActionResult<Result>> Create([FromBody] CreateShowRequest createShowRequest)
 		{
 			var show = _showStore.Create(createShowRequest);
-			return _refreshShowTask.Refresh(show);
+			return await _refreshShowTask.Refresh(show);
 		}
 
 		private readonly IShowStore _showStore;

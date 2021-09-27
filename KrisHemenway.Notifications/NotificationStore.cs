@@ -3,7 +3,6 @@ using KrisHemenway.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace KrisHemenway.Notifications
@@ -11,7 +10,7 @@ namespace KrisHemenway.Notifications
 	public interface INotificationStore
 	{
 		Task<IReadOnlyList<Notification>> FindAll(DateTime? afterTime = null);
-		Notification CreateNotification(PushNotificationDetails details);
+		Task<Notification> CreateNotification(PushNotificationDetails details);
 	}
 
 	public class NotificationStore : INotificationStore
@@ -37,7 +36,7 @@ namespace KrisHemenway.Notifications
 			}
 		}
 
-		public Notification CreateNotification(PushNotificationDetails details)
+		public async Task<Notification> CreateNotification(PushNotificationDetails details)
 		{
 			const string sql = @"
 				INSERT INTO public.notification
@@ -55,8 +54,7 @@ namespace KrisHemenway.Notifications
 					TypeName = details.TypeName
 				};
 
-				connection.Execute(sql, notification);
-
+				await connection.ExecuteAsync(sql, notification);
 				return notification;
 			}
 		}

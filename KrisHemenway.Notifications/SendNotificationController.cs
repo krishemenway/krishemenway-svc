@@ -1,5 +1,6 @@
 using KrisHemenway.Common;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace KrisHemenway.Notifications
 {
@@ -15,9 +16,9 @@ namespace KrisHemenway.Notifications
 		}
 
 		[HttpPost("send")]
-		public ActionResult<Result> SendNotification([FromBody] PushNotificationDetails detailsRequest)
+		public async Task<ActionResult<Result>> SendNotification([FromBody] PushNotificationDetails detailsRequest)
 		{
-			var notification = _notificationStore.CreateNotification(detailsRequest);
+			var notification = await _notificationStore.CreateNotification(detailsRequest);
 			_firebasePusnNotificationSender.NotifyAll(notification);
 
 			return Result.Successful;

@@ -7,17 +7,18 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace KrisHemenway.TVShows.MazeDataSource
 {
 	public interface IMazeDataSource
 	{
-		Result<IReadOnlyList<IEpisode>> FindEpisodes(IShow show);
+		Task<Result<IReadOnlyList<IEpisode>>> FindEpisodes(IShow show);
 	}
 
 	public class MazeShowEpisodeClient : IMazeDataSource
 	{
-		public Result<IReadOnlyList<IEpisode>> FindEpisodes(IShow show)
+		public async Task<Result<IReadOnlyList<IEpisode>>> FindEpisodes(IShow show)
 		{
 			if(!show.MazeId.HasValue)
 			{
@@ -26,7 +27,7 @@ namespace KrisHemenway.TVShows.MazeDataSource
 
 			try
 			{
-				return Result<IReadOnlyList<IEpisode>>.Successful(FindEpisodesFromMazeApi(show));
+				return Result<IReadOnlyList<IEpisode>>.Successful(await FindEpisodesFromMazeApi(show));
 			}
 			catch(Exception exception)
 			{
@@ -35,14 +36,12 @@ namespace KrisHemenway.TVShows.MazeDataSource
 			}
 		}
 
-		private IReadOnlyList<IEpisode> FindEpisodesFromMazeApi(IShow show)
+		private async Task<IReadOnlyList<IEpisode>> FindEpisodesFromMazeApi(IShow show)
 		{
 			var request = WebRequest.Create($"http://api.tvmaze.com/shows/{show.MazeId}/episodes");
-			var response = request.GetResponseAsync();
 
-			response.Wait();
-
-			using (var streamReader = new StreamReader(response.Result.GetResponseStream()))
+			using (var response = await request.GetResponseAsync())
+			using (var streamReader = new StreamReader(response.GetResponseStream()))
 			{
 				var responseString = streamReader.ReadToEnd();
 				var mazeEpisodes = JsonSerializer.Deserialize<IReadOnlyList<MazeShowEpisode>>(responseString);
@@ -51,7 +50,7 @@ namespace KrisHemenway.TVShows.MazeDataSource
 			}
 		}
 
-		private Episode CreateEpisode(MazeShowEpisode episode, IShow show)
+		private static Episode CreateEpisode(MazeShowEpisode episode, IShow show)
 		{
 			return new Episode
 				{
