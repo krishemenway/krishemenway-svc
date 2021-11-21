@@ -8,6 +8,7 @@ const DefaultErrorMessageComponent = (errorMessages: string[]) => (<div style={{
 interface BaseLoadingComponentProps {
 	loadingComponent?: JSX.Element,
 	errorComponent?: (errorMessages: string[]) => JSX.Element,
+	minimumLoadTimeInMilliseconds?: number,
 }
 
 function Loading<A>(props: { loadables: [Loadable<A>], renderSuccess: (a: A) => JSX.Element }&BaseLoadingComponentProps): JSX.Element;
@@ -16,8 +17,12 @@ function Loading<A, B, C>(props: { loadables: [Loadable<A>, Loadable<B>, Loadabl
 function Loading<A, B, C, D>(props: { loadables: [Loadable<A>, Loadable<B>, Loadable<C>, Loadable<D>], renderSuccess: (a: A, b: B, c: C, d: D) => JSX.Element }&BaseLoadingComponentProps): JSX.Element;
 
 function Loading(props: { loadables: Loadable<unknown>[], renderSuccess: (...inputValues: unknown[]) => JSX.Element, }&BaseLoadingComponentProps): JSX.Element {
+	const [canStartShowingLoading, setCanStartShowingLoading] = React.useState(false);
+	const [canStartShowingLoadingHandle, setCanStartShowingLoadingHandle] = React.useState<number|undefined>(undefined);
 	const loadableDatas = props.loadables.map((loadable) => useObservable(loadable.Data));
 	const loadState = DetermineLoadState(loadableDatas);
+
+	React.useEffect(() => { setCanStartShowingLoadingHandle(window.setTimeout(() => { setCanStartShowingLoading(true); }, props.minimumLoadTimeInMilliseconds ?? 100)); return () => window.clearTimeout(canStartShowingLoadingHandle); }, []);
 
 	switch(loadState) {
 		case LoadState.Failed:
@@ -28,7 +33,7 @@ function Loading(props: { loadables: Loadable<unknown>[], renderSuccess: (...inp
 		case LoadState.NotStarted:
 		case LoadState.Loading:
 		default:
-			return props.loadingComponent ?? DefaultLoadingComponent;
+			return canStartShowingLoading ? (props.loadingComponent ?? DefaultLoadingComponent) : <></>;
 	}
 }
 
