@@ -2,15 +2,17 @@ import * as React from "react";
 import * as reactDom from "react-dom";
 import * as moment from "moment";
 import { createUseStyles } from "react-jss";
+import { useObservable } from "@residualeffect/rereactor";
+import { Loading } from "@krishemenway/react-loading-component";
 import { Episode } from "Episodes/Episode";
 import CalendarMonth from "Calendar/CalendarMonth";
 import MonthNavigation from "Calendar/MonthNavigation";
 import ListOf from "Common/ListOf";
 import EpisodeName from "Episodes/EpisodeName";
 import {default as AppBackground} from "Common/AppBackground.png";
-import Loading from "Common/Loading";
 import { CalendarService } from "Calendar/CalendarService";
-import { useObservable } from "Common/UseObservable";
+import LoadingErrorMessages from "Common/LoadingErrorMessages";
+import LoadingSpinner from "Common/LoadingSpinner";
 
 export const Calendar: React.FC = () => {
 	const classes = useCalendarStyles();
@@ -22,8 +24,11 @@ export const Calendar: React.FC = () => {
 				<MonthNavigation />
 
 				<Loading
-					loadables={[CalendarService.Instance.FindOrCreateMonthOfEpisodes(currentMonth)]}
-					renderSuccess={(episodesInMonth) => (
+					receivers={[CalendarService.Instance.FindOrCreateMonthOfEpisodes(currentMonth)]}
+					whenError={(errors) => <LoadingErrorMessages errorMessages={errors} />}
+					whenLoading={<LoadingSpinner />}
+					whenNotStarted={<LoadingSpinner />}
+					whenReceived={(episodesInMonth) => (
 						<CalendarMonth
 							Month={episodesInMonth.Date}
 							DayRenderers={[
@@ -58,10 +63,11 @@ const CalendarEpisodeList: React.FC<CalendarEpisodeListProps> = (props) => {
 
 	return (
 		<ListOf
-			className={classes.episodes}
 			key={`episodes-${props.Date.format("YYYY-MM-DD")}`}
 			items={props.EpisodesByDayKey[props.Date.format("YYYY-MM-DD")]}
 			renderItem={(episode) => <EpisodeName className={classes.episodeName} Episode={episode} ShowDownload={false} />}
+			listClassName={classes.episodes}
+			createKey={(_, i) => i.toString()}
 		/>
 	);
 };

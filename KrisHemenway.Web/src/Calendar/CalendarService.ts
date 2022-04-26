@@ -1,7 +1,7 @@
 import { Observable } from "@residualeffect/reactor";
+import { Receiver } from "@krishemenway/react-loading-component";
 import * as moment from "moment";
 import { EpisodesInMonth } from "Calendar/EpisodesInMonth";
-import { Loadable } from "Common/Loadable";
 import { Http } from "Common/Http";
 import { EpisodesInMonthResponse } from "Episodes/EpisodesInMonthResponse";
 import { Episode } from "Episodes/Episode";
@@ -17,11 +17,11 @@ export class CalendarService {
 		this.AddBoundaryMonthOfEpisodes();
 	}
 
-	public FindOrCreateMonthOfEpisodes(dayInMonth: moment.Moment): Loadable<EpisodesInMonth> {
+	public FindOrCreateMonthOfEpisodes(dayInMonth: moment.Moment): Receiver<EpisodesInMonth> {
 		const monthKey = dayInMonth.format("YYYY-MM");
 
 		if (this.MonthOfEpisodes[monthKey] === undefined) {
-			this.MonthOfEpisodes[monthKey] = new Loadable();
+			this.MonthOfEpisodes[monthKey] = new Receiver(`Failed to load episode data for ${dayInMonth.format("MMM YYYY")}.`);
 			this.TryLoadEpisodesInMonth(dayInMonth, this.MonthOfEpisodes[monthKey]);
 		}
 
@@ -51,11 +51,11 @@ export class CalendarService {
 		this.FindOrCreateMonthOfEpisodes(this.ViewingMonth.Value.clone().subtract(1, 'month'));
 	}
 
-	private TryLoadEpisodesInMonth(dayInMonth: moment.Moment, loadable: Loadable<EpisodesInMonth>) {
-		Http.get<EpisodesInMonthResponse, EpisodesInMonth>(`/api/tvshows/episodes/calendar/${dayInMonth.format("YYYY/MM")}`, loadable, (response) => this.CreateMonthOfEpisodes(dayInMonth, response));
+	private TryLoadEpisodesInMonth(dayInMonth: moment.Moment, receiver: Receiver<EpisodesInMonth>) {
+		receiver.Start(() => Http.get<EpisodesInMonthResponse, EpisodesInMonth>(`/api/tvshows/episodes/calendar/${dayInMonth.format("YYYY/MM")}`, (response) => this.CreateMonthOfEpisodes(dayInMonth, response)));
 	}
 
-	public MonthOfEpisodes: Dictionary<Loadable<EpisodesInMonth>>;
+	public MonthOfEpisodes: Dictionary<Receiver<EpisodesInMonth>>;
 	public ViewingMonth: Observable<moment.Moment>;
 
 	public static get Instance(): CalendarService {

@@ -1,61 +1,55 @@
-import { Loadable } from "Common/Loadable";
-
 export class Http {
 	/**
-	 * @param url Url path for get request
+	 * @param url Url path for get request.
+	 * @param transformFunc Optional conversion function if you want something more complex than the response object stored.
 	 * @template TResponse Describes the type for the json response
 	 */
-	public static get<TResponse, TLoadableData = TResponse>(url: string, loadable: Loadable<TLoadableData>, transformFunc?: (response: TResponse) => TLoadableData): Promise<TResponse> {
-		return new Promise<TResponse>((onFulfilled, onRejected) => {
-			if (!loadable.CanMakeRequest()) {
-				return;
-			}
-
-			loadable.StartLoading();
-
-			fetch(url)
-				.then((response) => {
-					if (!response.ok) {
-						throw new Error(`Received response status code: ${response.status}`);
-					}
-
-					return response.json();
-				})
-				.then((jsonResponse) => {
-					loadable.SucceededLoading(transformFunc === undefined ? jsonResponse : transformFunc(jsonResponse));
-					onFulfilled(jsonResponse as TResponse);
-				}, (reason) => {
-					loadable.FailedLoading(reason);
-					onRejected(reason);
-				});
-		});
-	}
-
-	/**
-	 * @param url Url path for get request
-	 * @param request Request for the post body
-	 * @template TRequest Describes the type for the json request
-	 * @template TResponse Describes the type for the json response
-	 */
-	public static post<TRequest, TResponse>(url: string, request: TRequest): Promise<TResponse> {
-		return new Promise<TResponse>((onFulfilled, onRejected) => {
-			fetch(url, { 
-				body: JSON.stringify(request),
-				method: "post",
-				headers: { "Content-Type": "application/json" },
-			})
+	public static get<TResponse, TTransformedData = TResponse>(url: string, transformFunc?: (response: TResponse) => TTransformedData): Promise<TTransformedData> {
+		return fetch(url)
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error(`Received response status code: ${response.status}`);
 				}
 
-				return response.json();
+				return response.json().catch(() => {
+					console.error(`JSON parsing failed for url ${url}`);
+					throw new Error("Unknown response received from the server. Try again later.");
+				});
 			})
-			.then((jsonResponse) => {
-				onFulfilled(jsonResponse as TResponse);
-			}, (reason) => {
-				onRejected(reason);
+			.then((jsonResponse: TResponse) => {
+				return transformFunc === undefined
+					? jsonResponse as unknown as TTransformedData
+					: transformFunc(jsonResponse);
 			});
-		});
+	}
+
+	/**
+	 * @param url Url path for post request
+	 * @param request Request object to be JSON.stringified for the post body.
+	 * @param transformFunc Optional conversion function if you want something more complex than the response object stored.
+	 * @template TRequest Describes the type for the json request
+	 * @template TResponse Describes the type for the json response
+	 */
+	public static post<TRequest, TResponse, TLoadableData>(url: string, request: TRequest, transformFunc?: (response: TResponse) => TLoadableData): Promise<TLoadableData> {
+		const fetchRequest: RequestInit = {
+			body: JSON.stringify(request),
+			method: "post",
+			headers: { "Content-Type": "application/json" },
+		};
+
+		return fetch(url, fetchRequest)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(`Received response status code: ${response.status}`);
+				}
+
+				return response.json().catch(() => {
+					console.error(`JSON parsing failed for url ${url}`);
+					throw new Error("Unknown response received from the server. Try again later.");
+				});
+			})
+			.then((jsonResponse: TResponse) => {
+				return transformFunc === undefined ? jsonResponse as unknown as TLoadableData : transformFunc(jsonResponse)
+			});
 	}
 }

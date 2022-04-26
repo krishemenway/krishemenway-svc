@@ -106,6 +106,7 @@ export const useMargin = createUseStyles({
 
 	vertical: { marginTop: "10px", marginBottom: "10px", },
 	verticalHalf: { marginTop: "5px", marginBottom: "5px", },
+	verticalDouble: { marginTop: "20px", marginBottom: "20px", },
 
 	horizontal: { marginLeft: "10px", marginRight: "10px", },
 	horizontalHalf: { marginLeft: "5px", marginRight: "5px", },

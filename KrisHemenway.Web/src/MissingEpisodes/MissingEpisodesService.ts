@@ -1,19 +1,19 @@
 import { Computed, Observable } from "@residualeffect/reactor";
+import { Receiver } from "@krishemenway/react-loading-component";
 import { Percentage } from "../Common/Percentage";
 import { Episode } from "Episodes/Episode";
-import { Loadable } from "Common/Loadable";
 import { Http } from "Common/Http";
 
 export class MissingEpisodesService {
 	constructor() {
-		this.LoadableShows = new Loadable<MissingEpisodesViewModel>();
+		this.Shows = new Receiver<MissingEpisodesViewModel>("Unable to load missing episodes");
 	}
 
 	public LoadShows() {
-		Http.get<MissingEpisodesForShowResponse, MissingEpisodesViewModel>("/api/tvshows/episodes/missing", this.LoadableShows, (response) => new MissingEpisodesViewModel(response));
+		this.Shows.Start(() => Http.get<MissingEpisodesForShowResponse, MissingEpisodesViewModel>("/api/tvshows/episodes/missing", (response) => new MissingEpisodesViewModel(response)));
 	}
 
-	public LoadableShows: Loadable<MissingEpisodesViewModel>;
+	public Shows: Receiver<MissingEpisodesViewModel>;
 
 	public static get Instance(): MissingEpisodesService {
 		if (MissingEpisodesService._instance === undefined) {

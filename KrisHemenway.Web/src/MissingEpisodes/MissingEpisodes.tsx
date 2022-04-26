@@ -1,14 +1,16 @@
 import * as React from "react";
 import * as reactDom from "react-dom";
 import { createUseStyles } from "react-jss";
+import { useObservable } from "@residualeffect/rereactor";
+import { Loading } from "@krishemenway/react-loading-component";
 import {default as AppBackground} from "Common/AppBackground.png";
 import Text from "Common/Text";
 import DoneIcon from "Common/DoneIcon";
 import SortByAlphaIcon from "Common/SortByAlphaIcon";
-import { useObservable } from "Common/UseObservable";
 import { MissingEpisodesService, MissingEpisodesForShow, SortFuncType, MissingEpisodesViewModel } from "MissingEpisodes/MissingEpisodesService";
 import { belowWidth } from "Common/AppStyles";
-import Loading from "Common/Loading";
+import LoadingErrorMessages from "Common/LoadingErrorMessages";
+import LoadingSpinner from "Common/LoadingSpinner";
 
 const MissingEpisodesList : React.FC<{}> = () => {
 	const classes = useMissingEpisodeStyles();
@@ -17,8 +19,11 @@ const MissingEpisodesList : React.FC<{}> = () => {
 	return (
 		<div className={classes.app}>
 			<Loading
-				loadables={[MissingEpisodesService.Instance.LoadableShows]}
-				renderSuccess={(shows) => <LoadedMissingEpisodesForShow missingEpisodes={shows} />}
+				receivers={[MissingEpisodesService.Instance.Shows]}
+				whenReceived={(shows) => <LoadedMissingEpisodesForShow missingEpisodes={shows} />}
+				whenError={(errors) => <LoadingErrorMessages errorMessages={errors} />}
+				whenLoading={<LoadingSpinner />}
+				whenNotStarted={<LoadingSpinner />}
 			/>
 		</div>
 	);

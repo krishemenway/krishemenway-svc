@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as moment from "moment";
+import { useObservable } from "@residualeffect/rereactor";
 import { CalendarService } from "Calendar/CalendarService";
-import { useObservable } from "Common/UseObservable";
 import Text from "Common/Text";
 import { createUseStyles } from "react-jss";
 import { belowWidth } from "Common/AppStyles";

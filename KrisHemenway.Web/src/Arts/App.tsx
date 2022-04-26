@@ -1,13 +1,13 @@
 import * as React from "react";
 import * as reactDom from "react-dom";
 import { createUseStyles } from "react-jss";
+import { useObservable } from "@residualeffect/rereactor";
 import Text from "Common/Text";
 import {default as AppBackground} from "Common/AppBackground.png";
 import { ArtGroup } from "Arts/ArtGroup";
 import { belowWidth, useBackground, useEvents, useLayout, useMargin, usePadding, useText, useTextColor } from "Common/AppStyles";
 import { ArtService } from "Arts/ArtService";
 import Modal from "Common/Modal";
-import { useObservable } from "Common/UseObservable";
 import CloseIcon from "Common/CloseIcon";
 import DownloadIcon from "Common/DownloadIcon";
 import { FileDownloader } from "Common/FileDownloader";

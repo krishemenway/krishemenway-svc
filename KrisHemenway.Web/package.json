@@ -16,12 +16,15 @@
   "author": "Kris Hemenway <krishemenway@gmail.com>",
   "license": "ISC",
   "engines": {
-    "node": "15.0.1"
+    "node": "16.14.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@residualeffect/rereactor": "^1.0.0"
+  },
   "devDependencies": {
+    "@krishemenway/react-loading-component": "^0.0.4",
     "@material-ui/icons": "4.11.2",
-    "@residualeffect/reactor": "3.0.0",
+    "@residualeffect/reactor": "4.1.0",
     "@types/moment": "2.13.0",
     "@types/react": "17.0.10",
     "@types/react-dom": "17.0.7",
@@ -29,7 +32,7 @@
     "copy-webpack-plugin": "9.0.0",
     "express": "4.17.1",
     "file-loader": "6.2.0",
-    "moment": "2.29.1",
+    "moment": "2.29.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-jss": "10.6.0",
