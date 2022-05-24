@@ -1,6 +1,7 @@
 ﻿using KrisHemenway.TVShows.Shows;
 using StronglyTyped.GuidIds;
 using System;
+using System.Text.Json.Serialization;
 
 namespace KrisHemenway.TVShows.Episodes
 {
@@ -16,6 +17,7 @@ namespace KrisHemenway.TVShows.Episodes
 		int EpisodeInSeason { get; }
 		int EpisodeInShow { get; }
 
+		[JsonIgnore]
 		string VideoPath { get; }
 		bool HasEpisode { get; }
 		bool IsMissing { get; }
@@ -37,6 +39,7 @@ namespace KrisHemenway.TVShows.Episodes
 		public int EpisodeInSeason { get; set; }
 		public int EpisodeInShow { get; set; }
 
+		[JsonIgnore]
 		public string VideoPath { get; set; }
 		public bool HasEpisode => !string.IsNullOrWhiteSpace(VideoPath);
 
