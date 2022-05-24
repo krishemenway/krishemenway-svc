@@ -40,6 +40,7 @@ namespace KrisHemenway.TVShows.Jobs
 
 			CreateOrUpdateEpisodes(show, episodesResult);
 
+			MissingEpisodesRequestController.CacheSource.Cancel();
 			return Result.Successful;
 		}
 

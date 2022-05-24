@@ -15,6 +15,7 @@ namespace KrisHemenway.TVShows
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvcCore().AddJsonOptions(FixJsonCamelCasing);
+			services.AddMemoryCache();
 			services.AddDistributedMemoryCache();
 			services.AddSession(options =>
 			{

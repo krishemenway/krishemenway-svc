@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using KrisHemenway.TVShows.Episodes;
 using StronglyTyped.GuidIds;
-using StronglyTyped.GuidIds.Dapper;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,11 +36,6 @@ namespace KrisHemenway.TVShows.Shows
 
 			using (var dbConnection = Database.CreateConnection())
 			{
-				if (_cachedShows != null && _cachedShows.Any())
-				{
-					return _cachedShows;
-				}
-
 				var shows = dbConnection.Query<Show>(sql).ToList();
 				var episodesByShow = _episodeStore.FindEpisodes(shows.ToArray());
 
@@ -51,7 +44,6 @@ namespace KrisHemenway.TVShows.Shows
 					show.Episodes = episodesByShow[show];
 				}
 
-				_cachedShows = shows;
 				return shows;
 			}
 		}
@@ -130,9 +122,6 @@ namespace KrisHemenway.TVShows.Shows
 					};
 			}
 		}
-
-		[ThreadStatic]
-		private static IReadOnlyList<IShow> _cachedShows;
 
 		private readonly IEpisodeStore _episodeStore;
 	}

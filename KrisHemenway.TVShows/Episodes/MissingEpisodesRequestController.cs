@@ -1,14 +1,22 @@
 ﻿using KrisHemenway.TVShows.Shows;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Primitives;
+using Serilog;
+using System;
 using System.Linq;
+using System.Threading;
 
 namespace KrisHemenway.TVShows.Episodes
 {
 	[Route("api/tvshows/episodes")]
-	public class MissingEpisodesRequestHandler : ControllerBase
+	public class MissingEpisodesRequestController : ControllerBase
 	{
-		public MissingEpisodesRequestHandler(IShowStore showStore = null)
+		public MissingEpisodesRequestController(
+			IMemoryCache memoryCache,
+			IShowStore showStore = null)
 		{
+			_memoryCache = memoryCache;
 			_showStore = showStore ?? new ShowStore();
 		}
 
@@ -16,9 +24,20 @@ namespace KrisHemenway.TVShows.Episodes
 		[ProducesResponseType(200, Type = typeof(MissingEpisodesResponse))]
 		public ActionResult<MissingEpisodesResponse> Missing()
 		{
-			var allShowReports = _showStore.FindAll()
-				.Select(CreateReportForShow)
-				.ToList();
+			return _memoryCache.GetOrCreate("MissingShowsReport", (cache) => {
+
+				CacheSource = new CancellationTokenSource();
+				cache.AddExpirationToken(new CancellationChangeToken(CacheSource.Token));
+				cache.AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1);
+
+				return CreatingMissingEpisodesReport();
+			});
+		}
+
+		private MissingEpisodesResponse CreatingMissingEpisodesReport()
+		{
+			Log.Information("Building missing episodes report");
+			var allShowReports = _showStore.FindAll().Select(CreateReportForShow).ToList();
 
 			return new MissingEpisodesResponse
 				{
@@ -39,6 +58,9 @@ namespace KrisHemenway.TVShows.Episodes
 				};
 		}
 
-		private IShowStore _showStore { get; }
+		internal static CancellationTokenSource CacheSource { get; private set; }
+
+		private readonly IMemoryCache _memoryCache;
+		private readonly IShowStore _showStore;
 	}
 }
