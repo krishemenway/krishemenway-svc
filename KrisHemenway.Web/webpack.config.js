@@ -7,6 +7,7 @@ module.exports = {
 		app: "./src/Home/App.tsx",
 		arts: "./src/Arts/App.tsx",
 		missingepisodes: "./src/MissingEpisodes/MissingEpisodes.tsx",
+		slots: "./src/Slots/Slots.tsx",
 		calendar: "./src/Calendar/Calendar.tsx"
 	},
 

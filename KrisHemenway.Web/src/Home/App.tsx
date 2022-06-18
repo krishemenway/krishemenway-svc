@@ -31,6 +31,12 @@ const App : React.FC<{}> = () => {
 				/>
 
 				<ProjectLink
+					Title="Slot Machine"
+					Description="press the button. why? I dunno. could be cool?"
+					Location="/Slots.html"
+				/>
+
+				<ProjectLink
 					Title="Typing Center for America"
 					Description="something that continuously types on screen for you"
 					Location="https://im-busy.krishemenway.com"
