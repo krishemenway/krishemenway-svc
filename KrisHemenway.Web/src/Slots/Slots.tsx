@@ -164,8 +164,12 @@ const SpinResultMessage: React.FC<{ slotMachine: SlotMachine }> = (props) => {
 	const spinWinFlag = useObservable(props.slotMachine.SpinWinFlag);
 	const mostRecentPattern = useObservable(props.slotMachine.MostRecentWonPattern);
 
+	if (spinWinFlag === null) {
+		return <></>;
+	}
+
 	return (
-		<div className={clsx(classes.winMessage, spinWinFlag !== null && "withMessage")}>
+		<div className={clsx(classes.winMessage)}>
 			{spinWinFlag === true && (<><div>YOU</div><div>WIN</div><div>+{mostRecentPattern?.EarnsPoints}</div></>)}
 			{spinWinFlag === false && (<><div>YOU</div><div>LOSE</div></>)}
 		</div>
@@ -219,17 +223,13 @@ const useStyles = createUseStyles({
 		},
 	},
 	winMessage: {
+		background: "#101010",
 		width: "100%",
 		margin: "16px auto",
 		padding: "8px 24px",
-		minHeight: "46px",
 		lineHeight: "30px",
 		fontSize: "24px",
 		textAlign: "center",
-
-		"&.withMessage": {
-			background: "#101010",
-		},
 	},
 	winningPatterns: {
 		display: "flex",
@@ -339,7 +339,7 @@ const useStyles = createUseStyles({
 
 		"& > *": {
 			top: "0px",
-			animation: "$spinner infinite .5s",
+			animation: "$spinner linear infinite .5s",
 			position: "relative",
 		},
 	},
