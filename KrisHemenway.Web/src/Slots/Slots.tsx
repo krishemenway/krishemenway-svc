@@ -141,7 +141,7 @@ const SpinningSlotSymbol: React.FC<{ slotMachine: SlotMachine; animationDelay: n
 		<div className={classes.symbolSpinner}>
 			<div style={{ height: 80 * props.slotMachine.AllSymbols.length, animationDelay: `.${props.animationDelay}s` }}>
 				{props.slotMachine.AllSymbols.map((s) => <SlotSymbolComponent key={`1-${s}`} symbol={s} />)}
-				{props.slotMachine.AllSymbols.map((s) => <SlotSymbolComponent key={`2-${s}`} symbol={s} />)}
+				<SlotSymbolComponent symbol={props.slotMachine.AllSymbols[0]} />
 			</div>
 		</div>
 	);
