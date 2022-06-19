@@ -139,7 +139,7 @@ const SpinningSlotSymbol: React.FC<{ slotMachine: SlotMachine; animationDelay: n
 
 	return (
 		<div className={classes.symbolSpinner}>
-			<div style={{ height: 80 * props.slotMachine.AllSymbols.length, animationDelay: `.${props.animationDelay}s` }}>
+			<div style={{ animationDelay: `.${props.animationDelay}s` }}>
 				{props.slotMachine.AllSymbols.map((s) => <SlotSymbolComponent key={`1-${s}`} symbol={s} />)}
 				<SlotSymbolComponent symbol={props.slotMachine.AllSymbols[0]} />
 			</div>
@@ -178,8 +178,8 @@ const SpinResultMessage: React.FC<{ slotMachine: SlotMachine }> = (props) => {
 
 const useStyles = createUseStyles({
 	"@keyframes spinner": {
-		from: {top: "0px"},
-		to: {top: "-320px"},
+		from: {top: "0"},
+		to: {top: "-400%"}, // 4 Symbols * 100
 	},
 	actionRow: {
 		display: "flex",
