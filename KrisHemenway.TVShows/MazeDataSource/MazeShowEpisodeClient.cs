@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace KrisHemenway.TVShows.MazeDataSource
@@ -18,6 +19,12 @@ namespace KrisHemenway.TVShows.MazeDataSource
 
 	public class MazeShowEpisodeClient : IMazeDataSource
 	{
+		static MazeShowEpisodeClient()
+		{
+			JsonOptions = new JsonSerializerOptions();
+			JsonOptions.Converters.Add(new EmptyDateTimeConverter());
+		}
+
 		public async Task<Result<IReadOnlyList<IEpisode>>> FindEpisodes(IShow show)
 		{
 			if(!show.MazeId.HasValue)
@@ -38,10 +45,8 @@ namespace KrisHemenway.TVShows.MazeDataSource
 
 		private async Task<IReadOnlyList<IEpisode>> FindEpisodesFromMazeApi(IShow show)
 		{
-			var request = WebRequest.Create($"http://api.tvmaze.com/shows/{show.MazeId}/episodes");
-
-			using (var response = await request.GetResponseAsync())
-			using (var streamReader = new StreamReader(response.GetResponseStream()))
+			using (var response = await new HttpClient().GetAsync($"http://api.tvmaze.com/shows/{show.MazeId}/episodes"))
+			using (var streamReader = new StreamReader(response.Content.ReadAsStream()))
 			{
 				var responseString = streamReader.ReadToEnd();
 				var mazeEpisodes = JsonSerializer.Deserialize<IReadOnlyList<MazeShowEpisode>>(responseString);
@@ -61,6 +66,28 @@ namespace KrisHemenway.TVShows.MazeDataSource
 					ShowName = show.Name,
 					ShowId = show.ShowId
 				};
+		}
+
+		private static JsonSerializerOptions JsonOptions { get; } = new JsonSerializerOptions();
+
+		private class EmptyDateTimeConverter : JsonConverter<DateTime?>
+		{
+			public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+			{
+				return reader.GetString() == "" ? null : reader.GetDateTime();
+			}
+
+			public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
+			{
+				if (!value.HasValue)
+				{
+					writer.WriteStringValue("");
+				}
+				else
+				{
+					writer.WriteStringValue(value.Value);
+				}
+			}
 		}
 	}
 }

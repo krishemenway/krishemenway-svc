@@ -4,6 +4,7 @@ using KrisHemenway.TVShows.MazeDataSource;
 using KrisHemenway.TVShows.Shows;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,8 +27,11 @@ namespace KrisHemenway.TVShows.Jobs
 
 		public async Task<Result> Refresh(IShow show)
 		{
+			Log.Information("Started loading data for {Show}", show.Name);
+
 			if (!show.MazeId.HasValue)
 			{
+				Log.Warning("Failed loading data for {Show}: {Error}", show.Name, "Missing a maze id");
 				return Result.Failure($"Could not refresh show {show.Name} because it was missing a maze id");
 			}
 
@@ -35,16 +39,19 @@ namespace KrisHemenway.TVShows.Jobs
 
 			if (!episodesResult.Success)
 			{
+				Log.Warning("Failed loading data for {Show}: {Error}", show.Name, episodesResult.ErrorMessage);
 				return Result.Failure(episodesResult.ErrorMessage);
 			}
 
 			CreateOrUpdateEpisodes(show, episodesResult);
 
 			MissingEpisodesRequestController.CacheSource.Cancel();
+			Log.Warning("Succeeded loading data for {Show}", show.Name);
+
 			return Result.Successful;
 		}
 
-		private void CreateOrUpdateEpisodes(IShow show, Result<System.Collections.Generic.IReadOnlyList<IEpisode>> episodesResult)
+		private void CreateOrUpdateEpisodes(IShow show, Result<IReadOnlyList<IEpisode>> episodesResult)
 		{
 			foreach (var episode in episodesResult.Data)
 			{
