@@ -68,7 +68,7 @@ namespace KrisHemenway.TVShows.EpisodeRenamer
 		public IReadOnlyList<string> GetAllParentDirectories(IReadOnlyList<string> blacklist = null)
 		{
 			var directories = new List<string>();
-			blacklist = blacklist ?? new string[0];
+			blacklist ??= Array.Empty<string>();
 
 			var currentDirectory = _fileInfo.Directory;
 

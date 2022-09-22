@@ -45,14 +45,13 @@ namespace KrisHemenway.TVShows.MazeDataSource
 
 		private async Task<IReadOnlyList<IEpisode>> FindEpisodesFromMazeApi(IShow show)
 		{
-			using (var response = await new HttpClient().GetAsync($"http://api.tvmaze.com/shows/{show.MazeId}/episodes"))
-			using (var streamReader = new StreamReader(response.Content.ReadAsStream()))
-			{
-				var responseString = streamReader.ReadToEnd();
-				var mazeEpisodes = JsonSerializer.Deserialize<IReadOnlyList<MazeShowEpisode>>(responseString);
+			using var response = await new HttpClient().GetAsync($"http://api.tvmaze.com/shows/{show.MazeId}/episodes");
+			using var streamReader = new StreamReader(response.Content.ReadAsStream());
+			
+			var responseString = streamReader.ReadToEnd();
+			var mazeEpisodes = JsonSerializer.Deserialize<IReadOnlyList<MazeShowEpisode>>(responseString);
 
-				return mazeEpisodes.Select(episode => CreateEpisode(episode, show)).ToList();
-			}
+			return mazeEpisodes.Select(episode => CreateEpisode(episode, show)).ToList();
 		}
 
 		private static Episode CreateEpisode(MazeShowEpisode episode, IShow show)
