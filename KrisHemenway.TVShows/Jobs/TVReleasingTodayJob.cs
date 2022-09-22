@@ -31,7 +31,7 @@ namespace KrisHemenway.TVShows.Jobs
 					var details = new PushNotificationDetails
 						{
 							Title = $"Airing Today",
-							Content = string.Join("\n", episodes.Select(episode => $"{episode.ShowName} - {episode.Season}x{episode.EpisodeInSeason} - {episode.Title}")),
+							Content = string.Join("\n", episodes.Select(episode => episode.Formatted)),
 							TypeName = nameof(TVReleasingTodayJob),
 							AlertNumber = episodes.Count
 						};

@@ -22,6 +22,9 @@ namespace KrisHemenway.TVShows.Episodes
 		bool HasEpisode { get; }
 		bool IsMissing { get; }
 
+		[JsonIgnore]
+		string Formatted { get; }
+
 		DateTime? AirDate { get; }
 		DateTime LastModified { get; }
 		DateTime Created { get; }
@@ -50,6 +53,8 @@ namespace KrisHemenway.TVShows.Episodes
 		public DateTime Created { get; set; }
 
 		public bool IsMissing => !HasEpisode && HasAired;
+
+		public string Formatted => $"{ShowName} - {Season}x{EpisodeInSeason} - {Title}";
 
 		public override string ToString()
 		{
