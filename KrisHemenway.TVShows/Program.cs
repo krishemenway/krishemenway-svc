@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using System;
@@ -11,7 +12,7 @@ namespace KrisHemenway.TVShows
 {
 	public class Program
 	{
-		public static void Main(string[] args)
+		public static int Main(string[] args)
 		{
 			var configuration = new ConfigurationBuilder()
 				.SetBasePath(ExecutablePath)
@@ -22,24 +23,6 @@ namespace KrisHemenway.TVShows
 
 			Settings = new Settings(configuration);
 
-			SetupLogging();
-
-			try
-			{
-				StartWebHost(configuration);
-			}
-			catch (Exception exception)
-			{
-				Log.Fatal(exception, "Service terminated unexpectedly");
-			}
-			finally
-			{
-				Log.CloseAndFlush();
-			}
-		}
-
-		private static void SetupLogging()
-		{
 			Log.Logger = new LoggerConfiguration()
 				.MinimumLevel.Debug()
 				.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -47,24 +30,36 @@ namespace KrisHemenway.TVShows
 				.WriteTo.Console()
 				.WriteTo.File(Settings.LogFile, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 10)
 				.CreateLogger();
-		}
 
-		private static void StartWebHost(IConfigurationRoot configuration)
-		{
-			WebHost = new WebHostBuilder()
-				.UseKestrel()
-				.UseConfiguration(configuration)
-				.UseStartup<Startup>()
-				.UseSerilog()
-				.UseUrls($"http://*:{Settings.WebPort}")
-				.Build();
+			try
+			{
+				Host.CreateDefaultBuilder(args)
+					.UseSerilog()
+					.ConfigureWebHostDefaults(webHost =>
+					{
+						webHost.UseKestrel();
+						webHost.UseConfiguration(configuration);
+						webHost.UseStartup<Startup>();
+						webHost.UseUrls($"http://*:{configuration.GetValue<int>("WebPort")}");
+					})
+					.Build()
+					.Run();
 
-			WebHost.Run();
+				return 0;
+			}
+			catch (Exception exception)
+			{
+				Log.Fatal(exception, "Service terminated unexpectedly");
+				return 1;
+			}
+			finally
+			{
+				Log.CloseAndFlush();
+			}
 		}
 
 		public static string ExecutablePath { get; set; } = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
 
 		public static Settings Settings { get; internal set; }
-		public static IWebHost WebHost { get; internal set; }
 	}
 }
