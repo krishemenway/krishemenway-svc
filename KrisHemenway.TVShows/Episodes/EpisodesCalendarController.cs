@@ -49,7 +49,7 @@ namespace KrisHemenway.TVShows.Episodes
 			}
 
 			var serializedCalendar = new CalendarSerializer().SerializeToString(calendar);
-			var fileContents = Encoding.ASCII.GetBytes(serializedCalendar);
+			var fileContents = Encoding.UTF8.GetBytes(serializedCalendar);
 
 			return File(fileContents, ContentType, FileName);
 		}
