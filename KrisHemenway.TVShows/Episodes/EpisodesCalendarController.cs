@@ -4,6 +4,7 @@ using Ical.Net.DataTypes;
 using Ical.Net.Serialization;
 using KrisHemenway.TVShows.Shows;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -26,7 +27,7 @@ namespace KrisHemenway.TVShows.Episodes
 
 			foreach (var episode in _showStore.FindAll().SelectMany((s) => s.Episodes))
 			{
-				if (!episode.AirDate.HasValue)
+				if (!episode.AirDate.HasValue || episode.AirDate.Value < new DateTime(DateTime.Now.Year, 1, 1))
 				{
 					continue;
 				}
