@@ -3,22 +3,6 @@ name: All Builds
 on: [push]
 
 jobs:
-  build-tvshows:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
-    - name: Build with dotnet
-      run: dotnet publish KrisHemenway.TVShows --configuration Release --output ./tvshows
-    - uses: actions/upload-artifact@v1
-      with:
-        name: tvshows-service
-        path: ./tvshows
-
   build-notifications:
     runs-on: ubuntu-latest
 
