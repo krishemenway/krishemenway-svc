@@ -13,12 +13,6 @@ const App : React.FC<{}> = () => {
 				<Text Text="Projects" className={classes.projectsTitle} />
 
 				<ProjectLink
-					Title="TV Show Release Calendar"
-					Description="complete calendar listing of all the TV Shows being tracked"
-					Location="/Calendar.html"
-				/>
-
-				<ProjectLink
 					Title="Artwork"
 					Description="some art I have made"
 					Location="/Arts.html"
@@ -46,12 +40,6 @@ const App : React.FC<{}> = () => {
 					Title="Supermarket Ninja (mobile)"
 					Description="swipin food away at the cash register!"
 					Location="/supermarketninja"
-				/>
-
-				<ProjectLink
-					Title="TV Show Completion"
-					Description="Completion for TV Shows"
-					Location="/MissingEpisodes.html"
 				/>
 
 				<ProjectLink
