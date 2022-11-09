@@ -21,7 +21,7 @@ const App : React.FC<{}> = () => {
 				<ProjectLink
 					Title="Sloshy Dosh Man Killing Floor 2 Stats"
 					Description="tracking the stats of local killing floor 2 server"
-					Location="https://www.sloshydoshman.com"
+					Location="https://kf2.krishemenway.dev"
 				/>
 
 				<ProjectLink
@@ -33,7 +33,7 @@ const App : React.FC<{}> = () => {
 				<ProjectLink
 					Title="Typing Center for America"
 					Description="something that continuously types on screen for you"
-					Location="https://im-busy.krishemenway.com"
+					Location="https://im-busy.krishemenway.dev"
 				/>
 
 				<ProjectLink
@@ -45,7 +45,7 @@ const App : React.FC<{}> = () => {
 				<ProjectLink
 					Title="Game Profile"
 					Description="project for tracking which games you are playing with interesting statistics"
-					Location="https://profile.krishemenway.com"
+					Location="https://profile.krishemenway.dev"
 				/>
 			</div>
 		</div>
