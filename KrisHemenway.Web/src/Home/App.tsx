@@ -33,7 +33,7 @@ const App : React.FC<{}> = () => {
 				<ProjectLink
 					Title="Typing Center for America"
 					Description="something that continuously types on screen for you"
-					Location="https://im-busy.krishemenway.dev"
+					Location="/im-busy"
 				/>
 
 				<ProjectLink

@@ -5,8 +5,9 @@ const path = require("path");
 module.exports = {
 	entry: {
 		app: "./src/Home/App.tsx",
+		lookCool: "./src/LookCool/App.ts",
 		arts: "./src/Arts/App.tsx",
-		slots: "./src/Slots/Slots.tsx"
+		slots: "./src/Slots/App.tsx"
 	},
 
 	output: {

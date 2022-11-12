@@ -105,7 +105,7 @@ const LockButton: React.FC<{ reel: SlotReel; canChangeLocks: boolean; }> = (prop
 	const reelIsBusy = useObservable(props.reel.CurrentSymbol.IsBusy);
 
 	return (
-		<button className={clsx(classes.lockButton, isLocked && "locked")} type="button" disabled={!props.canChangeLocks || reelIsBusy} onClick={() => { props.reel.ToggleLock(); }}>
+		<button className={clsx(classes.lockButton, isLocked && "locked", props.canChangeLocks && "can-change-locks")} type="button" disabled={!props.canChangeLocks || reelIsBusy} onClick={() => { props.reel.ToggleLock(); }}>
 			{isLocked ? <LockedIcon /> : <UnlockedIcon />}
 		</button>
 	);
@@ -205,9 +205,13 @@ const useStyles = createUseStyles({
 	lockButton: {
 		fontSize: "26px",
 		padding: "8px 0",
+		opacity: 0,
 
 		"&.locked": {
 			color: "#00F",
+		},
+		"&.can-change-locks": {
+			opacity: 1,
 		},
 		"&:hover": {
 			color: "#00F",
